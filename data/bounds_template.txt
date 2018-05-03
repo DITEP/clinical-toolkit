@@ -1,0 +1,3 @@
+variable1 10 20
+variable2 1 5 3
+variabme3 20 30

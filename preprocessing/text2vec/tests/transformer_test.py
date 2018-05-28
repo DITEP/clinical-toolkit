@@ -5,7 +5,7 @@ import pandas as pd
 
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal, assert_list_equal
-from reptk.features.transformers import HTMLParser
+from preprocessing.text2vec.transformers import HTMLParser
 
 
 html_doc = """

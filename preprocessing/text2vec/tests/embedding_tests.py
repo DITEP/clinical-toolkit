@@ -3,9 +3,8 @@ script to test reptk.features.embedding
 """
 import numpy as np
 
-from nose.tools import assert_equal
 from numpy.testing import assert_array_almost_equal
-from reptk.features import embedding
+from preprocessing.text2vec import embedding
 from gensim.models import word2vec
 
 

@@ -1,11 +1,8 @@
 """
-script to test functions in reptk.features.transform
+script to test functions in preprocessing.text2vec.transform
 """
-import pandas as pd
-
-from reptk.features import transform
+from preprocessing.text2vec import transform
 from nose.tools import assert_list_equal
-from numpy.testing import assert_array_equal
 
 
 class TestTransform(object):

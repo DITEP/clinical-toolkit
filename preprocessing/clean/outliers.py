@@ -1,5 +1,10 @@
 """
-Scripts to remove the outliers from the different tables
+Scripts to remove the outliers and na values from the different tables
+
+
+TODO move doc of functions to the object + test inline parameter
+
+TODO changer nom a terme car fait aussi office d'immputer
 """
 import pandas as pd
 import numpy as np
@@ -50,7 +55,8 @@ def impute_col(X, lbound, ubound, impute):#='mean'):
     res = []
 
     for row in X:
-        if (row < lbound) | (row > ubound):
+        # check bounds + nan
+        if (row < lbound) | (row > ubound) | (row == np.nan):
             res.append(impute_value)
         else:
             res.append(row)

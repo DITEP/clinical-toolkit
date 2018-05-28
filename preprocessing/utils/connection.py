@@ -34,7 +34,7 @@ def sql2df(engine, table):
 
 def get_engine(user, ip, db, use_password='yes', driver='pymysql'):
     """ returns engine instance connected to a given database
-
+    todo add example inspired by `create_engine` function
     Parameters
     ----------
     user : str

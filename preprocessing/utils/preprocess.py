@@ -6,7 +6,7 @@ import re
 import unidecode
 import pandas as pd
 
-from reptk.features import transform
+from preprocessing.text2vec import transform
 
 
 def normalize_cat(X, strat='tokens'):
@@ -16,13 +16,26 @@ def normalize_cat(X, strat='tokens'):
     ----------
     X : iterable
 
+    strat : str, ('tokens', 'strings'), default='tokens"
+        if 'tokens', words in a category are kept split (use this for embedding
+        categories by a nlp aproach)
+        if 'strings', each category is considered as a single word
+
     Returns
     -------
+    pandas.Series
+        same size as input, each entry corresponding to the normalized
+        category name
 
     """
     res = []
     for x in X:
-        x = unidecode.unidecode(x)
+        try:
+            x = unidecode.unidecode(x)
+        except AttributeError:
+            x = str(x)
+            x = unidecode.unidecode(x)
+        x = x.lower()
         patt = re.compile('[\W_]+')
         x_norm = transform.text_normalize(patt.sub(' ', x), ['sw'])
         res.append(x_norm)

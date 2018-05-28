@@ -8,7 +8,7 @@ concatenation of categories as text
 import pandas as pd
 from gensim.models import Word2Vec
 
-from reptk.features import embedding
+from ..text2vec import embedding
 
 
 class NeuralVectorizer(object):

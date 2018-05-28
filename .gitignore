@@ -10,3 +10,5 @@ examples/*
 
 data/*
 !data/bounds_template.txt
+
+venv/

@@ -6,6 +6,8 @@ tf_embedding.py
 imputer.py
 
 examples/*
+!examples/simple_transformation.py
+!examples/words_importance.py
 
 
 data/*

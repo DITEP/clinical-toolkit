@@ -9,7 +9,7 @@ sns.set()
 
 # load data
 path = 'data/reports.csv'
-df = pd.read_csv(path, sep=';') .head(5000)
+df = pd.read_csv(path, sep=';', encoding='utf-8') .head(5000)
 
 # parse the reports
 parser = HTMLParser(strategy='tokens')

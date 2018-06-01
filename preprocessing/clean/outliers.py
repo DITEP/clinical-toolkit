@@ -2,28 +2,39 @@
 Scripts to remove the outliers and na values from the different tables
 
 
-TODO move doc of functions to the object + test inline parameter
 
-TODO changer nom a terme car fait aussi office d'immputer
 """
 import pandas as pd
 import numpy as np
 
 
 class OutlierRemover(object):
-    def __init__(self, dic_path, inline=True):
+    """ removes outliers and replaces them by value given in dic_path or by 
+    imputing the column mean value
+    
+    Parameters
+    ----------
+    dic_path: str   
+        path to the dictionary containing outliers information
+    
+    inplace: bool, default=True
+        True to perform the transformation inplace
+        False to do it on a copy of the dataframe
+        
+    """
+    def __init__(self, dic_path, inplace=True):
         self.path = dic_path
-        self.inline = inline
+        self.inplace = inplace
 
     # for sklearn pipeline compatibility
     def fit(self, X, y=None):
         return X
 
     def transform(self, X, y=None):
-        return impute_df(X, self.path, self.inline)
+        return impute_df(X, self.path, self.inplace)
 
 
-def impute_col(X, lbound, ubound, impute):#='mean'):
+def impute_col(X, lbound, ubound, impute):
     """ imputes missing and mistyped values of one col of the dataframe
 
     Parameters
@@ -64,7 +75,7 @@ def impute_col(X, lbound, ubound, impute):#='mean'):
     return pd.Series(res)
 
 
-def impute_df(df, dic_path, inline):
+def impute_df(df, dic_path, inplace):
     """ cleans the df from missing/mistyped values
 
     Parameters
@@ -83,7 +94,7 @@ def impute_df(df, dic_path, inline):
     pd.DataFrame
 
     """
-    if not inline:
+    if not inplace:
         # make a copy of df
         df = df[::]
     dic = {}

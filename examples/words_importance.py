@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 
 from gensim.models import word2vec
 from sklearn.manifold import TSNE
-from preprocessing.text2vec.transformers import HTMLParser
+from preprocessing.html_parser.parser import ReportsParser
 
 
 path = '../data/reports.csv'
 
 df = pd.read_csv(path, sep=';').head(1000)
-parser = HTMLParser(strategy='tokens')
+parser = ReportsParser(strategy='tokens')
 X = parser.transform(df)
 
 w2v = word2vec.Word2Vec(X,

@@ -2,7 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from preprocessing.text2vec.transformers import HTMLParser, Text2Vector
+from preprocessing.html_parser.parser import ReportsParser
+from preprocessing.text2vec.transformers import Text2Vector
 from sklearn.manifold import TSNE
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline
@@ -11,16 +12,16 @@ sns.set()
 
 # load data
 path = 'data/reports.csv'
-df = pd.read_csv(path, sep=';', encoding='utf-8') .head(5000)
+df = pd.read_csv(path, sep=';', encoding='utf-8') .head(500)
 
 # parse the reports
-parser = HTMLParser(strategy='tokens')
+parser = ReportsParser(strategy='tokens', remove_sections=['hopital de jour'])
 X = parser.transform(df)
 
 
 
 ###################### vectorization using word2vec aggregation
-text2vec = Text2Vector().fit(X)
+text2vec = Text2Vector(sg=1, min_count=5).fit(X)
 x_w2v = text2vec.transform(X)
 
 # plot the result using t-sne reduction
@@ -31,7 +32,7 @@ plt.show()
 
 ###################### vectorization using TF-IDF
 
-X_2 = HTMLParser(strategy='strings').transform(df['report'])
+X_2 = ReportsParser(strategy='strings').transform(df['report'])
 
 counter = CountVectorizer(ngram_range=(1, 5), lowercase=False,
                           max_df=0.9,

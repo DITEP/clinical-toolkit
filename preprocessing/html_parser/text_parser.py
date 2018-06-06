@@ -45,7 +45,7 @@ def main_parser(text, name, remove=['h4', 'table', 'link', 'style'], headers='h3
         soup.name = name
     except TypeError:
         print('{} can not be parsed'.format(text))
-        soup = BeautifulSoup('')
+        soup = BeautifulSoup('', 'html.parser')
 
     clean_soup(soup, remove)
 

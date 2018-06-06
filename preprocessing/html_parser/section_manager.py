@@ -19,6 +19,8 @@ Hypothesis: the two methods should give the same results
 
 @author Valentin Charvet
 @date 11/04/2018
+
+@TODO unit tests
 """
 import pandas as pd
 from .text_parser import main_parser
@@ -77,7 +79,7 @@ def splitter(patient_id, date, cycle, report_dict):
              'text': report_dict[key]} for key in report_dict]
 
 
-def reduce_dic(dico, remove=[]):
+def reduce_dic(dico, remove):
     """ merges key, values of a dictionary
     
     Parameters

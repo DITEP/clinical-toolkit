@@ -3,7 +3,7 @@ Word embedding based on  word2Vec model: turns words into feature
 space to input them ino a classification model
 
 """
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 
 from gensim.models import word2vec
@@ -41,43 +41,43 @@ def train_w2v_model(corpus, n_embed=128, window=8, min_word=1,
                              *kwargs)
 
 
-def plot_w2v(model, s=10, reducer='t-sne'):
-    """ plots a word2vec's model vocab given a dimension reduction
-    algorihm
-
-    Parameters
-    ----------
-    model : word2vec.Word2Vec instance
-        trained w2v model
-    s : int
-        size of the scatter plot
-    reducer : str
-        either 't-sne' for using Stochastic Neighbour Embedding
-        algorithm or 'pca' for Principal Components Analysis
-
-    Returns
-    -------
-    None
-    """
-    if reducer == 't-sne':
-        transformer = t_sne.TSNE(n_components=2)
-    elif reducer == 'pca':
-        transformer = pca.PCA(n_components=2)
-    else:
-        raise ValueError("reducer agrument = {} not in \
-                ['t-sne', 'pca']".format(reducer))
-
-    words = model.wv.vocab
-    word_vectors = model[words]
-
-    embedded_vect = transformer.fit_transform(word_vectors)
-
-    plt.scatter(embedded_vect[:, 0], embedded_vect[:, 1], s=s)
-    for i, word in enumerate(words):
-        plt.annotate(word, xy=(embedded_vect[i, 0], embedded_vect[i, 1]))
-    plt.show()
-
-    return 'done'
+# def plot_w2v(model, s=10, reducer='t-sne'):
+#     """ plots a word2vec's model vocab given a dimension reduction
+#     algorihm
+#
+#     Parameters
+#     ----------
+#     model : word2vec.Word2Vec instance
+#         trained w2v model
+#     s : int
+#         size of the scatter plot
+#     reducer : str
+#         either 't-sne' for using Stochastic Neighbour Embedding
+#         algorithm or 'pca' for Principal Components Analysis
+#
+#     Returns
+#     -------
+#     None
+#     """
+#     if reducer == 't-sne':
+#         transformer = t_sne.TSNE(n_components=2)
+#     elif reducer == 'pca':
+#         transformer = pca.PCA(n_components=2)
+#     else:
+#         raise ValueError("reducer agrument = {} not in \
+#                 ['t-sne', 'pca']".format(reducer))
+#
+#     words = model.wv.vocab
+#     word_vectors = model[words]
+#
+#     embedded_vect = transformer.fit_transform(word_vectors)
+#
+#     plt.scatter(embedded_vect[:, 0], embedded_vect[:, 1], s=s)
+#     for i, word in enumerate(words):
+#         plt.annotate(word, xy=(embedded_vect[i, 0], embedded_vect[i, 1]))
+#     plt.show()
+#
+#     return 'done'
 
 
 def avg_document(model, document):

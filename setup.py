@@ -9,6 +9,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
+#@TODO update python packages
+
 setup(
     name='db-cleansing',
 

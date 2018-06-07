@@ -10,7 +10,7 @@ For the moment only binary/continuous logistic regression is implemented
 import pandas as pd
 import numpy as np
 
-from preprocessing.utils import preprocess
+from preprocessing.cat2vec import tools
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 
@@ -55,7 +55,7 @@ def lr_coefficients(path, features, targets, key, output_path, **kwargs):
 
     """
     df = pd.read_csv(path, sep=';')
-    df[features] = preprocess.normalize_cat(df[features], 'strings')
+    df[features] = tools.normalize_cat(df[features], 'strings')
     dummies = pd.get_dummies(df[[key, features, targets]],
                              columns=[features])
 

@@ -12,6 +12,7 @@ examples/*
 
 data/*
 !data/bounds_template.txt
+!data/report_example.html
 
 venv/
 

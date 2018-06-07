@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from sklearn.base import BaseEstimator
 from .section_manager import reduce_dic
 from .text_parser import main_parser, clean_string
-from ..text2vec.transform import text_normalize
+from preprocessing.text2vec.tools import text_normalize
 
 
 class ReportsParser(BaseEstimator):

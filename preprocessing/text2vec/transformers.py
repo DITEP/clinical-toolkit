@@ -1,19 +1,71 @@
 """
-object classes for sklearn pipeline comprehension
+object classes for sklearn pipeline compatibility
 
-
-@TODO remplacer word2vec par modèle doc2vec de gensim (
-@TODOhttp://yaronvazana.com/2018/01/20/training-doc2vec-model-with-gensim/)
 
 """
-from .embedding import avg_corpus
+from .tools import avg_corpus
 from gensim.models import word2vec
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from sklearn.base import BaseEstimator
-
-import pandas as pd
 
 
 class Text2Vector(BaseEstimator):
+    """ implementation of Doc2Vec model adapted to sklearn for
+    hyperparameters tuning
+
+    """
+    def __init__(self, n_components, dm, window, **kwargs):
+        self.n_components = n_components,
+        self.dm = dm
+        self.window = window
+
+        self.d2v = lambda corpus: Doc2Vec(corpus,
+                                          size=self.n_components,
+                                          dm=self.dm,
+                                          window=self.window,
+                                          **kwargs)
+        self.d2v_model_: Doc2Vec = None
+
+    def fit(self, reports, y=None):
+        """ tags reports (for gensim's model consistence) and trains Doc2Vec
+        model on the corpus
+
+        Parameters
+        ----------
+        reports : iterable of iterables
+            list of tokenized reports
+
+        y : not used, default=None
+
+        Returns
+        -------
+
+        """
+        tagged_docs = [TaggedDocument(j, 'doc_{}'.format(i))
+                       for i, j in enumerate(reports)]
+
+        self.d2v_model_ = self.d2v(tagged_docs)
+
+        return self
+
+    def transform(self, reports):
+        """ transforms reports in embedding space based on previously trained
+        Doc2Vec model
+
+        Parameters
+        ----------
+        reports : iterable of iterables
+            list of tokenized reports
+
+        Returns
+        -------
+        np.ndarray
+            vectorized reports
+        """
+        return self.d2v_model_.infer_vector(reports)
+
+
+class AverageWords2Vector(BaseEstimator):
     """ trains a unsupervised word2vec model, and then transform
     text data according to it
     This function is only for convenience in using word2vec in a pipeline
@@ -23,56 +75,9 @@ class Text2Vector(BaseEstimator):
     n_components : int, default=128
         dimension of the embedding vector
 
-    sg : int, {0,1}, default=1
-        Defines training algorithm, 1 for skip-gram, otherwise CBOW
-
-    window : int, default=5
-        The maximum distance between the current an predicted word in a
-        sentence
-
-    alpha : float, default=0.025
-        The initial learning rate
-
-    min_alpha : float, default=1e4
-        Learning rate will linearly decrease to min_alpha during training
-
-    seed : int, default=0
-        random seed
-
-    min_count : int, default=5
-        ignore words with total frequency lower than this
-
-    max_vocab_size : int, default=None
-        Limits the RAM during vocabulary building; if there are more unique
-        words than this, then prune the infrequent ones. Every 10
-        million word types need about 1GB of RAM.
-        Set to None for no limit
-
-    sample : float, default=1e-3
-         The threshold for configuring which higher-frequency words
-          are randomly downsampled, useful range is (0, 1e-5)
-
-    workers : int, default=2
-        number of worker threads (-1 for all)
-
-    hs : int, {0,1}, default=0
-        If 1, hierarchical softmax will be used for model training.
-        if 0, and negative > 0, negative sampling
-
-    negative : int, default=5
-         if > 0 , negative sample used
-         if = 0, no negative sampling used
-
-    cbow_mean : int, {0,1}, default=1
-        If 0, use the sum of the context word vectors.
-        If 1, use the mean, only applies when cbow is used
-
-    epochs : int, default=5
-        Number of epochs over the corpus
-
-    sorted_vocab : int, {0,1}, default=1
-        If 1, sort the vocab by descending frequency before assiging
-        word indexes
+    kwargs
+    additionnal arguments to pass to gensim.Word2Vec (see appropriate
+    documentation for details)
     """
     def __init__(self,
                  n_components=128, **kwargs):
@@ -80,14 +85,6 @@ class Text2Vector(BaseEstimator):
             word2vec.Word2Vec(corpus,
                               size=n_components,
                               **kwargs)
-                              # sg=sg, window=window,
-                              # alpha=alpha, min_alpha=min_alpha,
-                              # seed=seed, min_count=min_count,
-                              # max_vocab_size=max_vocab_size,
-                              # sample=sample, workers=workers,
-                              # hs=hs, negative=negative,
-                              # cbow_mean=cbow_mean, iter=epochs,
-                              # sorted_vocab=sorted_vocab)
         # trained w2v model
         self.w2v_model_ = None
 
@@ -134,7 +131,3 @@ class Text2Vector(BaseEstimator):
         -------
         """
         return avg_corpus(self.w2v(parsed_reports), parsed_reports)
-
-
-
-

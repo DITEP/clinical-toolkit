@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.base import BaseEstimator
 
 
-class LASSO_selector(BaseEstimator):
+class LassoSelector(BaseEstimator):
     """
     This class is made to be used after cat2vec.lasso_gridsearch since it
     selects the features from a dataframe that have the most weighted
@@ -36,7 +36,7 @@ class LASSO_selector(BaseEstimator):
                 'colnames': ['feat1', 'feat2', 'feat3', 'feat4']}
     >>> df = pd.DataFrame(dico)
     keeps only feat2 and feat3
-    >>> selector = LASSO_selector(2).fit(df['colnames'], df['coef'])
+    >>> selector = LassoSelector(2).fit(df['colnames'], df['coef'])
     >>> X = [[0, 0, 1, 0], [1, 1, 0, 0], [0, 1, 0, 0]]
     >>> selector.transform(X)
     [[0, 1], [1, 0], [1, 0]]
@@ -73,35 +73,3 @@ class LASSO_selector(BaseEstimator):
         coefs_to_keep = coefs_to_keep[self.feature_col]
 
         return X[coefs_to_keep.values].values
-
-    # # following methods exist for scikit-learn pipeline and gridsearch APIs
-    # deprecated since BaseEstimator inheritance
-    # def get_params(self, deep=True):
-    #     return {'lasso_coefs': self.lasso_coefs,
-    #             'n_features': self.n_features}
-    #
-    # def set_params(self, **parameters):
-    #         for parameter, value in parameters.items():
-    #             setattr(self, parameter, value)
-    #         return self
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

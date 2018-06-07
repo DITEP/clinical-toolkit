@@ -1,16 +1,23 @@
 # DataBase Cleansing
 
+This repository contains scripts to preprocess a clinical database. It notably
+includes functions to process medical text reports, and feature selection on 
+high cardinality categorical features (eg: for medication names).
 
-This repository contains basic scripts to preprocess a database, it 
-includes:
-* outlier removal 
-* imputing missing values
-* categorical encoding
-
+Most of the scrits rely on scikit-learn API
 
 
+## Getting started
 
-## TODO
-* change name HTMLParser (conflict with HTMLParser from standard python library) 
+### Prerequisities
+
+
+### Installation
+
+
+
+
+
+## References
 
 

@@ -1,7 +1,7 @@
 """
 Scripts to remove the outliers and na values from the different tables
 
-
+To be used for the values that are mistyped
 
 """
 import pandas as pd

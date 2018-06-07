@@ -4,7 +4,7 @@ script to test reptk.features.embedding
 import numpy as np
 
 from numpy.testing import assert_array_almost_equal
-from preprocessing.text2vec import embedding
+from preprocessing.text2vec import tools
 from gensim.models import word2vec
 
 
@@ -27,10 +27,10 @@ class TestEmbeddings(object):
         doc3 = 'nose pour les tests unitaires c est genial'.split(' ')
         doc4 = 'rien a voir'.split(' ')
 
-        avg1 = embedding.avg_document(w2v, doc1)
-        avg2 = embedding.avg_document(w2v, doc2)
-        avg3 = embedding.avg_document(w2v, doc3)
-        avg4 = embedding.avg_document(w2v, doc4)
+        avg1 = tools.avg_document(w2v, doc1)
+        avg2 = tools.avg_document(w2v, doc2)
+        avg3 = tools.avg_document(w2v, doc3)
+        avg4 = tools.avg_document(w2v, doc4)
 
         expected1 = np.mean([w2v['omelette'],
                             w2v['au']], axis=0)

@@ -5,7 +5,7 @@
 import pandas as pd
 import numpy as np
 
-from preprocessing.cat2vec.feature_selection import LASSO_selector
+from preprocessing.cat2vec.feature_selection import LassoSelector
 from numpy.testing import assert_array_equal
 
 
@@ -40,10 +40,10 @@ class TestTransformation(object):
         return self
 
     def test_fit_transform(self):
-        selector = LASSO_selector(n_features=2,
-                                  lasso_coefs=df_coef,
-                                  feature_col='feature_name',
-                                  coef_col='coef')
+        selector = LassoSelector(n_features=2,
+                                 lasso_coefs=df_coef,
+                                 feature_col='feature_name',
+                                 coef_col='coef')
         # selector.fit(df_coef.feature_name, df_coef.coef)
 
         x_res = selector.transform(df)

@@ -8,7 +8,7 @@ concatenation of categories as text
 import pandas as pd
 from gensim.models import Word2Vec
 
-from ..text2vec import embedding
+from ..text2vec import tools
 
 
 class NeuralVectorizer(object):
@@ -71,11 +71,11 @@ class NeuralVectorizer(object):
             .apply(lambda s: s.split(' '))
 
         self.w2v_ = Word2Vec(df_grouped[self.cat_col],
-                            size=self.size,
-                            window=self.window,
-                            min_count=self.min_count,
-                            sg=self.sg,
-                            seed=self.seed)
+                             size=self.size,
+                             window=self.window,
+                             min_count=self.min_count,
+                             sg=self.sg,
+                             seed=self.seed)
         return self
 
     def transform(self, X, y=None):
@@ -93,15 +93,8 @@ class NeuralVectorizer(object):
         """
         categories = X[self.cat_col].apply(lambda s: s.split(' '))
 
-        vectors = categories.apply(lambda cat:
-                                   embedding.avg_document(self.w2v_, cat))
+        vectors = categories.apply(lambda cat: tools.avg_document(self.w2v_, cat))
 
         X[self.cat_col + '_embedded'] = vectors
 
         return X
-
-
-
-
-
-

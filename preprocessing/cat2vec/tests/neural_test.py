@@ -7,9 +7,7 @@ import numpy as np
 
 from gensim.models import Word2Vec
 from numpy.testing import assert_array_equal, assert_array_almost_equal
-from preprocessing.cat2vec import neural_embedding
-from preprocessing.utils import preprocess
-
+from preprocessing.cat2vec import neural_embedding, tools
 
 # global variables definition
 
@@ -18,7 +16,7 @@ dic = {'ids': [0, 0, 1, 2, 2, 2, 0],
                   'second cat', 'third cat', 'third cat']}
 
 df = pd.DataFrame(dic, index=None)
-df['values'] = preprocess.normalize_cat(df['values'])
+df['values'] = tools.normalize_cat(df['values'])
 
 corpus = [['first', 'cat', 'first', 'cat', 'third', 'cat'],
           ['second', 'cat'],

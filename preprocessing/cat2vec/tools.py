@@ -6,7 +6,7 @@ import re
 import unidecode
 import pandas as pd
 
-from preprocessing.text2vec import transform
+import preprocessing.text2vec.tools
 
 
 def normalize_cat(X, strat='tokens'):
@@ -37,12 +37,10 @@ def normalize_cat(X, strat='tokens'):
             x = unidecode.unidecode(x)
         x = x.lower()
         patt = re.compile('[\W_]+')
-        x_norm = transform.text_normalize(patt.sub(' ', x), ['sw'])
+        x_norm = preprocessing.text2vec.tools.text_normalize(patt.sub(' ', x),
+                                                             ['sw'])
         res.append(x_norm)
     if strat == 'tokens':
         return pd.Series(res).apply(lambda t: ' '.join(t))
     elif strat == 'strings':
         return pd.Series(res).apply(lambda t: '_'.join(t))
-
-
-

@@ -35,7 +35,7 @@ class TestParser(object):
 
     def test_empty_cleaner(self):
         soup, _ = self.setUp()
-        text_parser.clean_soup(soup, remove=['div'])
+        text_parser.clean_soup(soup, remove=['div'], verbose=False)
 
         expected = """
         <h3> Some title 0</h3>
@@ -95,7 +95,7 @@ class TestParser(object):
 
     def test_main_parser(self):
         # soup, _ = self.setUp()
-        res = text_parser.main_parser(html_doc, 'test')
+        res = text_parser.main_parser(html_doc, 'test', False)
 
         expected = {'some title 0': 'this is div 0 text ' +
                                     '0 0 text 0 1',

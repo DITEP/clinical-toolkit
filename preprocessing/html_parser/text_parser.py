@@ -6,18 +6,15 @@ sections.
 Only main_parser is used in practice since all the other functions
 are auxiliary (~private)
 
-@author Valentin Charvet
-@date 11/04/2018
 """
-
-
 from bs4 import BeautifulSoup
 
 from unidecode import unidecode
 import re
 
 
-def main_parser(text, name, remove=['h4', 'table', 'link', 'style'], headers='h3'):
+def main_parser(text, name, verbose, remove=['h4', 'table', 'link', 'style'],
+                headers='h3'):
     """ takes as input the string from the report and
     transforms splits it into sections
 
@@ -27,8 +24,13 @@ def main_parser(text, name, remove=['h4', 'table', 'link', 'style'], headers='h3
         report in html format
     name : string
         name of the current document (useful for debugging purpose)
+
+    verbose : bool
+        True for logging
+
     remove : list
         name of the tags to remove because contain useless information
+
     headers : string
         name of the tags that delimit the sections
 
@@ -44,12 +46,13 @@ def main_parser(text, name, remove=['h4', 'table', 'link', 'style'], headers='h3
         soup = BeautifulSoup(soup.prettify())
         soup.name = name
     except TypeError:
-        print('{} can not be parsed'.format(text))
+        if verbose:
+            print('{} can not be parsed'.format(text))
         soup = BeautifulSoup('', 'html.parser')
 
-    clean_soup(soup, remove)
+    clean_soup(soup, remove, verbose)
 
-    return parse_soup(soup, False, headers)
+    return parse_soup(soup, verbose, headers)
 
 
 def text_between_tags(tag1, tag2):
@@ -98,7 +101,7 @@ def last_tag_text(final_tag):
     return clean_string(res)
 
 
-def parse_soup(soup, verbose=False, headers='h3'):
+def parse_soup(soup, verbose, headers='h3'):
     """Splits the soup between headers and returns a dictionnary
 
     Parameters
@@ -140,16 +143,20 @@ def parse_soup(soup, verbose=False, headers='h3'):
     return res_dic
 
 
-def clean_soup(soup, remove):
+def clean_soup(soup, remove, verbose):
     """ Remove the tags indicated in remove parameter from the soup
     soup
-    Transfo done inline
+    Transfo done inplace
 
     Parameters
     ----------
     soup : BeautifulSoup instance
+
     remove : list
         name of the tags to remove from the soup
+
+    verbose: bool
+        controls logging
 
     Returns
     -------
@@ -162,7 +169,8 @@ def clean_soup(soup, remove):
     try:
         soup.find('span', attrs={'style': "color: red"}).extract()
     except AttributeError:
-        print('No legend found')
+        if verbose:
+            print('No legend found')
 
     # remove tags indicated in input
     for tag in remove:
@@ -171,7 +179,8 @@ def clean_soup(soup, remove):
             try:
                 soup.find(tag).extract()
             except AttributeError:
-                print('No tag {} in the soup {}'.format(tag, soup.name))
+                if verbose:
+                    print('No tag {} in the soup {}'.format(tag, soup.name))
                 cont = False
     return
 

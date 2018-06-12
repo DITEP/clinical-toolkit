@@ -82,7 +82,7 @@ class ReportsParser(BaseEstimator):
                 text = clean_string(BeautifulSoup(html, 'html.parser').text)
                 res.append(text_normalize(text, self.stop_words, stem=False))
             else:
-                dico = main_parser(html, i)
+                dico = main_parser(html, i, self.verbose)
                 merged_report = reduce_dic(dico, self.remove_sections)
 
                 res.append(text_normalize(merged_report, self.stop_words,

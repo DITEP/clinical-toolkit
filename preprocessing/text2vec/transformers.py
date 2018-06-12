@@ -4,7 +4,7 @@ object classes for sklearn pipeline compatibility
 
 """
 from .tools import avg_corpus
-from gensim.models import word2vec
+from gensim.models.word2vec import Word2Vec
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from sklearn.base import BaseEstimator
 
@@ -14,19 +14,12 @@ class Text2Vector(BaseEstimator):
     hyperparameters tuning
 
     """
-    def __init__(self, n_components, dm, window, **kwargs):
-        self.n_components = n_components,
+    def __init__(self, n_components=128, dm=1, window=3):
+        self.n_components = n_components
         self.dm = dm
         self.window = window
 
-        self.d2v = lambda corpus: Doc2Vec(corpus,
-                                          size=self.n_components,
-                                          dm=self.dm,
-                                          window=self.window,
-                                          **kwargs)
-        self.d2v_model_: Doc2Vec = None
-
-    def fit(self, reports, y=None):
+    def fit(self, reports, y=None, **kwargs):
         """ tags reports (for gensim's model consistence) and trains Doc2Vec
         model on the corpus
 
@@ -44,7 +37,10 @@ class Text2Vector(BaseEstimator):
         tagged_docs = [TaggedDocument(j, 'doc_{}'.format(i))
                        for i, j in enumerate(reports)]
 
-        self.d2v_model_ = self.d2v(tagged_docs)
+        # self.d2v_model_ = self.d2v(tagged_docs)
+        self.d2v_model_ = Doc2Vec(tagged_docs, size=self.n_components,
+                                  dm=self.dm, window=self.window,
+                                  **kwargs)
 
         return self
 
@@ -81,14 +77,9 @@ class AverageWords2Vector(BaseEstimator):
     """
     def __init__(self,
                  n_components=128, **kwargs):
-        self.w2v = lambda corpus:  \
-            word2vec.Word2Vec(corpus,
-                              size=n_components,
-                              **kwargs)
-        # trained w2v model
-        self.w2v_model_ = None
+        self.n_components = n_components
 
-    def fit(self, parsed_reports, y=None):
+    def fit(self, parsed_reports, y=None, **kwargs):
         """ Trains the word2vec model with given corpus
         as input
 
@@ -102,7 +93,9 @@ class AverageWords2Vector(BaseEstimator):
         Returns
         -------
         """
-        self.w2v_model_ = self.w2v(parsed_reports)
+        self.w2v_model_ = Word2Vec(parsed_reports,
+                                   size=self.n_components,
+                                   **kwargs)
         return self
 
     def transform(self, parsed_reports):
@@ -119,15 +112,16 @@ class AverageWords2Vector(BaseEstimator):
         """
         return avg_corpus(self.w2v_model_, parsed_reports)
 
-    def fit_transform(self, parsed_reports, y=None):
-        """
-
-        Parameters
-        ----------
-        parsed_reports
-        y
-
-        Returns
-        -------
-        """
-        return avg_corpus(self.w2v(parsed_reports), parsed_reports)
+    # def fit_transform(self, parsed_reports, y=None):
+    #     """
+    #
+    #     Parameters
+    #     ----------
+    #     parsed_reports
+    #     y
+    #
+    #     Returns
+    #     -------
+    #     """
+    #     return avg_corpus(self.fit(self, parsed_reports).w2v_model_,
+    #                       parsed_reports)

@@ -7,6 +7,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal, assert_list_equal
 from ..parser import ReportsParser
+from sklearn.utils.estimator_checks import check_estimator
+
 
 
 html_doc = """
@@ -61,6 +63,8 @@ class TestHTMLParser(object):
 
         assert_list_equal(res_tokens, expected_tokens)
 
+    def check_consistence_sklearn(self):
+        assert_equal(True, check_estimator(ReportsParser))
 
 
 

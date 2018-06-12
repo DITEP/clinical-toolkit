@@ -1,8 +1,8 @@
 """
 script to test functions in preprocessing.text2vec.transform
+@TODO check sklearn api consistency
 """
 import preprocessing.text2vec.tools
-from preprocessing.text2vec import transform
 from nose.tools import assert_list_equal
 
 

@@ -79,7 +79,8 @@ class ReportsParser(BaseEstimator):
         for i, html in X.iteritems():
             if self.headers is None:
                 # html is not structured
-                text = clean_string(BeautifulSoup(html, 'html.parser').text)
+                text = clean_string(BeautifulSoup(str(html),
+                                                  'html.parser').text)
                 res.append(text_normalize(text, self.stop_words, stem=False))
             else:
                 dico = main_parser(html, i, self.verbose)

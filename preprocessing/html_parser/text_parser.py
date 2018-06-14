@@ -43,7 +43,7 @@ def main_parser(text, name, verbose, remove=['h4', 'table', 'link', 'style'],
     """
     try:
         soup = BeautifulSoup(text, 'html.parser')
-        soup = BeautifulSoup(soup.prettify())
+        soup = BeautifulSoup(soup.prettify(), 'html.parser')
         soup.name = name
     except TypeError:
         if verbose:

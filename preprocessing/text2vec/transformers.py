@@ -3,6 +3,8 @@ object classes for sklearn pipeline compatibility
 
 
 """
+import numpy as np
+
 from .tools import avg_corpus
 from gensim.models.word2vec import Word2Vec
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
@@ -38,6 +40,7 @@ class Text2Vector(BaseEstimator):
                        for i, j in enumerate(reports)]
 
         # self.d2v_model_ = self.d2v(tagged_docs)
+        #TODO change `size` parameter before deprecation
         self.d2v_model_ = Doc2Vec(tagged_docs, size=self.n_components,
                                   dm=self.dm, window=self.window,
                                   **kwargs)
@@ -58,7 +61,8 @@ class Text2Vector(BaseEstimator):
         np.ndarray
             vectorized reports
         """
-        return self.d2v_model_.infer_vector(reports)
+        return np.array([self.d2v_model_.infer_vector(document) for document
+                         in reports])
 
 
 class AverageWords2Vector(BaseEstimator):
@@ -76,7 +80,7 @@ class AverageWords2Vector(BaseEstimator):
     documentation for details)
     """
     def __init__(self,
-                 n_components=128, **kwargs):
+                 n_components=128):
         self.n_components = n_components
 
     def fit(self, parsed_reports, y=None, **kwargs):
@@ -111,17 +115,3 @@ class AverageWords2Vector(BaseEstimator):
 
         """
         return avg_corpus(self.w2v_model_, parsed_reports)
-
-    # def fit_transform(self, parsed_reports, y=None):
-    #     """
-    #
-    #     Parameters
-    #     ----------
-    #     parsed_reports
-    #     y
-    #
-    #     Returns
-    #     -------
-    #     """
-    #     return avg_corpus(self.fit(self, parsed_reports).w2v_model_,
-    #                       parsed_reports)

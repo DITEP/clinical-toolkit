@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from preprocessing.html_parser.parser import ReportsParser
-from preprocessing.text2vec.transformers import AverageWords2Vector
+from preprocessing.text2vec.transformers import AverageWords2Vector, Text2Vector
 from sklearn.manifold import TSNE
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline
@@ -12,16 +12,20 @@ sns.set()
 
 # load data
 path = 'data/reports.csv'
-df = pd.read_csv(path, sep=';', encoding='utf-8') .head(500)
+df = pd.read_csv(path, sep=';', encoding='utf-8') .head(1000)
 
 # parse the reports
-parser = ReportsParser(strategy='tokens', remove_sections=['hopital de jour'])
+sections = ['hopital de jour', 'examen du patient', 'examens complentaires']
+parser = ReportsParser(strategy='tokens', remove_sections=sections)
 X = parser.transform(df)
 
 
 
 ###################### vectorization using word2vec aggregation
-text2vec = AverageWords2Vector(sg=1, min_count=5).fit(X)
+# text2vec = AverageWords2Vector(sg=1, min_count=5).fit(X)
+# x_w2v = text2vec.transform(X)
+text2vec = Text2Vector()
+text2vec.fit(X)
 x_w2v = text2vec.transform(X)
 
 # plot the result using t-sne reduction

@@ -64,7 +64,6 @@ class Folder(BaseEstimator):
         pandas.DataFrame
         columns are [key1, key2, feature, value, date] where feature contains
         the features names and values are the values.
-        
 
         """
         df_res = pd.DataFrame(None, columns=[self.key1, self.key2, 'feature',

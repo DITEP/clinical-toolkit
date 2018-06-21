@@ -20,23 +20,25 @@ class ReportsParser(BaseEstimator):
     ----------
     strategy : string, (default='strings')
         defines the type of object returned by the transformation,
-        if 'strings', each line of the returned df is string
-        if 'tokens', the string is split into a list of words
+        if 'strings', each line of the returned df is string. 'strings' is to
+        be used for CountVectorizer and TFiDFVectorizer
+        if 'tokens', the string is split into a list of words. 'tokens' is to
+        be used for gensim's Word2Vec and Doc2Vec models
 
     remove_sections : list, default=[]
         list containing the names of the sections to be removes from
 
-    remove_tags : list
+    remove_tags : list, default=['h4', 'table', 'link', 'style']
         list of tags to remove from html  page
 
-    headers : string
+    headers : string, default='h3
         name of the html tag that delimits the sections in the page
 
     stop_words : list, default=[]
         additional words to remove from the text, specific to the kind
         of parsed document
 
-    verbose : bool
+    verbose : bool, default=Fale
 
     """
     def __init__(self,
@@ -56,7 +58,7 @@ class ReportsParser(BaseEstimator):
         self.verbose = verbose
         self.stop_words = stop_words
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         return self
 
     def transform(self, X):
@@ -76,7 +78,8 @@ class ReportsParser(BaseEstimator):
             # then turn it into a Series
             X = X[self.colName]
         res = []
-        for i, html in X.iteritems():
+        # for i, html in X.iteritems():
+        for i, html in enumerate(X):
             if self.headers is None:
                 # html is not structured
                 text = clean_string(BeautifulSoup(str(html),
@@ -89,7 +92,7 @@ class ReportsParser(BaseEstimator):
                 res.append(text_normalize(merged_report, self.stop_words,
                                           stem=False))
 
-        ser_res = pd.Series(res, index=X.index)
+        ser_res = pd.Series(res) #, index=X.index)
 
         if self.strategy == 'strings':
             # merge tokens into a string
@@ -98,3 +101,5 @@ class ReportsParser(BaseEstimator):
             return ser_res
         else:
             return ValueError("Expected 'tokens' or 'string' in strategy")
+
+

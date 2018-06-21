@@ -40,8 +40,7 @@ class Text2Vector(BaseEstimator):
                        for i, j in enumerate(reports)]
 
         # self.d2v_model_ = self.d2v(tagged_docs)
-        #TODO change `size` parameter before deprecation
-        self.d2v_model_ = Doc2Vec(tagged_docs, size=self.n_components,
+        self.d2v_model_ = Doc2Vec(tagged_docs, vector_size=self.n_components,
                                   dm=self.dm, window=self.window,
                                   **kwargs)
 

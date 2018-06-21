@@ -130,6 +130,7 @@ def parse_soup(soup, verbose, headers='h3'):
             res_dic[clean_string(key)] = new_text
             # print(index, new_text)
         except AttributeError as e:
+            # @TODO fix verbosity
             print('{} occurred at {}'.format(e, soup.name))
     try:
         final_text = last_tag_text(header_list[-1])

@@ -101,6 +101,7 @@ def transform_and_label(df, key1, key2, date,  feature, value,
 
     df_res = pd.DataFrame(None, columns=df.columns)
 
+    # filling new rows
     for i in range(new_col.shape[0]):
         for j in range(new_col.shape[1]):
             row = {key1: df.at[i, key1],

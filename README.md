@@ -21,3 +21,8 @@ Most of the scrits rely on scikit-learn API
 ## References
 
 
+
+## TODO
+* paralleliser le parsing de textes
+* module de selection de variables (chi2, ANOVA etc...)
+* wiki + notebooks + trouver bdd example

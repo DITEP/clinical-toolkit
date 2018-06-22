@@ -13,7 +13,7 @@ from unidecode import unidecode
 import re
 
 
-def main_parser(text, name, verbose, remove=['h4', 'table', 'link', 'style'],
+def main_parser(text, verbose, remove=['h4', 'table', 'link', 'style'],
                 headers='h3'):
     """ takes as input the string from the report and
     transforms splits it into sections
@@ -22,8 +22,6 @@ def main_parser(text, name, verbose, remove=['h4', 'table', 'link', 'style'],
     ----------
     text : string
         report in html format
-    name : string
-        name of the current document (useful for debugging purpose)
 
     verbose : bool
         True for logging
@@ -44,7 +42,6 @@ def main_parser(text, name, verbose, remove=['h4', 'table', 'link', 'style'],
     try:
         soup = BeautifulSoup(text, 'html.parser')
         soup = BeautifulSoup(soup.prettify(), 'html.parser')
-        soup.name = name
     except TypeError:
         if verbose:
             print('{} can not be parsed'.format(text))

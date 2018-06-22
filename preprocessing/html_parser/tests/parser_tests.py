@@ -95,7 +95,7 @@ class TestParser(object):
 
     def test_main_parser(self):
         # soup, _ = self.setUp()
-        res = text_parser.main_parser(html_doc, 'test', False)
+        res = text_parser.main_parser(html_doc, False)
 
         expected = {'some title 0': 'this is div 0 text ' +
                                     '0 0 text 0 1',

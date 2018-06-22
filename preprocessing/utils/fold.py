@@ -15,6 +15,7 @@ key1 | key2 | feature_name | value | date
 import pandas as pd
 
 from sklearn.base import BaseEstimator
+from multiprocessing.pool import Pool
 
 
 class Folder(BaseEstimator):
@@ -31,7 +32,7 @@ class Folder(BaseEstimator):
         indicator of the primary key indicator
 
     key2 : str, (optionnal?)
-        seconday key
+        secondary key
 
     features : list
         column names that contain the feature
@@ -41,11 +42,12 @@ class Folder(BaseEstimator):
 
 
     """
-    def __init__(self, key1, key2, features, date):
+    def __init__(self, key1, key2, features, date, n_jobs=1):
         self.key1 = key1
         self.key2 = key2
         self.features = features
         self.date = date
+        self.n_jobs = n_jobs
 
     def fit(self, X, y=None):
         return self
@@ -66,32 +68,61 @@ class Folder(BaseEstimator):
         the features names and values are the values.
 
         """
-        df_res = pd.DataFrame(None, columns=[self.key1, self.key2, 'feature',
-                                             'value', 'date'])
-        if len(self.features) > 1:
-            for _, row in df_base.iterrows():
-                dico = {self.key1: [], self.key2: [], 'feature': [],
-                        'value': [], 'date': []}
-                for cur_feat in self.features:
-                    dico[self.key1] += [row[self.key1]]
-                    dico[self.key2] += [row[self.key2]]
+        # df_res = pd.DataFrame(None, columns=[self.key1, self.key2, 'feature',
+        #                                      'value', 'date'])
+        columns = [self.key1, self.key2, 'feature', 'value', 'date']
+        if self.n_jobs == -1:
+            pool = Pool()
+        else:
+            pool = Pool(self.n_jobs)
 
-                    dico['feature'] += [cur_feat]
-                    dico['value'] += [row[cur_feat]]
-                    dico['date'] += [row[self.date]]
-                df_cur = pd.DataFrame(dico)
-                df_res = df_res.append(df_cur, ignore_index=True)
+        if len(self.features) > 1:
+            dicts = pool.map(self.fold_several_features, df_base.iterrows())
+            pool.close()
+            pool.join()
+
+            merged_dict = {k: [] for k in columns}
+            for key in dicts[0]:
+                for dico in dicts:
+                    merged_dict[key] += dico[key]
 
         # only one feature
         else:
-            # df_res['feature'] = df_base[self.features]
-            for _, row in df_base.iterrows():
-                dico = {self.key1: row[self.key1],
-                        self.key2: row[self.key2],
-                        'feature': self.features[0],
-                        'value': row[self.features[0]],
-                        'date': row[self.date]}
+            dicts = pool.map(self.fold_one_feature, df_base.iterrows())
 
-                df_res = df_res.append(dico, ignore_index=True)
+            pool.close()
+            pool.join()
 
-        return df_res
+            merged_dict = {k: [d[k] for d in dicts] for k in dicts[0]}
+
+        return pd.DataFrame(merged_dict)
+
+
+    def fold_several_features(self, row):
+        # fetching value of the row, droping index
+        _, row = row
+        dico = {self.key1: [], self.key2: [], 'feature': [],
+                'value': [], 'date': []}
+        for cur_feat in self.features:
+            dico[self.key1] += [row[self.key1]]
+            dico[self.key2] += [row[self.key2]]
+
+            dico['feature'] += [cur_feat]
+            dico['value'] += [row[cur_feat]]
+            dico['date'] += [row[self.date]]
+
+        return dico
+
+    def fold_one_feature(self, row):
+        _, row = row
+
+        dico = {self.key1: row[self.key1],
+                self.key2: row[self.key2],
+                'feature': self.features[0],
+                'value': row[self.features[0]],
+                'date': row[self.date]}
+
+        return dico
+
+
+

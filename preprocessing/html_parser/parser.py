@@ -11,6 +11,7 @@ from sklearn.base import BaseEstimator
 from .section_manager import reduce_dic
 from .text_parser import main_parser, clean_string
 from preprocessing.text2vec.tools import text_normalize
+from multiprocessing.pool import Pool
 
 
 class ReportsParser(BaseEstimator):
@@ -48,7 +49,8 @@ class ReportsParser(BaseEstimator):
                  col_name='report',
                  headers='h3',
                  stop_words=[],
-                 verbose=False):
+                 verbose=False,
+                 n_jobs=1):
 
         self.strategy = strategy
         self.remove_sections = remove_sections
@@ -57,6 +59,7 @@ class ReportsParser(BaseEstimator):
         self.colName = col_name
         self.verbose = verbose
         self.stop_words = stop_words
+        self.n_jobs = n_jobs
 
     def fit(self, X, y=None):
         return self
@@ -77,29 +80,40 @@ class ReportsParser(BaseEstimator):
         if type(X) == pd.DataFrame:
             # then turn it into a Series
             X = X[self.colName]
-        res = []
-        # for i, html in X.iteritems():
-        for i, html in enumerate(X):
-            if self.headers is None:
-                # html is not structured
-                text = clean_string(BeautifulSoup(str(html),
-                                                  'html.parser').text)
-                res.append(text_normalize(text, self.stop_words, stem=False))
-            else:
-                dico = main_parser(html, i, self.verbose)
-                merged_report = reduce_dic(dico, self.remove_sections)
+        # res = []
+        # for html in X:
+        #     res.append(self.fetch_doc(html))
+        if self.n_jobs == -1:
+            pool = Pool()
+        else:
+            pool = Pool(self.n_jobs )
 
-                res.append(text_normalize(merged_report, self.stop_words,
-                                          stem=False))
+        res = pool.map(self.fetch_doc, X)
+
+        pool.close()
+        pool.join()
+
 
         ser_res = pd.Series(res) #, index=X.index)
 
-        if self.strategy == 'strings':
-            # merge tokens into a string
-            return ser_res.apply(lambda x: ' '.join(x))
-        elif self.strategy == 'tokens':
-            return ser_res
-        else:
-            return ValueError("Expected 'tokens' or 'string' in strategy")
+        return ser_res
 
+    def fetch_doc(self, html):
+        if self.headers is None:
+            # html is not structured
+            text = clean_string(BeautifulSoup(str(html),
+                                              'html.parser').text)
+            text = text_normalize(text, self.stop_words, stem=False)
+
+        # parse html split into self.headers
+        else:
+            dico = main_parser(html, self.verbose)
+            text = reduce_dic(dico, self.remove_sections)
+
+            text = text_normalize(text, self.stop_words,
+                                  stem=False)
+        if self.strategy == 'strings':
+            return ' '.join(text)
+        else:
+            return text
 

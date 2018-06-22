@@ -7,7 +7,7 @@ import numpy as np
 from numpy.testing import assert_array_equal
 from nose.tools import assert_list_equal
 from sklearn.feature_extraction.text import TfidfVectorizer
-from preprocessing.utils.unfold import transform_and_label, unfold
+from preprocessing.utils.unfold import transform_and_label, Unfolder
 from preprocessing.html_parser.parser import ReportsParser
 from sklearn.pipeline import Pipeline
 
@@ -111,7 +111,12 @@ class TestUnfold(object):
         df = self.setUp()
         df = df[df['feature'] != 'feat2']
 
-        unfolded_df = unfold(df, 'key1', 'key2', 'feature', 'value', 'date')
+        unfolder = Unfolder('key1', 'key2', 'feature', 'value', 'date')
+        unfolder.fit(df)
+
+        unfolded_df = unfolder.unfold()
+
+        # unfolded_df = unfold(df, 'key1', 'key2', 'feature', 'value', 'date')
 
         expected = {'key1': ['1', '2', '2'],
                     'key2': ['a1', 'a2', 'a2'],

@@ -8,9 +8,11 @@ import numpy as np
 import pandas as pd
 
 from scipy.sparse import csr_matrix
+from multiprocessing.pool import Pool
+from sklearn.base import BaseEstimator
 
 
-def unfold(df, key1, key2, feature, value, date):
+class Unfolder(BaseEstimator):
     """
     Takes a dataframe[key1, key2, feature, value, date] to build a matrix of
     the parameters grouped by [key1, key2, key3]
@@ -18,38 +20,60 @@ def unfold(df, key1, key2, feature, value, date):
     Parameters
     ----------
     df
-    id1
-    id2
+    key1
+    key2
     feature
     value
     date
-    target
 
     Returns
     -------
 
     """
-    df_res = df.loc[:, [key1, key2, date]]
+    def __init__(self, key1, key2, feature, value, date, n_jobs=1):
+        self.key1 = key1
+        self.key2 = key2
+        self.feature = feature
+        self.value = value
+        self.date = date
+        self.n_jobs = n_jobs
 
-    # dictionnary for aggregation
-    agg_dic = {}
+    def fit(self, df, y=None):
+        # stocking df and agg_dic for multipocessing convenience
+        self.df_ = df
 
-    for feature_name in df[feature].unique():
-        agg_dic[feature_name] = 'mean'
+    def unfold(self):
+        df_res = self.df_.loc[:, [self.key1, self.key2, self.date]]
 
+        if self.n_jobs == -1:
+            pool = Pool()
+        else:
+            pool = Pool(self.n_jobs)
+
+        unique_features = self.df_[self.feature].unique()
+        new_cols = pool.map(self.add_columns, unique_features)
+
+        df_res.reset_index(drop=True, inplace=True)
+        df_res = pd.concat([df_res] + [new_col for new_col in new_cols],
+                           axis=1)
+
+        # agregation function for group by
+        agg_dic = {key: 'mean' for key in unique_features}
+        df_grouped = df_res.groupby(by=[self.key1, self.key2, self.date],
+                                    sort=False,
+                                    as_index=False).agg(agg_dic)
+        return df_grouped
+
+    def add_columns(self, feature_name):
         new_col = []
-        for i in df.index:
-            if df.at[i, feature] == feature_name:
-                new_col.append(df.at[i, value])
+        for i in self.df_.index:
+            if self.df_.at[i, self.feature] == feature_name:
+                new_col.append(self.df_.at[i, self.value])
             else:
                 new_col.append(np.nan)
 
-        df_res.loc[:, feature_name] = new_col
+        return pd.DataFrame(new_col, columns=[feature_name])
 
-    df_grouped = df_res.groupby(by=[key1, key2, date], sort=False,
-                                as_index=False).agg(agg_dic)
-
-    return df_grouped
 
 
 def transform_and_label(df, key1, key2, date,  feature, value,

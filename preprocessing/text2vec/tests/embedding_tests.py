@@ -14,7 +14,7 @@ corpus_test = ['la programmation en python c est genial'.split(' '),
 
 #setting random seed for reproducibility
 w2v = word2vec.Word2Vec(corpus_test, size=3, seed=0, min_count=1,
-                        workers=1)
+                        workers=1).wv
 
 
 class TestEmbeddings(object):

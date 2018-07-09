@@ -13,7 +13,7 @@ def avg_document(model, document):
 
     Parameters
     ----------
-    model : word2vec.Word2Vec instance
+    model : word2vec.KeyedVectors instance
     document : list
         tokenized document to transform into a vector
 
@@ -23,8 +23,8 @@ def avg_document(model, document):
         the average of all the words in document
 
     """
-    vocab = model.wv.vocab
-    n_features = model.layer1_size
+    vocab = model.vocab
+    n_features = model.vector_size # change to model.vector_sizes
     count = 0
 
     vectors = np.zeros((n_features,), dtype='float64')

@@ -42,7 +42,7 @@ class TestVectorize(object):
         w2v_pred = embedder.w2v_
 
         assert_array_equal(w2v_true.wv.vocab.keys(), w2v_pred.wv.vocab.keys())
-        assert_array_equal(w2v_true.corpus_count, w2v_pred.corpus_count)
+        assert_array_equal(w2v_true.corpus_count, w2v_pred.syn0.shape[1])
         assert_array_equal(w2v_true.wv.vectors, w2v_pred.wv.vectors)
 
     def test_transformer(self):
@@ -61,5 +61,12 @@ class TestVectorize(object):
 
         for i, j in enumerate(true_col):
             assert_array_almost_equal(j, col_embed[i])
+
+    def test_pretrained(self):
+        embedder = self.setUp()
+        path = 'data/wiki.fr.vec'
+
+        embedder.fit_pretrained(path, limit=10)
+
 
 

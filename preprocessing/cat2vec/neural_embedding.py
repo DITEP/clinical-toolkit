@@ -6,7 +6,7 @@ that each one contains a corpus of them, allowing to process the
 concatenation of categories as text
 """
 import pandas as pd
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, KeyedVectors
 
 from ..text2vec import tools
 
@@ -75,7 +75,7 @@ class NeuralVectorizer(object):
                              window=self.window,
                              min_count=self.min_count,
                              sg=self.sg,
-                             seed=self.seed)
+                             seed=self.seed).wv
         return self
 
     def transform(self, X, y=None):
@@ -98,3 +98,23 @@ class NeuralVectorizer(object):
         X[self.cat_col + '_embedded'] = vectors
 
         return X
+
+    def fit_pretrained(self, path, **kwargs):
+        """
+        fits model using pretrained word embedding from
+        https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md
+
+
+        Parameters
+        ----------
+        path : str
+            path do wiki.lg.vec file
+
+        Returns
+        -------
+
+        """
+        self.w2v_ = KeyedVectors.load_word2vec_format(path, **kwargs)
+
+        return self
+

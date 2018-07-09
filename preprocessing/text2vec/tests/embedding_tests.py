@@ -5,6 +5,7 @@ import numpy as np
 
 from numpy.testing import assert_array_almost_equal
 from preprocessing.text2vec import tools
+from preprocessing.text2vec.transformers import AverageWords2Vector
 from gensim.models import word2vec
 
 
@@ -20,6 +21,28 @@ w2v = word2vec.Word2Vec(corpus_test, size=3, seed=0, min_count=1,
 class TestEmbeddings(object):
     def setUp(self):
         pass
+
+    # def test_avg_w2v_object(self):
+    #     avg_w2v = AverageWords2Vector(n_components=3)
+    #     avg_w2v.fit(corpus_test, min_count=0)
+    #
+    #     docs_res = avg_w2v.transform(corpus_test)
+    #
+    #     expected1 = np.mean([w2v['omelette'],
+    #                         w2v['au']], axis=0)
+    #     expected2 = np.mean([w2v['la'],
+    #                          w2v['programmation'],
+    #                          w2v['en'],
+    #                          w2v['c'],
+    #                          w2v['est']], axis=0)
+    #     expected3 = np.mean([w2v['c'],
+    #                          w2v['est'],
+    #                          w2v['genial']], axis=0)
+    #
+    #     assert_array_almost_equal(expected1, docs_res[0])
+    #     assert_array_almost_equal(expected2, docs_res[1])
+    #     assert_array_almost_equal(expected3, docs_res[2])
+
 
     def test_avg_doc(self):
         doc1 = 'omelette au champignon'.split(' ')

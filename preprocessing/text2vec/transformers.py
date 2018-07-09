@@ -81,6 +81,7 @@ class AverageWords2Vector(BaseEstimator):
     def __init__(self,
                  n_components=128):
         self.n_components = n_components
+        self.w2v_ = None
 
     def fit(self, parsed_reports, y=None, **kwargs):
         """ Trains the word2vec model with given corpus
@@ -88,7 +89,7 @@ class AverageWords2Vector(BaseEstimator):
 
         Parameters
         ----------
-        parsed_reports : iterable of ierables
+        parsed_reports : iterable of iterables
             contains parsed tokenized reports
 
         y : None
@@ -96,9 +97,8 @@ class AverageWords2Vector(BaseEstimator):
         Returns
         -------
         """
-        self.w2v_model_ = Word2Vec(parsed_reports,
-                                   size=self.n_components,
-                                   **kwargs)
+        self.w2v_ = Word2Vec(parsed_reports, size=self.n_components,
+                             **kwargs).wv
         return self
 
     def transform(self, parsed_reports):
@@ -113,4 +113,19 @@ class AverageWords2Vector(BaseEstimator):
         -------
 
         """
-        return avg_corpus(self.w2v_model_, parsed_reports)
+        return avg_corpus(self.w2v_, parsed_reports)
+
+    def fit_pretrained(self, path):
+        """ fits a pretrained model from
+        
+
+        Parameters
+        ----------
+        path : str
+            path to the model
+
+        Returns
+        -------
+
+        """
+

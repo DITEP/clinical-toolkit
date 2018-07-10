@@ -20,6 +20,7 @@ class Text2Vector(BaseEstimator):
         self.n_components = n_components
         self.dm = dm
         self.window = window
+        self.d2v_model_ = None
 
     def fit(self, reports, y=None, **kwargs):
         """ tags reports (for gensim's model consistence) and trains Doc2Vec

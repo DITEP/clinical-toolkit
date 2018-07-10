@@ -68,12 +68,20 @@ def text_normalize(text, stop_words, stem=False):
     stop words removal, lemmatization etc...
 
     stemming for french not accurate enough yet
-    @TODO lemmatization for french
+    @TODO lemmatization for french + adapt stemmer for other languages
 
     Parameters
     ----------
     text: string
         text to normalize
+    
+    stop_words : list
+        list of additionnal stopwords to remove from the text
+    
+    stem : bool
+        if True, stems the words to fetch the meaning of the words
+        However, this functionality does not perform well with french
+
 
     Returns
     -------

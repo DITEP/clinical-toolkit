@@ -14,11 +14,10 @@ key1 | key2 | feature_name | value | date
 """
 import pandas as pd
 
-from sklearn.base import BaseEstimator
 from multiprocessing.pool import Pool
 
 
-class Folder(BaseEstimator):
+class Folder:
     """  This object enables "unfolding" the features of a DataFrame, 
     which means for a df that has 5 feature columns for instance, 
     the unfolding would result in two feature columns: one is for the feature 
@@ -40,6 +39,11 @@ class Folder(BaseEstimator):
     date : str
         name of the date column,
 
+    n_jobs : int
+        number of CPUs to use for computation. If -1, all the available cores
+        are used
+
+
 
     """
     def __init__(self, key1, key2, features, date, n_jobs=1):
@@ -49,10 +53,7 @@ class Folder(BaseEstimator):
         self.date = date
         self.n_jobs = n_jobs
 
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, df_base, y=None):
+    def fold(self, df_base, y=None):
         """ 
 
         Parameters
@@ -68,8 +69,6 @@ class Folder(BaseEstimator):
         the features names and values are the values.
 
         """
-        # df_res = pd.DataFrame(None, columns=[self.key1, self.key2, 'feature',
-        #                                      'value', 'date'])
         columns = [self.key1, self.key2, 'feature', 'value', 'date']
         if self.n_jobs == -1:
             pool = Pool()
@@ -99,7 +98,7 @@ class Folder(BaseEstimator):
 
 
     def fold_several_features(self, row):
-        # fetching value of the row, droping index
+        # fetching value of the row, dropping index
         _, row = row
         dico = {self.key1: [], self.key2: [], 'feature': [],
                 'value': [], 'date': []}
@@ -123,6 +122,3 @@ class Folder(BaseEstimator):
                 'date': row[self.date]}
 
         return dico
-
-
-

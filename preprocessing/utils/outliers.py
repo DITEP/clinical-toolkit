@@ -28,7 +28,7 @@ class OutlierRemover(object):
 
     # for sklearn pipeline compatibility
     def fit(self, X, y=None):
-        return X
+        return self
 
     def transform(self, X, y=None):
         return impute_df(X, self.path, self.inplace)
@@ -87,7 +87,7 @@ def impute_df(df, dic_path, inplace):
         limits to consider point as outlier and optionnal third value is the
         imputing value
 
-    inline : bool
+    inplace  : bool
         if True, performs the transformation inline
     Returns
     -------
@@ -128,7 +128,3 @@ def impute_df(df, dic_path, inplace):
         df[col] = series_clean
 
     return df
-
-
-
-

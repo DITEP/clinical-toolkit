@@ -28,6 +28,7 @@ df = pd.DataFrame(values, columns=['key1', 'key2', 'feat1', 'feat2', 'feat3',
 2    2   a2     3     4     5   2017-03-01
 """
 
+
 class TestFolder(object):
     def setUp(self):
 
@@ -39,7 +40,7 @@ class TestFolder(object):
         unfold = Folder('key1', 'key2', ['feat1', 'feat2', 'feat3'],
                           'event_date')
 
-        df_res = unfold.transform(df_base)
+        df_res = unfold.fold(df_base)
 
         dico_expected = {'key1': ['1', '1', '1', '2', '2', '2', '2', '2', '2'],
                          'key2': ['a1', 'a1', 'a1', 'a2', 'a2', 'a2', 'a2',
@@ -61,7 +62,7 @@ class TestFolder(object):
 
         unfold = Folder('key1', 'key2', ['feat1'], 'event_date')
 
-        df_res = unfold.transform(df_base)
+        df_res = unfold.fold(df_base)
 
         df_expected = pd.DataFrame({'key1': ['1', '2', '2'],
                                     'key2': ['a1', 'a2', 'a2'],

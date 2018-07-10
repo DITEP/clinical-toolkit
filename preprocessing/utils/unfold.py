@@ -2,7 +2,7 @@
 unfolds merges dataframes into a big feature matrix 
 All the features are labeled with a date and two keys for identification
 
-
+Better explainations and schemas can be found on the repo wiki
 """
 import numpy as np
 import pandas as pd
@@ -15,19 +15,33 @@ from sklearn.base import BaseEstimator
 class Unfolder(BaseEstimator):
     """
     Takes a dataframe[key1, key2, feature, value, date] to build a matrix of
-    the parameters grouped by [key1, key2, key3]
+    the parameters grouped by [key1, key2, date]
+
+    This object is to be used after a timeframe of the feature has been build to
+    group them into a feature matrix.
+    The idea is to facilitate the data preparation for a sequential learning
+    task.
 
     Parameters
     ----------
-    df
-    key1
-    key2
-    feature
-    value
-    date
+    key1 : str
+        primary key
 
-    Returns
-    -------
+    key2 : str
+        secondary key
+
+    feature : str
+        name of the feature
+
+    value : float
+        value of the feature `feature`
+
+    date : datetime
+        date at which `feature` was measured
+
+    n_jobs : int
+        number of CPUs to use for computation. If -1, all the available cores
+        are used
 
     """
     def __init__(self, key1, key2, feature, value, date, n_jobs=1):
@@ -37,12 +51,34 @@ class Unfolder(BaseEstimator):
         self.value = value
         self.date = date
         self.n_jobs = n_jobs
+        self.df_ = None
 
-    def fit(self, df, y=None):
-        # stocking df and agg_dic for multipocessing convenience
+    def fit(self, df):
+        """  saves dataframe for multiprocessing convenience
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+
+        Returns
+        -------
+        self
+
+        """
         self.df_ = df
+        return self
+
 
     def unfold(self):
+        """ performs the unfolding transformation
+
+        Returns
+        -------
+        pandas.DataFrame
+            The dataframe that contains the added feature columns
+            Rows are ordered by [key1, key2, date] for convenience
+
+        """
         df_res = self.df_.loc[:, [self.key1, self.key2, self.date]]
 
         if self.n_jobs == -1:
@@ -57,7 +93,7 @@ class Unfolder(BaseEstimator):
         df_res = pd.concat([df_res] + [new_col for new_col in new_cols],
                            axis=1)
 
-        # agregation function for group by
+        # aggregation function for group by
         agg_dic = {key: 'mean' for key in unique_features}
         df_grouped = df_res.groupby(by=[self.key1, self.key2, self.date],
                                     sort=False,
@@ -65,6 +101,22 @@ class Unfolder(BaseEstimator):
         return df_grouped
 
     def add_columns(self, feature_name):
+        """ adds a column of a given feature
+
+        This auxiliary function is to ease the use of multiprocess.pool.Pool
+
+        Parameters
+        ----------
+        feature_name : str
+            name of the feature we are adding to the dataframe
+
+        Returns
+        -------
+        pandas.DataFrame
+            contains a single column `feature_name` that contains values
+            or NaN depending on the presence of the feature for each row
+
+        """
         new_col = []
         for i in self.df_.index:
             if self.df_.at[i, self.feature] == feature_name:
@@ -75,9 +127,9 @@ class Unfolder(BaseEstimator):
         return pd.DataFrame(new_col, columns=[feature_name])
 
 
-
 def transform_and_label(df, key1, key2, date,  feature, value,
-                        estimator, **kwargs):
+                        estimator, return_estimator=False,
+                        **kwargs):
     """ Takes dataframe as input, applies transformation on value column and
     returns  df with a new columns of the transformed feature
 
@@ -96,10 +148,12 @@ def transform_and_label(df, key1, key2, date,  feature, value,
     value : str
         features values column
 
-
     estimator : sklearn.BaseEstimator
         sklearn compatible transformer that implements .fit() and
-        .transform() methods
+        .fold() methods
+
+    return_estimator : bool
+        if true, returns the trained estimator
 
     **kwargs : additional keyword arguments for estimator object
 
@@ -136,9 +190,7 @@ def transform_and_label(df, key1, key2, date,  feature, value,
 
             df_res = df_res.append(row, ignore_index=True)
 
-    return df_res
-
-
-
-
-
+    if return_estimator:
+        return df_res, estimator
+    else:
+        return df_res

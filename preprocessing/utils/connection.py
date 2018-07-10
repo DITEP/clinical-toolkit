@@ -10,7 +10,7 @@ from getpass import getpass
 
 def sql2df(engine, table):
     """ Builds a DataFrame using a table from the
-    database to which engin is connected
+    database to which engine is connected
 
     Parameters
     ----------
@@ -43,7 +43,7 @@ def get_engine(user, ip, db, use_password='yes', driver='pymysql'):
         ip adress of the sql server
     db : str
         name of the database
-    use_password : str, {'yes', 'no'}, default='yes
+            use_password : str, {'yes', 'no'}, default='yes
         'yes' to use a password to connect, if 'yes', the
         password will have to be entered in the terminal
 

@@ -6,8 +6,8 @@ object classes for sklearn pipeline compatibility
 import numpy as np
 
 from .tools import avg_corpus
-from gensim.models.word2vec import Word2Vec
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
+from gensim.models import KeyedVectors, Word2Vec, Doc2Vec
+from gensim.models.doc2vec import TaggedDocument
 from sklearn.base import BaseEstimator
 
 
@@ -65,7 +65,7 @@ class Text2Vector(BaseEstimator):
 
 
 class AverageWords2Vector(BaseEstimator):
-    """ trains a unsupervised word2vec model, and then transform
+    """ trains a unsupervised word2vec model, and then fold
     text data according to it
     This function is only for convenience in using word2vec in a pipeline
 
@@ -115,9 +115,9 @@ class AverageWords2Vector(BaseEstimator):
         """
         return avg_corpus(self.w2v_, parsed_reports)
 
-    def fit_pretrained(self, path):
+    def fit_pretrained(self, path, **kwargs):
         """ fits a pretrained model from
-        
+        https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md
 
         Parameters
         ----------
@@ -128,4 +128,6 @@ class AverageWords2Vector(BaseEstimator):
         -------
 
         """
+        self.w2v_ = KeyedVectors.load_word2vec_format(path, **kwargs)
 
+        return self

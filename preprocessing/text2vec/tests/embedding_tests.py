@@ -26,7 +26,7 @@ class TestEmbeddings(object):
     #     avg_w2v = AverageWords2Vector(n_components=3)
     #     avg_w2v.fit(corpus_test, min_count=0)
     #
-    #     docs_res = avg_w2v.transform(corpus_test)
+    #     docs_res = avg_w2v.fold(corpus_test)
     #
     #     expected1 = np.mean([w2v['omelette'],
     #                         w2v['au']], axis=0)

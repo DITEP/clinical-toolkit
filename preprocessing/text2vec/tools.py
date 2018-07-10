@@ -15,7 +15,7 @@ def avg_document(model, document):
     ----------
     model : word2vec.KeyedVectors instance
     document : list
-        tokenized document to transform into a vector
+        tokenized document to fold into a vector
 
     Returns
     -------

@@ -1,6 +1,5 @@
 """
-script to test functions in preprocessing.text2vec.transform
-@TODO check sklearn api consistency
+script to test functions in preprocessing.text2vec.fold
 """
 import preprocessing.text2vec.tools
 from nose.tools import assert_list_equal
@@ -18,12 +17,3 @@ class TestTransform(object):
         expected = ['alfred', 'voisin', 'rose', 'tâches']
 
         assert_list_equal(expected, res)
-
-   
-
-
-
-
-
-
-

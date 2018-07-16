@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>preprocessing.cat2vec package &mdash; processing-toolbox 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="preprocessing.html_parser package" href="preprocessing.html_parser.html" />
+    <link rel="prev" title="preprocessing package" href="preprocessing.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> processing-toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">preprocessing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">preprocessing.cat2vec package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.html_parser.html">preprocessing.html_parser package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.text2vec.html">preprocessing.text2vec package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.utils.html">preprocessing.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">processing-toolbox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">preprocessing</a> &raquo;</li>
+        
+          <li><a href="preprocessing.html">preprocessing package</a> &raquo;</li>
+        
+      <li>preprocessing.cat2vec package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/preprocessing.cat2vec.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="preprocessing-cat2vec-package">
+<h1>preprocessing.cat2vec package<a class="headerlink" href="#preprocessing-cat2vec-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-preprocessing.cat2vec.feature_selection">
+<span id="preprocessing-cat2vec-feature-selection-module"></span><h2>preprocessing.cat2vec.feature_selection module<a class="headerlink" href="#module-preprocessing.cat2vec.feature_selection" title="Permalink to this headline">¶</a></h2>
+<p>selects parameters with L1 logistic regression</p>
+<dl class="class">
+<dt id="preprocessing.cat2vec.feature_selection.LassoSelector">
+<em class="property">class </em><code class="descclassname">preprocessing.cat2vec.feature_selection.</code><code class="descname">LassoSelector</code><span class="sig-paren">(</span><em>lasso_coefs</em>, <em>feature_col</em>, <em>coef_col</em>, <em>n_features=64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/feature_selection.html#LassoSelector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.feature_selection.LassoSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<p>This class is made to be used after cat2vec.lasso_gridsearch since it
+selects the features from a dataframe that have the most weighted
+coefficients (according to a L1-penalized linear model)</p>
+<p>It inherits from sklearn.base.BaseEstimator to allow gridsearching the
+best <cite>n_features</cite> using a pipeline and a basline classifier</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_features</strong> (<em>int</em>) – number of top features to keep</li>
+<li><strong>lasso_coefs</strong> (<em>pd.DataFrame</em>) – each row is the name of a category and its coef weight in LASSO
+model</li>
+<li><strong>feature_col</strong> (<em>str</em>) – name of the feature col (ie name of the categorical variable)</li>
+<li><strong>coef_col</strong> (<em>str</em>) – name of the column of the LASSO coefficients in lasso_coefs dataframe</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>                 <span class="s1">&#39;colnames&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;feat1&#39;</span><span class="p">,</span> <span class="s1">&#39;feat2&#39;</span><span class="p">,</span> <span class="s1">&#39;feat3&#39;</span><span class="p">,</span> <span class="s1">&#39;feat4&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dico</span><span class="p">)</span>
+<span class="go">keeps only feat2 and feat3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span> <span class="o">=</span> <span class="n">LassoSelector</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;colnames&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;coef&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">[[0, 1], [1, 0], [1, 0]]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="preprocessing.cat2vec.feature_selection.LassoSelector.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/feature_selection.html#LassoSelector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.feature_selection.LassoSelector.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.cat2vec.feature_selection.LassoSelector.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/feature_selection.html#LassoSelector.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.feature_selection.LassoSelector.transform" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>pd.DataFrame</em>) – contains only features</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">contains the best n_features</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.cat2vec.lasso_gridsearch">
+<span id="preprocessing-cat2vec-lasso-gridsearch-module"></span><h2>preprocessing.cat2vec.lasso_gridsearch module<a class="headerlink" href="#module-preprocessing.cat2vec.lasso_gridsearch" title="Permalink to this headline">¶</a></h2>
+<p>The objective of this script is to select the best categories of a high
+cardinality categorical feature using LASSO penalization.</p>
+<p>For the moment only binary/continuous logistic regression is implemented</p>
+<p>&gt;&gt; reload_ext autoreload
+&gt;&gt; autoreload 2</p>
+<dl class="function">
+<dt id="preprocessing.cat2vec.lasso_gridsearch.lr_coefficients">
+<code class="descclassname">preprocessing.cat2vec.lasso_gridsearch.</code><code class="descname">lr_coefficients</code><span class="sig-paren">(</span><em>path</em>, <em>features</em>, <em>targets</em>, <em>key</em>, <em>output_path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/lasso_gridsearch.html#lr_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.lasso_gridsearch.lr_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs categorical variable selection using L1-penalized logistic
+regression model</p>
+<p>It only supports binary or continuous target for the moment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) – input path or url for the dataframe</li>
+<li><strong>features</strong> (<em>str</em>) – column name of the categorical column</li>
+<li><strong>targets</strong> (<em>str</em>) – name of the target column in the df</li>
+<li><strong>key</strong> (<em>str</em>) – key to group categorical variables</li>
+<li><strong>output_path</strong> (<em>str</em>) – path to save the coefficients in a csv file</li>
+<li><strong>kwargs</strong> – keyword arguments for the hyperparameter grid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>array</em></li>
+<li><em>the coefficients of the L1-logistic regression</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lr_coefficients</span><span class="p">(</span><span class="s1">&#39;input.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;medication_name&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span>     <span class="n">solver</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;saga&#39;</span><span class="p">],</span> <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.cat2vec.neural_embedding">
+<span id="preprocessing-cat2vec-neural-embedding-module"></span><h2>preprocessing.cat2vec.neural_embedding module<a class="headerlink" href="#module-preprocessing.cat2vec.neural_embedding" title="Permalink to this headline">¶</a></h2>
+<p>Embedding of high cardinality categorical variables using Wod2Vec</p>
+<p>Embeding is done in two parts: first we group the categories by patient so
+that each one contains a corpus of them, allowing to process the
+concatenation of categories as text</p>
+<dl class="class">
+<dt id="preprocessing.cat2vec.neural_embedding.NeuralVectorizer">
+<em class="property">class </em><code class="descclassname">preprocessing.cat2vec.neural_embedding.</code><code class="descname">NeuralVectorizer</code><span class="sig-paren">(</span><em>group_key</em>, <em>category_col</em>, <em>size=128</em>, <em>min_count=1</em>, <em>sg=1</em>, <em>window=3</em>, <em>strategy='tokens'</em>, <em>seed=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralVectorizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>group_key</strong> (<em>str</em>) – name of the column to group</li>
+<li><strong>category_col</strong> (<em>str</em>) – name of the column containing the categorical variables</li>
+<li><strong>size</strong> (<em>int, default=128</em>) – dimension of the embedding vector</li>
+<li><strong>min_count</strong> (<em>int, default=1</em>) – minimum amount of instances to integrate it to the model</li>
+<li><strong>sg</strong> (<em>int {0, 1}, default=1</em>) – 0 for skip-gram word2vec model
+1 for CBOW (best suited for small datasets)</li>
+<li><strong>window</strong> (<em>int, default=3</em>) – size of the context</li>
+<li><strong>strategy</strong> (<em>str {‘tokens’, ‘strings’}, default=’tokens’</em>) – if ‘tokens’, categories containing several words are split
+else, each category is considered as a word</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralVectorizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>fits the model by grouping categories by group_key in order to
+embed categories as text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>pd.DataFrame</em>)</li>
+<li><strong>y</strong></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit_pretrained">
+<code class="descname">fit_pretrained</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralVectorizer.fit_pretrained"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit_pretrained" title="Permalink to this definition">¶</a></dt>
+<dd><p>fits model using pretrained word embedding from
+<a class="reference external" href="https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md">https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – path do wiki.lg.vec file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.cat2vec.neural_embedding.NeuralVectorizer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralVectorizer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>pd.DataFrame</em>)</li>
+<li><strong>y</strong> (<em>None</em>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.cat2vec.tools">
+<span id="preprocessing-cat2vec-tools-module"></span><h2>preprocessing.cat2vec.tools module<a class="headerlink" href="#module-preprocessing.cat2vec.tools" title="Permalink to this headline">¶</a></h2>
+<p>sample script for categorical encoding</p>
+<dl class="function">
+<dt id="preprocessing.cat2vec.tools.normalize_cat">
+<code class="descclassname">preprocessing.cat2vec.tools.</code><code class="descname">normalize_cat</code><span class="sig-paren">(</span><em>X</em>, <em>strat='tokens'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/tools.html#normalize_cat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.tools.normalize_cat" title="Permalink to this definition">¶</a></dt>
+<dd><p>normalize categories in a</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>iterable</em>)</li>
+<li><strong>strat</strong> (<em>str, (‘tokens’, ‘strings’), default=’tokens”</em>) – if ‘tokens’, words in a category are kept split (use this for embedding
+categories by a nlp aproach)
+if ‘strings’, each category is considered as a single word</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">same size as input, each entry corresponding to the normalized
+category name</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.Series</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.cat2vec">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-preprocessing.cat2vec" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="preprocessing.html_parser.html" class="btn btn-neutral float-right" title="preprocessing.html_parser package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preprocessing.html" class="btn btn-neutral" title="preprocessing package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Valentin Charvet.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>preprocessing.text2vec package &mdash; processing-toolbox 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="preprocessing.utils package" href="preprocessing.utils.html" />
+    <link rel="prev" title="preprocessing.html_parser.tests package" href="preprocessing.html_parser.tests.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> processing-toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">preprocessing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.cat2vec.html">preprocessing.cat2vec package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.html_parser.html">preprocessing.html_parser package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">preprocessing.text2vec package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.utils.html">preprocessing.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">processing-toolbox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">preprocessing</a> &raquo;</li>
+        
+          <li><a href="preprocessing.html">preprocessing package</a> &raquo;</li>
+        
+      <li>preprocessing.text2vec package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/preprocessing.text2vec.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="preprocessing-text2vec-package">
+<h1>preprocessing.text2vec package<a class="headerlink" href="#preprocessing-text2vec-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-preprocessing.text2vec.tools">
+<span id="preprocessing-text2vec-tools-module"></span><h2>preprocessing.text2vec.tools module<a class="headerlink" href="#module-preprocessing.text2vec.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="preprocessing.text2vec.tools.avg_corpus">
+<code class="descclassname">preprocessing.text2vec.tools.</code><code class="descname">avg_corpus</code><span class="sig-paren">(</span><em>model</em>, <em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/tools.html#avg_corpus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.tools.avg_corpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>computes average vector for each document of the corpus</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>gensim.word2vec.Word2Vec instance</em>) – Trained word2vec model</li>
+<li><strong>corpus</strong> (<em>iterable of iterables</em>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="preprocessing.text2vec.tools.avg_document">
+<code class="descclassname">preprocessing.text2vec.tools.</code><code class="descname">avg_document</code><span class="sig-paren">(</span><em>model</em>, <em>document</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/tools.html#avg_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.tools.avg_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>computes the average vector of the words in document
+in the word2vec model space</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<em>word2vec.KeyedVectors instance</em>)</li>
+<li><strong>document</strong> (<em>list</em>) – tokenized document to fold into a vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>avg</strong> – the average of all the words in document</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="preprocessing.text2vec.tools.text_normalize">
+<code class="descclassname">preprocessing.text2vec.tools.</code><code class="descname">text_normalize</code><span class="sig-paren">(</span><em>text</em>, <em>stop_words</em>, <em>stem=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/tools.html#text_normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.tools.text_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions performs the preprocessing steps
+needed to optimize the vectorization, such as normalization
+stop words removal, lemmatization etc…</p>
+<p>stemming for french not accurate enough yet
+&#64;TODO lemmatization for french + adapt stemmer for other languages</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>string</em>) – text to normalize</li>
+<li><strong>stop_words</strong> (<em>list</em>) – list of additionnal stopwords to remove from the text</li>
+<li><strong>stem</strong> (<em>bool</em>) – if True, stems the words to fetch the meaning of the words
+However, this functionality does not perform well with french</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">same text as input but cleansed and normalized</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.text2vec.transformers">
+<span id="preprocessing-text2vec-transformers-module"></span><h2>preprocessing.text2vec.transformers module<a class="headerlink" href="#module-preprocessing.text2vec.transformers" title="Permalink to this headline">¶</a></h2>
+<p>object classes for sklearn pipeline compatibility</p>
+<dl class="class">
+<dt id="preprocessing.text2vec.transformers.AverageWords2Vector">
+<em class="property">class </em><code class="descclassname">preprocessing.text2vec.transformers.</code><code class="descname">AverageWords2Vector</code><span class="sig-paren">(</span><em>n_components=128</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<p>trains a unsupervised word2vec model, and then fold
+text data according to it
+This function is only for convenience in using word2vec in a pipeline</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_components</strong> (<em>int, default=128</em>) – dimension of the embedding vector</li>
+<li><strong>kwargs</strong></li>
+<li><strong>additionnal arguments to pass to gensim.Word2Vec (see appropriate</strong></li>
+<li><strong>documentation for details)</strong></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>parsed_reports</em>, <em>y=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the word2vec model with given corpus
+as input</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parsed_reports</strong> (<em>iterable of iterables</em>) – contains parsed tokenized reports</li>
+<li><strong>y</strong> (<em>None</em>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained">
+<code class="descname">fit_pretrained</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.fit_pretrained"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained" title="Permalink to this definition">¶</a></dt>
+<dd><p>fits a pretrained model from
+<a class="reference external" href="https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md">https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – path to the model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>parsed_reports</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns the documents into vector by averaging
+over all the words</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parsed_reports</strong> (<em>iterable of iterables</em>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="preprocessing.text2vec.transformers.Text2Vector">
+<em class="property">class </em><code class="descclassname">preprocessing.text2vec.transformers.</code><code class="descname">Text2Vector</code><span class="sig-paren">(</span><em>n_components=128</em>, <em>dm=1</em>, <em>window=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<p>implementation of Doc2Vec model adapted to sklearn for
+hyperparameters tuning</p>
+<dl class="method">
+<dt id="preprocessing.text2vec.transformers.Text2Vector.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>reports</em>, <em>y=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>tags reports (for gensim’s model consistence) and trains Doc2Vec
+model on the corpus</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reports</strong> (<em>iterable of iterables</em>) – list of tokenized reports</li>
+<li><strong>y</strong> (<em>not used, default=None</em>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.text2vec.transformers.Text2Vector.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>reports</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>transforms reports in embedding space based on previously trained
+Doc2Vec model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reports</strong> (<em>iterable of iterables</em>) – list of tokenized reports</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vectorized reports</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-preprocessing.text2vec">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-preprocessing.text2vec" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="preprocessing.utils.html" class="btn btn-neutral float-right" title="preprocessing.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preprocessing.html_parser.tests.html" class="btn btn-neutral" title="preprocessing.html_parser.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Valentin Charvet.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

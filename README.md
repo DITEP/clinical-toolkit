@@ -4,7 +4,7 @@ This repository contains scripts to preprocess a clinical database. It notably
 includes functions to process medical text reports, and feature selection on 
 high cardinality categorical features (eg: for medication names).
 
-Many of the scrits rely on scikit-learn API
+Many of the scripts rely on scikit-learn API
 
 
 Disclaimer: This repository has not yet been tested for different databases,
@@ -17,6 +17,13 @@ this <i>toolbox</i>.
 ## Installation
 The package is not available on PyPI so you need to install it from source.
 
+```bash
+$ git clone https://github.com/DITEP/processing-toolbox.git
+$ cd preprocessing-toolbox
+$ pip install -r requirements.txt
+$ pip install . 
+```
+You should then run the tests to check the consistency of the installation (see subsection <b> Testing </b>)
 
 
 
@@ -39,7 +46,7 @@ Python 2 has not been tested. Windows support has not yet been tested
 * Unidecode==1.0.22
 
 
-###  Tesing
+###  Testing
 Unit testing is performed using [nose](http://nose.readthedocs.io/en/latest/)
 library which is both efficient and easy to use. 
 However good, Nose is now in maintenance mode and the migration to another testing framework will probably be necessary 
@@ -48,7 +55,7 @@ in later development.
 To launch the tests of a particular module:
 ```bash
 $ cd path/to/module
-$ nosetests tests # tests is a the test directory name
+$ nosetests tests # tests is directory that contains the tests scripts
 
 ........
 ----------------------------------------------------------------------
@@ -70,10 +77,6 @@ OK
 
 
 
-
-
-
-
 ## References
 
 
@@ -81,3 +84,4 @@ OK
 ## TODO
 * sphinx documentation
 * example notebooks
+* contributing guidelines

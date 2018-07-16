@@ -82,6 +82,6 @@ OK
 
 
 ## TODO
-* sphinx documentation
+* sphinx documentation --> remove spinx from venv nd install it for base interpreter
 * example notebooks
 * contributing guidelines

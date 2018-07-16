@@ -30,7 +30,7 @@ class LassoSelector(BaseEstimator):
     coef_col : str
         name of the column of the LASSO coefficients in lasso_coefs dataframe
 
-    Examples      -
+    Examples
     --------
     >>> dico = {'coef': [0, 4.5, 1.2, 0.3], \
                 'colnames': ['feat1', 'feat2', 'feat3', 'feat4']}

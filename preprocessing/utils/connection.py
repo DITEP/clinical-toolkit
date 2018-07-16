@@ -43,7 +43,8 @@ def get_engine(user, ip, db, use_password='yes', driver='pymysql'):
         ip adress of the sql server
     db : str
         name of the database
-            use_password : str, {'yes', 'no'}, default='yes
+
+    use_password : str, {'yes', 'no'}, default='yes
         'yes' to use a password to connect, if 'yes', the
         password will have to be entered in the terminal
 

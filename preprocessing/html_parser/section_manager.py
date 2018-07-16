@@ -30,8 +30,8 @@ def main_splitter(df, columns= ['patient_id', 'date', 'cycle', 'section', 'text'
 
 
 def splitter(patient_id, date, cycle, report_dict):
-    """    splits the report into the number of keys in
-        report_dict
+    """ splits the report into the number of keys in report_dict
+    
     Parameters
     ----------
     patient_id

@@ -32,7 +32,7 @@ class ReportsParser(BaseEstimator):
     remove_tags : list, default=['h4', 'table', 'link', 'style']
         list of tags to remove from html  page
 
-    headers : string, default='h3
+    headers : str or None, default='h3
         name of the html tag that delimits the sections in the page
 
     stop_words : list, default=[]

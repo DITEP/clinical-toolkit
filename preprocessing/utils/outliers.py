@@ -99,9 +99,9 @@ def impute_df(df, dic_path, inplace):
         df = df[::]
     dic = {}
 
-    with open(dic_path, 'r') as f:
+    with open(dic_path, 'r') as f: # add encoding?
         for line in f:
-            # print(line)
+            print(line, type(line))
             key_values = line.split()
             try:
                 dic[key_values[0]] = (float(key_values[1]),
@@ -112,19 +112,22 @@ def impute_df(df, dic_path, inplace):
                                       float(key_values[2]))
     print(dic)
     for col in dic:
-        series = df[col]
-        try:
-            series_clean = impute_col(series,
-                                      dic[col][0],
-                                      dic[col][1],
-                                      dic[col][2])
-        except IndexError:
-            print("Default value not passed - using mean")
-            series_clean = impute_col(series,
-                                      dic[col][0],
-                                      dic[col][1],
-                                      None)
+        if col in list(df.columns):
+            series = df[col]
+            try:
+                series_clean = impute_col(series,
+                                          dic[col][0],
+                                          dic[col][1],
+                                          dic[col][2])
+            except IndexError:
+                print("Default value not passed - using mean")
+                series_clean = impute_col(series,
+                                          dic[col][0],
+                                          dic[col][1],
+                                          None)
+            df[col] = series_clean
 
-        df[col] = series_clean
+        else:
+            pass
 
     return df

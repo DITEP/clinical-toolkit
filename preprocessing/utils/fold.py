@@ -53,20 +53,18 @@ class Folder:
         self.date = date
         self.n_jobs = n_jobs
 
-    def fold(self, df_base, y=None):
+    def fold(self, df_base):
         """ 
 
         Parameters
         ----------
         df_base : pandas DataFrame
         
-        y : None
-
         Returns
         -------
         pandas.DataFrame
-        columns are [key1, key2, feature, value, date] where feature contains
-        the features names and values are the values.
+            columns are [key1, key2, feature, value, date] where feature
+            contains the features names and values are the values.
 
         """
         columns = [self.key1, self.key2, 'feature', 'value', 'date']

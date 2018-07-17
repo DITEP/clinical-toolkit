@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>processing-toolbox &mdash; processing-toolbox 0.1 documentation</title>
+  <title>Quickstart &mdash; processing-toolbox 0.1 documentation</title>
   
 
   
@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="preprocessing" href="modules.html" />
-    <link rel="prev" title="Welcome to processing-toolbox’s documentation!" href="index.html" /> 
+    <link rel="prev" title="processing-toolbox" href="README.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -77,10 +77,9 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">processing-toolbox</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#development">Development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">preprocessing</a></li>
@@ -129,13 +128,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>processing-toolbox</li>
+      <li>Quickstart</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -148,28 +147,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="processing-toolbox">
-<h1>processing-toolbox<a class="headerlink" href="#processing-toolbox" title="Permalink to this headline">¶</a></h1>
-<p>processing-toolbox is a machine learning python API designed for clinical data
-processing.
-The objective of this repository to gather in a same API useful tools for such
-tasks rather than implementing new specific algorithms. That is the reason why
-it relies on many widely used APIs such as <a class="reference external" href="http://scikit-learn.org">scikit-learn</a>
-or gensim &lt;<a class="reference external" href="https://radimrehurek.com/gensim/index.html">https://radimrehurek.com/gensim/index.html</a>&gt;`_.</p>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="instructions">
-<h3>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="development">
-<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This page introduces the basic concepts related to data analysis and processing
+for clinical databases. The API has been originally developed for various
+machine learning tasks in a context of early drug development for cancer, but it
+is intended to be flexible and adaptable for other similar problematics.</p>
+<p>The objective of the API is to make available the tools needed to solve the issues
+raised by the complexity of Electronic Health Records (EHR), that will be
+introduced in <a class="reference external" href="Duringthelastdecade,therehasbeentremendousprogressinthefieldofofmachinelearningwhichhasbeenconductedbytheavailabilityofmassiveamountsofdataandthethrivingpowerofcomputers.Thoseprogresshaveimpacteddomainssuchascomputervision,speechrecognitionandmanyothers.Morerecently,researchershavestartedtoapplythisknowledgeonhealthcare,givenclinicaldatafromhospitalsorotherportabledevicesandthatiswhatwearefocusingthisAPIon.">intro</a> .</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The usage of EHR has been widely adopted around the earth, which has led
+doctors and statisticians to mine them to improve the care of patients.
+However, medical health records are very difficult to tackle since they contain
+all the difficulties that exist in data analysis:
+* <strong>sparcity</strong>
+* <strong>high cardinality categorical features</strong>
+* <strong>unstructured data</strong> (text, images)
+* <strong>temporality of the events</strong></p>
+<p>All those issues make it hard to initiate a machine learning project using
+clinical data, for those reason, we aim at providing the right tools to
+preprocess such databases with <em>efficiency</em> and <em>simplicity</em>.</p>
+</div></blockquote>
 </div>
 </div>
 
@@ -184,7 +185,7 @@ or gensim &lt;<a class="reference external" href="https://radimrehurek.com/gensi
         <a href="modules.html" class="btn btn-neutral float-right" title="preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to processing-toolbox’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="README.html" class="btn btn-neutral" title="processing-toolbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,5 +1,7 @@
 # Processing Toolbox 
 
+Full documentation available at https://ditep.github.io/processing-toolbox/
+
 This repository contains scripts to preprocess a clinical database. It notably
 includes functions to process medical text reports, and feature selection on 
 high cardinality categorical features (eg: for medication names).
@@ -82,6 +84,7 @@ OK
 
 
 ## TODO
-* sphinx documentation --> remove spinx from venv nd install it for base interpreter
 * example notebooks
 * contributing guidelines
+* issue template
+

@@ -1,12 +1,6 @@
 preprocessing.html\_parser package
 ==================================
 
-Subpackages
------------
-
-.. toctree::
-
-    preprocessing.html_parser.tests
 
 Submodules
 ----------

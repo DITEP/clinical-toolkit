@@ -10,9 +10,6 @@ examples/*
 !examples/simple_transformation.py
 !examples/words_importance.py
 
-_modules/
-_sources/
-_satic/
 
 data/*
 !data/bounds_template.txt

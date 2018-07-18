@@ -6,13 +6,20 @@ that each one contains a corpus of them, allowing to process the
 concatenation of categories as text
 """
 import pandas as pd
+
 from gensim.models import Word2Vec, KeyedVectors
+from sklearn.base import BaseEstimator
+from keras.models import Sequential, clone_model
+from keras.layers import Dense, Dropout
+
 
 from ..text2vec import tools
 
 
-class NeuralVectorizer(object):
-    """
+class W2VVectorizer(object):
+    """ vectorizes categories with word2vec model
+
+    @deprecated
     Parameters
     ----------
     group_key : str
@@ -118,3 +125,127 @@ class NeuralVectorizer(object):
 
         return self
 
+
+class NeuralEmbedder(BaseEstimator):
+    """ Trains a MLP classifier to learn a distributed representation of
+    categories
+
+    Only available for binary tarets
+
+    @TODO optimizer argument should be able to receive keras.Optimizer class
+    @TODO + batch_size + validation set ?
+
+    input_dim : tuple, (int, int)
+        input_dim[0] number of units in inpuot layer
+        input_dim[1] : dimension of the input layer (= number of features)
+
+    layers : tuple
+        The ith element represents the number of neurons in the ith hidden
+        layer. Similar to sklearn's MLP
+
+    activation : str, default='relu'
+        activation function in the intermediate layers
+
+    output : str, default='sigmoid'
+        output activation function, only supports sigmoid for binary
+        classification
+
+    optimizer : str, default='adam'
+        optimizing function for backpropagation
+        check https://keras.io/optimizers for available algorithms
+
+    loss : str, default='binary-crossentropy'
+        loss computed for optimization
+        check https://keras.io/losses
+
+    dropout : str, default=0.5
+        dropout rate
+
+    metrics : list, default=['acc', 'mae']
+        metrics used uring training and testing
+
+    epochs : int, default=20
+        number of epochs
+
+    @TODO copy model to pop() for .transform() method
+
+    """
+    def __init__(self, input_dim, layers,
+                 activation='relu', output='sigmoid',
+                 optimizer='adam',
+                 loss='binary-crossentropy',
+                 dropout=0.5,
+                 metrics=['acc', 'mae'],
+                 epochs=20):
+        self.optimizer = optimizer
+        self.loss = loss
+        self.metrics = metrics
+        self.epochs = epochs
+
+        # indicator of training state
+        self.fit_ = None
+
+        self.model = Sequential()
+
+        # input layer
+        self.model.add(Dense(input_dim[0],
+                             activation=activation,
+                             input_dim=input_dim[1]))
+        self.model.add(Dropout(dropout))
+
+        # stacking following layers
+        for i, units in enumerate(layers):
+            self.model.add(Dense(units, activation=activation))
+            self.model.add(Dropout(dropout))
+
+        self.model.add(Dense(1, activation=output))
+
+    def fit(self, X, y):
+        """ trains the model using input data
+
+        Parameters
+        ----------
+        X : iterable
+            feature matrix
+
+        y : iterable
+            target vector (possibly one-hot-encoded?)
+
+        Returns
+        -------
+        keras.History.history
+            record of training loss values and metrics values at successive
+            epochs, as well as validation loss values and validation metrics
+            values (if applicable)
+
+        """
+        self.model.compile(optimizer=self.optimizer,
+                           loss=self.loss,
+                           metrics=self.metrics)
+
+        hist = self.model.fit(X, y, epochs=self.epochs)
+        self.fit_ = True
+
+        return hist
+
+    def transform(self, X):
+        """ Transform X into a distributed representation learned by fit
+
+        Parameters
+        ----------
+        X : iterable
+            feature matrix to embed
+
+        Returns
+        -------
+        X_embed
+            X projected into an embedding space
+
+        """
+        model_cut = clone_model(self.model)
+
+        # removing output layer + last dropout
+        model_cut.pop()
+        model_cut.pop()
+
+        return model_cut.predict(X)

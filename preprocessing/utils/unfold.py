@@ -137,6 +137,8 @@ def transform_and_label(df, key1, key2, date,  feature, value,
 
     Only implements unsupervised transformation
 
+    @TODO keep sparse representation to unfold data
+
     Parameters
     ----------
     df : pandas.DataFrame
@@ -150,7 +152,7 @@ def transform_and_label(df, key1, key2, date,  feature, value,
 
     estimator : sklearn.BaseEstimator
         sklearn compatible transformer that implements .fit() and
-        .fold() methods
+        .transform() methods
 
     return_estimator : bool
         if true, returns the trained estimator
@@ -172,16 +174,17 @@ def transform_and_label(df, key1, key2, date,  feature, value,
     # converts to numpy.ndarray
     if type(new_col) in [pd.DataFrame, pd.Series]:
         new_col = new_col.values
-    elif type(new_col) == csr_matrix:
-        new_col = new_col.todense()
+    # elif type(new_col) == csr_matrix:
+    #     new_col = new_col.todense()
     else:
         new_col = new_col
 
     df_res = pd.DataFrame(None, columns=df.columns)
 
     # filling new rows
-    for i in range(new_col.shape[0]):
-        for j in range(new_col.shape[1]):
+    if type(new_col) == csr_matrix:
+        rows, cols = new_col.nonzero()
+        for i, j in zip(rows, cols):
             row = {key1: df.at[i, key1],
                    key2: df.at[i, key2],
                    feature: df.at[i, feature] + '_{}'.format(j),
@@ -190,7 +193,18 @@ def transform_and_label(df, key1, key2, date,  feature, value,
 
             df_res = df_res.append(row, ignore_index=True)
 
+    else:
+        for i in range(new_col.shape[0]):
+            for j in range(new_col.shape[1]):
+                row = {key1: df.at[i, key1],
+                       key2: df.at[i, key2],
+                       feature: df.at[i, feature] + '_{}'.format(j),
+                       value: new_col[i, j],
+                       date: df.at[i, date]}
+
+                df_res = df_res.append(row, ignore_index=True)
+
     if return_estimator:
-        return df_res, estimator
+        return df_res, transformer
     else:
         return df_res

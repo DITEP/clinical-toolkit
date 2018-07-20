@@ -54,16 +54,11 @@ class TestUnfold(object):
         df_res = transform_and_label(df, 'key1', 'key2', 'date', 'feature',
                                      'value', TfidfVectorizer)
 
-        expected = {'key1': ['1', '1', '1', '2', '2', '2', '2', '2', '2'],
-                    'key2': ['a1', 'a1', 'a1', 'a2', 'a2', 'a2', 'a2',
-                             'a2', 'a2'],
-                    'feature': ['feat2_0', 'feat2_1', 'feat2_2',
-                                'feat2_0', 'feat2_1', 'feat2_2',
-                                'feat2_0', 'feat2_1', 'feat2_2'],
-                    'value': [1, 0, 0, 0, 1, 0, 0, 0, 1],
-                    'date': ['2018-06-14', '2018-06-14', '2018-06-14',
-                             '2018-05-22', '2018-05-22', '2018-05-22',
-                             '2017-03-01', '2017-03-01', '2017-03-01']}
+        expected = {'key1': ['1',  '2',  '2'],
+                    'key2': ['a1', 'a2','a2'],
+                    'feature': ['feat2_0', 'feat2_1', 'feat2_2'],
+                    'value': [1, 1, 1],
+                    'date': ['2018-06-14', '2018-05-22', '2017-03-01']}
 
         df_expected = pd.DataFrame(expected)
 
@@ -87,16 +82,11 @@ class TestUnfold(object):
                                              ReportsParser(headers=None)),
                                             ('tfidf', TfidfVectorizer())])
 
-        expected = {'key1': ['1', '1', '1', '2', '2', '2', '2', '2', '2'],
-                    'key2': ['a1', 'a1', 'a1', 'a2', 'a2', 'a2', 'a2',
-                             'a2', 'a2'],
-                    'feature': ['feat2_0', 'feat2_1', 'feat2_2',
-                                'feat2_0', 'feat2_1', 'feat2_2',
-                                'feat2_0', 'feat2_1', 'feat2_2'],
-                    'value': [1, 0, 0, 0, 1, 0, 0, 0, 1],
-                    'date': ['2018-06-14', '2018-06-14', '2018-06-14',
-                             '2018-05-22', '2018-05-22', '2018-05-22',
-                             '2017-03-01', '2017-03-01', '2017-03-01']}
+        expected = {'key1': ['1', '2', '2'],
+                    'key2': ['a1', 'a2', 'a2'],
+                    'feature': ['feat2_0', 'feat2_1', 'feat2_2'],
+                    'value': [1, 1, 1],
+                    'date': ['2018-06-14', '2018-05-22', '2017-03-01']}
 
         df_expected = pd.DataFrame(expected)
 

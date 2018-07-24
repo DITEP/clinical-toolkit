@@ -32,8 +32,8 @@ w2v_true = Word2Vec(corpus, size=size, window=window, sg=sg,
 
 class TestVectorize(object):
     def setUp(self):
-        return neural_embedding.NeuralVectorizer('ids', 'values', size,
-                                                 min_count, sg, window)
+        return neural_embedding.W2VVectorizer('ids', 'values', size,
+                                              min_count, sg, window)
 
     def test_fitter(self):
         embedder = self.setUp()

@@ -86,13 +86,12 @@ class ReportsParser(BaseEstimator):
         if self.n_jobs == -1:
             pool = Pool()
         else:
-            pool = Pool(self.n_jobs )
+            pool = Pool(self.n_jobs)
 
         res = pool.map(self.fetch_doc, X)
 
         pool.close()
         pool.join()
-
 
         ser_res = pd.Series(res) #, index=X.index)
 
@@ -107,7 +106,7 @@ class ReportsParser(BaseEstimator):
 
         # parse html split into self.headers
         else:
-            dico = main_parser(html, self.verbose)
+            dico = main_parser(html, self.verbose, headers=self.headers)
             text = reduce_dic(dico, self.remove_sections)
 
             text = text_normalize(text, self.stop_words,

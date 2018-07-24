@@ -1,6 +1,6 @@
 """
 Script to test HTMLParser object
-@TODO add test to remove sections and stopwords
+@TODO add test to remove sections and stopwords + sklearn consistency
 """
 import pandas as pd
 
@@ -44,8 +44,8 @@ class TestHTMLParser(object):
         parsed_x = ReportsParser(strategy='strings').transform(x)
         res_text = parsed_x.values[0]
 
-        expected_text = 'some title 0 this is div 0 text 0 0 text 0 1 title' \
-                        ' 1 this is div 1 text 1 0 text 1 1 this is a span'
+        expected_text = 'this is div 0 text 0 0 text 0 1 ' \
+                        'this is div 1 text 1 0 text 1 1 this is a span'
 
         assert_equal(res_text, expected_text)
 
@@ -56,20 +56,13 @@ class TestHTMLParser(object):
 
         res_tokens = parsed_x.values[0]
 
-        expected_tokens = ['some', 'title', '0', 'this', 'is', 'div', '0',
-                           'text', '0', '0', 'text', '0', '1', 'title',
-                           '1', 'this', 'is', 'div', '1', 'text', '1', '0',
-                           'text', '1', '1', 'this', 'is', 'a', 'span']
+        expected_tokens = ['this', 'is', 'div', '0', 'text', '0', '0',
+                           'text', '0', '1', 'this', 'is', 'div', '1', 'text',
+                           '1', '0', 'text', '1', '1', 'this', 'is', 'a',
+                           'span']
 
         assert_list_equal(res_tokens, expected_tokens)
 
-    def check_consistence_sklearn(self):
-        assert_equal(True, check_estimator(ReportsParser))
-
-
-
-
-
-
-
+    # def test_consistence_sklearn(self):
+    #     assert_equal(True, check_estimator(ReportsParser))
 

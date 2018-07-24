@@ -42,14 +42,6 @@ def splitter(patient_id, date, cycle, report_dict):
     Returns
     -------
     """
-    # p = len(report_dict.keys())
-    # ids = np.array([patient_id] * p)
-    # dates = np.array([date] * p)
-    # keys, texts = np.zeros((p,), dtype= str), np.zeros((p,), dtype= str)
-    # for index, key in enumerate(report_dict):
-    #     keys[index] = key
-    #     texts[index] = report_dict[key]
-    # res = np.vstack((ids, dates, keys, texts))
     return [{'patient_id': patient_id,
              'date': date,
              'cycle': cycle,
@@ -59,7 +51,7 @@ def splitter(patient_id, date, cycle, report_dict):
 
 def reduce_dic(dico, remove):
     """ merges key, values of a dictionary
-    
+
     Parameters
     ----------
     dico
@@ -72,6 +64,6 @@ def reduce_dic(dico, remove):
     res = ''
     for key, value in dico.items():
         if key not in remove:
-            res += ' ' + key + ' ' + value
+            res += ' ' + value
 
     return res

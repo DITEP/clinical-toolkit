@@ -77,7 +77,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
             
@@ -154,7 +154,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
 
 
-<div class="viewcode-block" id="Text2Vector"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.Text2Vector">[docs]</a><span class="k">class</span> <span class="nc">Text2Vector</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="Text2Vector"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.Text2Vector">[docs]</a><span class="k">class</span> <span class="nc">Text2Vector</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; implementation of Doc2Vec model adapted to sklearn for</span>
 <span class="sd">    hyperparameters tuning</span>
 
@@ -165,7 +165,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d2v_model_</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Text2Vector.fit"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.Text2Vector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reports</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Text2Vector.fit"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.Text2Vector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reports</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; tags reports (for gensim&#39;s model consistence) and trains Doc2Vec</span>
 <span class="sd">        model on the corpus</span>
 
@@ -190,7 +190,7 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Text2Vector.transform"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.Text2Vector.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reports</span><span class="p">):</span>
+<div class="viewcode-block" id="Text2Vector.transform"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.Text2Vector.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reports</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; transforms reports in embedding space based on previously trained</span>
 <span class="sd">        Doc2Vec model</span>
 
@@ -208,7 +208,7 @@
                          <span class="ow">in</span> <span class="n">reports</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="AverageWords2Vector"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.AverageWords2Vector">[docs]</a><span class="k">class</span> <span class="nc">AverageWords2Vector</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="AverageWords2Vector"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.AverageWords2Vector">[docs]</a><span class="k">class</span> <span class="nc">AverageWords2Vector</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; trains a unsupervised word2vec model, and then fold</span>
 <span class="sd">    text data according to it</span>
 <span class="sd">    This function is only for convenience in using word2vec in a pipeline</span>
@@ -227,7 +227,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w2v_</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="AverageWords2Vector.fit"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.AverageWords2Vector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_reports</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AverageWords2Vector.fit"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.AverageWords2Vector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_reports</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Trains the word2vec model with given corpus</span>
 <span class="sd">        as input</span>
 
@@ -245,7 +245,7 @@
                              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">wv</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="AverageWords2Vector.transform"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.AverageWords2Vector.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_reports</span><span class="p">):</span>
+<div class="viewcode-block" id="AverageWords2Vector.transform"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.AverageWords2Vector.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_reports</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Turns the documents into vector by averaging</span>
 <span class="sd">        over all the words</span>
 
@@ -259,7 +259,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">avg_corpus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w2v_</span><span class="p">,</span> <span class="n">parsed_reports</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AverageWords2Vector.fit_pretrained"><a class="viewcode-back" href="../../../preprocessing.text2vec.html#preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained">[docs]</a>    <span class="k">def</span> <span class="nf">fit_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AverageWords2Vector.fit_pretrained"><a class="viewcode-back" href="../../../preprocessing.text2vec.transformers.html#preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained">[docs]</a>    <span class="k">def</span> <span class="nf">fit_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; fits a pretrained model from</span>
 <span class="sd">        https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</span>
 

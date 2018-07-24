@@ -77,7 +77,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
             
@@ -160,7 +160,7 @@
 <span class="kn">from</span> <span class="nn">multiprocessing.pool</span> <span class="k">import</span> <span class="n">Pool</span>
 
 
-<div class="viewcode-block" id="Folder"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.fold.Folder">[docs]</a><span class="k">class</span> <span class="nc">Folder</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder">[docs]</a><span class="k">class</span> <span class="nc">Folder</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;  This object enables &quot;unfolding&quot; the features of a DataFrame, </span>
 <span class="sd">    which means for a df that has 5 feature columns for instance, </span>
 <span class="sd">    the unfolding would result in two feature columns: one is for the feature </span>
@@ -196,7 +196,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
 
-<div class="viewcode-block" id="Folder.fold"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.fold.Folder.fold">[docs]</a>    <span class="k">def</span> <span class="nf">fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_base</span><span class="p">):</span>
+<div class="viewcode-block" id="Folder.fold"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold">[docs]</a>    <span class="k">def</span> <span class="nf">fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_base</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; </span>
 
 <span class="sd">        Parameters</span>
@@ -238,7 +238,7 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">merged_dict</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Folder.fold_several_features"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.fold.Folder.fold_several_features">[docs]</a>    <span class="k">def</span> <span class="nf">fold_several_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+<div class="viewcode-block" id="Folder.fold_several_features"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold_several_features">[docs]</a>    <span class="k">def</span> <span class="nf">fold_several_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
         <span class="c1"># fetching value of the row, dropping index</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="n">row</span>
         <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">:</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">key2</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="p">[],</span>
@@ -253,7 +253,7 @@
 
         <span class="k">return</span> <span class="n">dico</span></div>
 
-<div class="viewcode-block" id="Folder.fold_one_feature"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.fold.Folder.fold_one_feature">[docs]</a>    <span class="k">def</span> <span class="nf">fold_one_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+<div class="viewcode-block" id="Folder.fold_one_feature"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold_one_feature">[docs]</a>    <span class="k">def</span> <span class="nf">fold_one_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="n">row</span>
 
         <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">],</span>

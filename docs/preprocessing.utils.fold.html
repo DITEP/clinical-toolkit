@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>preprocessing.utils.fold module &mdash; processing-toolbox 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="preprocessing.utils.outliers module" href="preprocessing.utils.outliers.html" />
+    <link rel="prev" title="preprocessing.utils.connection module" href="preprocessing.utils.connection.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> processing-toolbox
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">processing-toolbox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="preprocessing.html">preprocessing package</a> &raquo;</li>
+        
+          <li><a href="preprocessing.utils.html">preprocessing.utils package</a> &raquo;</li>
+        
+      <li>preprocessing.utils.fold module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/preprocessing.utils.fold.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-preprocessing.utils.fold">
+<span id="preprocessing-utils-fold-module"></span><h1>preprocessing.utils.fold module<a class="headerlink" href="#module-preprocessing.utils.fold" title="Permalink to this headline">¶</a></h1>
+<p>As data may come from different sources, it is best to retrieve all the bases
+into one single dataframe that would enables fetching the features very
+easily, as well as the dates at which the events/measures occured.</p>
+<p>Doing so allows to retrieve the full timelines of the patients and
+therefore complete various tasks.</p>
+<p>The objective of this module is to parse the databases available in order to
+have each one of them organized as</p>
+<p>key1 | key2 | feature_name | value | date</p>
+<dl class="class">
+<dt id="preprocessing.utils.fold.Folder">
+<em class="property">class </em><code class="descclassname">preprocessing.utils.fold.</code><code class="descname">Folder</code><span class="sig-paren">(</span><em>key1</em>, <em>key2</em>, <em>features</em>, <em>date</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This object enables “unfolding” the features of a DataFrame,
+which means for a df that has 5 feature columns for instance,
+the unfolding would result in two feature columns: one is for the feature
+name and the other is the feature value.</p>
+<p>All the attributes are column names to indicate how to unfold the dataframe</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key1</strong> (<em>str</em>) – indicator of the primary key indicator</li>
+<li><strong>key2</strong> (<em>str, (optionnal?)</em>) – secondary key</li>
+<li><strong>features</strong> (<em>list</em>) – column names that contain the feature</li>
+<li><strong>date</strong> (<em>str</em>) – name of the date column,</li>
+<li><strong>n_jobs</strong> (<em>int</em>) – number of CPUs to use for computation. If -1, all the available cores
+are used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="preprocessing.utils.fold.Folder.fold">
+<code class="descname">fold</code><span class="sig-paren">(</span><em>df_base</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_base</strong> (<em>pandas DataFrame</em>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">columns are [key1, key2, feature, value, date] where feature
+contains the features names and values are the values.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.utils.fold.Folder.fold_one_feature">
+<code class="descname">fold_one_feature</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_one_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_one_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="preprocessing.utils.fold.Folder.fold_several_features">
+<code class="descname">fold_several_features</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_several_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_several_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="preprocessing.utils.outliers.html" class="btn btn-neutral float-right" title="preprocessing.utils.outliers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preprocessing.utils.connection.html" class="btn btn-neutral" title="preprocessing.utils.connection module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Valentin Charvet.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

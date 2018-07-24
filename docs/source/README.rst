@@ -56,9 +56,11 @@ Python 2 has not been tested. Windows support has not yet been tested
 Development
 -----------
 Everyone is welcome to take part to the project, there are however a few guidelines
-one should need to follow to keep it clean and functionning
+one should need to follow to keep it clean and functioning
 
-
+* make sure your code follows `PEP 8 <https://www.python.org/dev/peps/pep-0008>`_ guidelines
+  for optimal readability. The best way to check it is by using `flake 8 <http://flake8.pycqa.org/en/latest/>`_
+  tool.
 * to report an issue or a bug, refer https://github.com/DITEP/processing-toolbox/issues
   and make sur the error you report is **reproducible**.
 * to make add a feature or fix a bug, clone the repo and create a new branch

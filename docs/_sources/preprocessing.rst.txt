@@ -5,6 +5,8 @@ Subpackages
 -----------
 
 .. toctree::
+    :maxdepth: 2
+    :caption: Modules:
 
     preprocessing.cat2vec
     preprocessing.html_parser

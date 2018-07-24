@@ -77,7 +77,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
             
@@ -151,7 +151,7 @@
 <span class="kn">from</span> <span class="nn">getpass</span> <span class="k">import</span> <span class="n">getpass</span>
 
 
-<div class="viewcode-block" id="sql2df"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.connection.sql2df">[docs]</a><span class="k">def</span> <span class="nf">sql2df</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="sql2df"><a class="viewcode-back" href="../../../preprocessing.utils.connection.html#preprocessing.utils.connection.sql2df">[docs]</a><span class="k">def</span> <span class="nf">sql2df</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Builds a DataFrame using a table from the</span>
 <span class="sd">    database to which engine is connected</span>
 
@@ -175,7 +175,7 @@
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_engine"><a class="viewcode-back" href="../../../preprocessing.utils.html#preprocessing.utils.connection.get_engine">[docs]</a><span class="k">def</span> <span class="nf">get_engine</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">use_password</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;pymysql&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="get_engine"><a class="viewcode-back" href="../../../preprocessing.utils.connection.html#preprocessing.utils.connection.get_engine">[docs]</a><span class="k">def</span> <span class="nf">get_engine</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">use_password</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;pymysql&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; returns engine instance connected to a given database</span>
 
 <span class="sd">    Parameters</span>

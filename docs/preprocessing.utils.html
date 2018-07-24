@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="preprocessing.text2vec package" href="preprocessing.text2vec.html" /> 
+    <link rel="next" title="preprocessing.utils.connection module" href="preprocessing.utils.connection.html" />
+    <link rel="prev" title="preprocessing.text2vec.transformers module" href="preprocessing.text2vec.transformers.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,8 +79,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">preprocessing</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -127,8 +129,6 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="modules.html">preprocessing</a> &raquo;</li>
-        
           <li><a href="preprocessing.html">preprocessing package</a> &raquo;</li>
         
       <li>preprocessing.utils package</li>
@@ -154,356 +154,14 @@
 <h1>preprocessing.utils package<a class="headerlink" href="#preprocessing-utils-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.utils.connection.html">preprocessing.utils.connection module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.utils.fold.html">preprocessing.utils.fold module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.utils.outliers.html">preprocessing.utils.outliers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.utils.unfold.html">preprocessing.utils.unfold module</a></li>
+</ul>
 </div>
-<div class="section" id="module-preprocessing.utils.connection">
-<span id="preprocessing-utils-connection-module"></span><h2>preprocessing.utils.connection module<a class="headerlink" href="#module-preprocessing.utils.connection" title="Permalink to this headline">¶</a></h2>
-<p>connection scripts2 to a remote MySQL db server</p>
-<dl class="function">
-<dt id="preprocessing.utils.connection.get_engine">
-<code class="descclassname">preprocessing.utils.connection.</code><code class="descname">get_engine</code><span class="sig-paren">(</span><em>user</em>, <em>ip</em>, <em>db</em>, <em>use_password='yes'</em>, <em>driver='pymysql'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/connection.html#get_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.connection.get_engine" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns engine instance connected to a given database</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user</strong> (<em>str</em>) – username</li>
-<li><strong>ip</strong> (<em>str</em>) – ip adress of the sql server</li>
-<li><strong>db</strong> (<em>str</em>) – name of the database</li>
-<li><strong>use_password</strong> (<em>str, {‘yes’, ‘no’}, default=’yes</em>) – ‘yes’ to use a password to connect, if ‘yes’, the
-password will have to be entered in the terminal</li>
-<li><strong>driver</strong> (<em>str, default=’pymysql’</em>) – name of the driver used for MySQL-Python connexion,
-depends on your installation
-&#64;see <a class="reference external" href="http://docs.sqlalchemy.org/en/latest/dialects/mysql.html">http://docs.sqlalchemy.org/en/latest/dialects/mysql.html</a>
-for details</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">sqlalchemy.Engine instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.connection.sql2df">
-<code class="descclassname">preprocessing.utils.connection.</code><code class="descname">sql2df</code><span class="sig-paren">(</span><em>engine</em>, <em>table</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/connection.html#sql2df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.connection.sql2df" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds a DataFrame using a table from the
-database to which engine is connected</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>engine</strong> (<em>sqlalchemy.Engine</em>) – Engine instance connected to a remote or local
-sql database</li>
-<li><strong>table</strong> (<em>str</em>) – name of the table you wish to retrieve</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<p># &gt;&gt;&gt;uri = ‘mysql+mysqldb://user:password&#64;192.0.0.1/test’</p>
-</dd></dl>
-
-</div>
-<div class="section" id="module-preprocessing.utils.fold">
-<span id="preprocessing-utils-fold-module"></span><h2>preprocessing.utils.fold module<a class="headerlink" href="#module-preprocessing.utils.fold" title="Permalink to this headline">¶</a></h2>
-<p>As data may come from different sources, it is best to retrieve all the bases
-into one single dataframe that would enables fetching the features very
-easily, as well as the dates at which the events/measures occured.</p>
-<p>Doing so allows to retrieve the full timelines of the patients and
-therefore complete various tasks.</p>
-<p>The objective of this module is to parse the databases available in order to
-have each one of them organized as</p>
-<p>key1 | key2 | feature_name | value | date</p>
-<dl class="class">
-<dt id="preprocessing.utils.fold.Folder">
-<em class="property">class </em><code class="descclassname">preprocessing.utils.fold.</code><code class="descname">Folder</code><span class="sig-paren">(</span><em>key1</em>, <em>key2</em>, <em>features</em>, <em>date</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>This object enables “unfolding” the features of a DataFrame,
-which means for a df that has 5 feature columns for instance,
-the unfolding would result in two feature columns: one is for the feature
-name and the other is the feature value.</p>
-<p>All the attributes are column names to indicate how to unfold the dataframe</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key1</strong> (<em>str</em>) – indicator of the primary key indicator</li>
-<li><strong>key2</strong> (<em>str, (optionnal?)</em>) – secondary key</li>
-<li><strong>features</strong> (<em>list</em>) – column names that contain the feature</li>
-<li><strong>date</strong> (<em>str</em>) – name of the date column,</li>
-<li><strong>n_jobs</strong> (<em>int</em>) – number of CPUs to use for computation. If -1, all the available cores
-are used</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.utils.fold.Folder.fold">
-<code class="descname">fold</code><span class="sig-paren">(</span><em>df_base</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_base</strong> (<em>pandas DataFrame</em>)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">columns are [key1, key2, feature, value, date] where feature
-contains the features names and values are the values.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.fold.Folder.fold_one_feature">
-<code class="descname">fold_one_feature</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_one_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_one_feature" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.fold.Folder.fold_several_features">
-<code class="descname">fold_several_features</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_several_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_several_features" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-preprocessing.utils.outliers">
-<span id="preprocessing-utils-outliers-module"></span><h2>preprocessing.utils.outliers module<a class="headerlink" href="#module-preprocessing.utils.outliers" title="Permalink to this headline">¶</a></h2>
-<p>Scripts to remove the outliers and na values from the different tables</p>
-<p>To be used for the values that are mistyped</p>
-<dl class="class">
-<dt id="preprocessing.utils.outliers.OutlierRemover">
-<em class="property">class </em><code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">OutlierRemover</code><span class="sig-paren">(</span><em>dic_path</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>removes outliers and replaces them by value given in dic_path or by
-imputing the column mean value</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dic_path</strong> (<em>str</em>) – path to the dictionary containing outliers information</li>
-<li><strong>inplace</strong> (<em>bool, default=True</em>) – True to perform the transformation inplace
-False to do it on a copy of the dataframe</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.utils.outliers.OutlierRemover.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.outliers.OutlierRemover.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover.transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.outliers.impute_col">
-<code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">impute_col</code><span class="sig-paren">(</span><em>X</em>, <em>lbound</em>, <em>ubound</em>, <em>impute</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#impute_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.impute_col" title="Permalink to this definition">¶</a></dt>
-<dd><p>imputes missing and mistyped values of one col of the dataframe</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> (<em>iterable, array-like</em>) – column to which we want to impute missing values</p>
-<p class="last">name of the column</p>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>lbound <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>lower bound for normal values</dd>
-<dt>ubound <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>upper bound for normal values</dd>
-<dt>impute <span class="classifier-delimiter">:</span> <span class="classifier">float or None</span></dt>
-<dd>if float is given, replaces outlier by the given value
-if None, the mean value is returned</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">df.col_name except its wrong values are imputed according
-to strategy</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">df.Series</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.outliers.impute_df">
-<code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">impute_df</code><span class="sig-paren">(</span><em>df</em>, <em>dic_path</em>, <em>inplace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#impute_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.impute_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>cleans the df from missing/mistyped values</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> (<em>pd.DataFrame</em>)</li>
-<li><strong>dic_path</strong> (<em>str</em>) – path containing name of the columns to clean and the upper/lower
-limits to consider point as outlier and optionnal third value is the
-imputing value</li>
-<li><strong>inplace</strong> (<em>bool</em>) – if True, performs the transformation inline</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-preprocessing.utils.unfold">
-<span id="preprocessing-utils-unfold-module"></span><h2>preprocessing.utils.unfold module<a class="headerlink" href="#module-preprocessing.utils.unfold" title="Permalink to this headline">¶</a></h2>
-<p>unfolds merges dataframes into a big feature matrix
-All the features are labeled with a date and two keys for identification</p>
-<p>Better explainations and schemas can be found on the repo wiki</p>
-<dl class="class">
-<dt id="preprocessing.utils.unfold.Unfolder">
-<em class="property">class </em><code class="descclassname">preprocessing.utils.unfold.</code><code class="descname">Unfolder</code><span class="sig-paren">(</span><em>key1</em>, <em>key2</em>, <em>feature</em>, <em>value</em>, <em>date</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/unfold.html#Unfolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.unfold.Unfolder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>Takes a dataframe[key1, key2, feature, value, date] to build a matrix of
-the parameters grouped by [key1, key2, date]</p>
-<p>This object is to be used after a timeframe of the feature has been build to
-group them into a feature matrix.
-The idea is to facilitate the data preparation for a sequential learning
-task.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key1</strong> (<em>str</em>) – primary key</li>
-<li><strong>key2</strong> (<em>str</em>) – secondary key</li>
-<li><strong>feature</strong> (<em>str</em>) – name of the feature</li>
-<li><strong>value</strong> (<em>float</em>) – value of the feature <cite>feature</cite></li>
-<li><strong>date</strong> (<em>datetime</em>) – date at which <cite>feature</cite> was measured</li>
-<li><strong>n_jobs</strong> (<em>int</em>) – number of CPUs to use for computation. If -1, all the available cores
-are used</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.utils.unfold.Unfolder.add_columns">
-<code class="descname">add_columns</code><span class="sig-paren">(</span><em>feature_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/unfold.html#Unfolder.add_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.unfold.Unfolder.add_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>adds a column of a given feature</p>
-<p>This auxiliary function is to ease the use of multiprocess.pool.Pool</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>feature_name</strong> (<em>str</em>) – name of the feature we are adding to the dataframe</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">contains a single column <cite>feature_name</cite> that contains values
-or NaN depending on the presence of the feature for each row</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.unfold.Unfolder.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/unfold.html#Unfolder.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.unfold.Unfolder.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>saves dataframe for multiprocessing convenience</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<em>pandas.DataFrame</em>)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">self</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.unfold.Unfolder.unfold">
-<code class="descname">unfold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/unfold.html#Unfolder.unfold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.unfold.Unfolder.unfold" title="Permalink to this definition">¶</a></dt>
-<dd><p>performs the unfolding transformation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dataframe that contains the added feature columns
-Rows are ordered by [key1, key2, date] for convenience</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.unfold.transform_and_label">
-<code class="descclassname">preprocessing.utils.unfold.</code><code class="descname">transform_and_label</code><span class="sig-paren">(</span><em>df</em>, <em>key1</em>, <em>key2</em>, <em>date</em>, <em>feature</em>, <em>value</em>, <em>estimator</em>, <em>return_estimator=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/unfold.html#transform_and_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.unfold.transform_and_label" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes dataframe as input, applies transformation on value column and
-returns  df with a new columns of the transformed feature</p>
-<p>The transformation returns a copy of the input dataframe</p>
-<p>Only implements unsupervised transformation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> (<em>pandas.DataFrame</em>) – should contain only one unique value in its <cite>feature</cite> column</li>
-<li><strong>feature</strong> (<em>str</em>) – features names column</li>
-<li><strong>value</strong> (<em>str</em>) – features values column</li>
-<li><strong>estimator</strong> (<em>sklearn.BaseEstimator</em>) – sklearn compatible transformer that implements .fit() and
-.fold() methods</li>
-<li><strong>return_estimator</strong> (<em>bool</em>) – if true, returns the trained estimator</li>
-<li><strong>**kwargs</strong> (<em>additional keyword arguments for estimator object</em>)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">same as df with additional rows  for the transformed feature</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="module-preprocessing.utils">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-preprocessing.utils" title="Permalink to this headline">¶</a></h2>
@@ -518,8 +176,10 @@ returns  df with a new columns of the transformed feature</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="preprocessing.utils.connection.html" class="btn btn-neutral float-right" title="preprocessing.utils.connection module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="preprocessing.text2vec.html" class="btn btn-neutral" title="preprocessing.text2vec package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="preprocessing.text2vec.transformers.html" class="btn btn-neutral" title="preprocessing.text2vec.transformers module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

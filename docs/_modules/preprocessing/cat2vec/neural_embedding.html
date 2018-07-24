@@ -77,7 +77,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
             
@@ -149,13 +149,20 @@
 <span class="sd">concatenation of categories as text</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="kn">from</span> <span class="nn">gensim.models</span> <span class="k">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">KeyedVectors</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="k">import</span> <span class="n">Sequential</span><span class="p">,</span> <span class="n">clone_model</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+
 
 <span class="kn">from</span> <span class="nn">..text2vec</span> <span class="k">import</span> <span class="n">tools</span>
 
 
-<div class="viewcode-block" id="NeuralVectorizer"><a class="viewcode-back" href="../../../preprocessing.cat2vec.html#preprocessing.cat2vec.neural_embedding.NeuralVectorizer">[docs]</a><span class="k">class</span> <span class="nc">NeuralVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="W2VVectorizer"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.W2VVectorizer">[docs]</a><span class="k">class</span> <span class="nc">W2VVectorizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; vectorizes categories with word2vec model</span>
+
+<span class="sd">    @deprecated</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    group_key : str</span>
@@ -196,7 +203,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w2v_</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="NeuralVectorizer.fit"><a class="viewcode-back" href="../../../preprocessing.cat2vec.html#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="W2VVectorizer.fit"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; fits the model by grouping categories by group_key in order to</span>
 <span class="sd">        embed categories as text</span>
 
@@ -221,7 +228,7 @@
                              <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">wv</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="NeuralVectorizer.transform"><a class="viewcode-back" href="../../../preprocessing.cat2vec.html#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="W2VVectorizer.transform"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.W2VVectorizer.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Parameters</span>
@@ -242,7 +249,7 @@
 
         <span class="k">return</span> <span class="n">X</span></div>
 
-<div class="viewcode-block" id="NeuralVectorizer.fit_pretrained"><a class="viewcode-back" href="../../../preprocessing.cat2vec.html#preprocessing.cat2vec.neural_embedding.NeuralVectorizer.fit_pretrained">[docs]</a>    <span class="k">def</span> <span class="nf">fit_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="W2VVectorizer.fit_pretrained"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit_pretrained">[docs]</a>    <span class="k">def</span> <span class="nf">fit_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        fits model using pretrained word embedding from</span>
 <span class="sd">        https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</span>
@@ -261,6 +268,130 @@
 
         <span class="k">return</span> <span class="bp">self</span></div></div>
 
+
+<div class="viewcode-block" id="NeuralEmbedder"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.NeuralEmbedder">[docs]</a><span class="k">class</span> <span class="nc">NeuralEmbedder</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Trains a MLP classifier to learn a distributed representation of</span>
+<span class="sd">    categories</span>
+
+<span class="sd">    Only available for binary tarets</span>
+
+<span class="sd">    @TODO optimizer argument should be able to receive keras.Optimizer class</span>
+<span class="sd">    @TODO + batch_size + validation set ?</span>
+
+<span class="sd">    input_dim : tuple, (int, int)</span>
+<span class="sd">        input_dim[0] number of units in inpuot layer</span>
+<span class="sd">        input_dim[1] : dimension of the input layer (= number of features)</span>
+
+<span class="sd">    layers : tuple</span>
+<span class="sd">        The ith element represents the number of neurons in the ith hidden</span>
+<span class="sd">        layer. Similar to sklearn&#39;s MLP</span>
+
+<span class="sd">    activation : str, default=&#39;relu&#39;</span>
+<span class="sd">        activation function in the intermediate layers</span>
+
+<span class="sd">    output : str, default=&#39;sigmoid&#39;</span>
+<span class="sd">        output activation function, only supports sigmoid for binary</span>
+<span class="sd">        classification</span>
+
+<span class="sd">    optimizer : str, default=&#39;adam&#39;</span>
+<span class="sd">        optimizing function for backpropagation</span>
+<span class="sd">        check https://keras.io/optimizers for available algorithms</span>
+
+<span class="sd">    loss : str, default=&#39;binary-crossentropy&#39;</span>
+<span class="sd">        loss computed for optimization</span>
+<span class="sd">        check https://keras.io/losses</span>
+
+<span class="sd">    dropout : str, default=0.5</span>
+<span class="sd">        dropout rate</span>
+
+<span class="sd">    metrics : list, default=[&#39;acc&#39;, &#39;mae&#39;]</span>
+<span class="sd">        metrics used uring training and testing</span>
+
+<span class="sd">    epochs : int, default=20</span>
+<span class="sd">        number of epochs</span>
+
+<span class="sd">    @TODO copy model to pop() for .transform() method</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span>
+                 <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span>
+                 <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary-crossentropy&#39;</span><span class="p">,</span>
+                 <span class="n">dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="s1">&#39;mae&#39;</span><span class="p">],</span>
+                 <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="n">epochs</span>
+
+        <span class="c1"># indicator of training state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+
+        <span class="c1"># input layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">input_dim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                             <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span>
+                             <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">))</span>
+
+        <span class="c1"># stacking following layers</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">units</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">output</span><span class="p">))</span>
+
+<div class="viewcode-block" id="NeuralEmbedder.fit"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.NeuralEmbedder.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; trains the model using input data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : iterable</span>
+<span class="sd">            feature matrix</span>
+
+<span class="sd">        y : iterable</span>
+<span class="sd">            target vector (possibly one-hot-encoded?)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        keras.History.history</span>
+<span class="sd">            record of training loss values and metrics values at successive</span>
+<span class="sd">            epochs, as well as validation loss values and validation metrics</span>
+<span class="sd">            values (if applicable)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span>
+                           <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
+                           <span class="n">metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+
+        <span class="n">hist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">hist</span></div>
+
+<div class="viewcode-block" id="NeuralEmbedder.transform"><a class="viewcode-back" href="../../../preprocessing.cat2vec.neural_embedding.html#preprocessing.cat2vec.neural_embedding.NeuralEmbedder.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Transform X into a distributed representation learned by fit</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : iterable</span>
+<span class="sd">            feature matrix to embed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_embed</span>
+<span class="sd">            X projected into an embedding space</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_cut</span> <span class="o">=</span> <span class="n">clone_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="c1"># removing output layer + last dropout</span>
+        <span class="n">model_cut</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">model_cut</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">model_cut</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

@@ -4,22 +4,10 @@ preprocessing.text2vec package
 Submodules
 ----------
 
-preprocessing.text2vec.tools module
------------------------------------
+.. toctree::
 
-.. automodule:: preprocessing.text2vec.tools
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-preprocessing.text2vec.transformers module
-------------------------------------------
-
-.. automodule:: preprocessing.text2vec.transformers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   preprocessing.text2vec.tools
+   preprocessing.text2vec.transformers
 
 Module contents
 ---------------

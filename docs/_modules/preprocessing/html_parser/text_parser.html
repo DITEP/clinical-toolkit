@@ -77,7 +77,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
             
@@ -156,7 +156,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<div class="viewcode-block" id="main_parser"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.main_parser">[docs]</a><span class="k">def</span> <span class="nf">main_parser</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">],</span>
+<div class="viewcode-block" id="main_parser"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.main_parser">[docs]</a><span class="k">def</span> <span class="nf">main_parser</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">],</span>
                 <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; takes as input the string from the report and</span>
 <span class="sd">    transforms splits it into sections</span>
@@ -195,7 +195,7 @@
     <span class="k">return</span> <span class="n">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="text_between_tags"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.text_between_tags">[docs]</a><span class="k">def</span> <span class="nf">text_between_tags</span><span class="p">(</span><span class="n">tag1</span><span class="p">,</span> <span class="n">tag2</span><span class="p">):</span>
+<div class="viewcode-block" id="text_between_tags"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.text_between_tags">[docs]</a><span class="k">def</span> <span class="nf">text_between_tags</span><span class="p">(</span><span class="n">tag1</span><span class="p">,</span> <span class="n">tag2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function fetches the text between tag 1 and tag 2</span>
 <span class="sd">    The soup should already be cleansed from useless tags such as  span</span>
 
@@ -220,7 +220,7 @@
     <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="last_tag_text"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.last_tag_text">[docs]</a><span class="k">def</span> <span class="nf">last_tag_text</span><span class="p">(</span><span class="n">final_tag</span><span class="p">):</span>
+<div class="viewcode-block" id="last_tag_text"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.last_tag_text">[docs]</a><span class="k">def</span> <span class="nf">last_tag_text</span><span class="p">(</span><span class="n">final_tag</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Fetches text from last tag</span>
 
 <span class="sd">    Parameters</span>
@@ -241,7 +241,7 @@
     <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="parse_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.parse_soup">[docs]</a><span class="k">def</span> <span class="nf">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="parse_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.parse_soup">[docs]</a><span class="k">def</span> <span class="nf">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Splits the soup between headers and returns a dictionnary</span>
 
 <span class="sd">    Parameters</span>
@@ -284,7 +284,7 @@
     <span class="k">return</span> <span class="n">res_dic</span></div>
 
 
-<div class="viewcode-block" id="clean_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.clean_soup">[docs]</a><span class="k">def</span> <span class="nf">clean_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+<div class="viewcode-block" id="clean_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.clean_soup">[docs]</a><span class="k">def</span> <span class="nf">clean_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Remove the tags indicated in remove parameter from the soup</span>
 <span class="sd">    soup</span>
 <span class="sd">    Transfo done inplace</span>
@@ -326,7 +326,7 @@
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="clean_string"><a class="viewcode-back" href="../../../preprocessing.html_parser.html#preprocessing.html_parser.text_parser.clean_string">[docs]</a><span class="k">def</span> <span class="nf">clean_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="clean_string"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.clean_string">[docs]</a><span class="k">def</span> <span class="nf">clean_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; remove non alphanumeric caracters from string s</span>
 <span class="sd">    returns the lowerCase string</span>
 

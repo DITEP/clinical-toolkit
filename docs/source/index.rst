@@ -7,14 +7,12 @@ Welcome to processing-toolbox's documentation!
 ==============================================
 
 .. toctree::
-   :glob:
+   :maxdepth: 2
    :caption: Contents:
 
    README.rst
-
    quickstart
- 
-   modules
+   preprocessing
 
 
 Indices and tables

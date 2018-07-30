@@ -48,6 +48,7 @@ class ReportsParser(BaseEstimator):
                  remove_tags=['h4', 'table', 'link', 'style'],
                  col_name='report',
                  headers='h3',
+                 is_html=True,
                  stop_words=[],
                  verbose=False,
                  n_jobs=1):
@@ -56,7 +57,8 @@ class ReportsParser(BaseEstimator):
         self.remove_sections = remove_sections
         self.tags = remove_tags
         self.headers = headers
-        self.colName = col_name
+        self.is_html = is_html
+        self.col_name = col_name
         self.verbose = verbose
         self.stop_words = stop_words
         self.n_jobs = n_jobs
@@ -79,7 +81,7 @@ class ReportsParser(BaseEstimator):
         """
         if type(X) == pd.DataFrame:
             # then turn it into a Series
-            X = X[self.colName]
+            X = X[self.col_name]
         # res = []
         # for html in X:
         #     res.append(self.fetch_doc(html))
@@ -106,7 +108,8 @@ class ReportsParser(BaseEstimator):
 
         # parse html split into self.headers
         else:
-            dico = main_parser(html, self.verbose, headers=self.headers)
+            dico = main_parser(html, self.is_html, self.verbose,
+                               headers=self.headers)
             text = reduce_dic(dico, self.remove_sections)
 
             text = text_normalize(text, self.stop_words,

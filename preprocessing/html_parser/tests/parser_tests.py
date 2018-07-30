@@ -1,6 +1,7 @@
 """
 This script is to test html_parser.text_parser script
 
+@TODO tests for unstructured html
 """
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal
@@ -68,7 +69,7 @@ class TestParser(object):
     def test_parse(self):
         soup, _ = self.setUp()
 
-        res = text_parser.parse_soup(soup, False, 'h3')
+        res = text_parser.parse_soup(soup, True, False, 'h3')
         expected = {'some title 0': 'texts in red are important this ' +
                                     'is div 0 text 0 0 text 0 1',
                     'title 1': 'this is div 1 text 1 0 text 1 1 ' +
@@ -79,7 +80,7 @@ class TestParser(object):
         soup, tags = self.setUp()
         last_tag = tags[-1]
 
-        res_text = text_parser.last_tag_text(last_tag)
+        res_text = text_parser.last_tag_text(last_tag, True)
         expected = 'this is div 1 text 1 0 text 1 1 this is a span'
 
         assert_equal(res_text, expected)
@@ -87,7 +88,8 @@ class TestParser(object):
     def test_between_tags(self):
         soup, tags = self.setUp()
 
-        res = text_parser.text_between_tags(tags[0].find_next(), tags[1])
+        res = text_parser.text_between_tags(tags[0].find_next(), tags[1],
+                                            True)
         expected = 'texts in red are important this is div 0 ' \
                    'text 0 0 text 0 1'
 
@@ -95,7 +97,7 @@ class TestParser(object):
 
     def test_main_parser(self):
         # soup, _ = self.setUp()
-        res = text_parser.main_parser(html_doc, False)
+        res = text_parser.main_parser(html_doc, True, False)
 
         expected = {'some title 0': 'this is div 0 text ' +
                                     '0 0 text 0 1',

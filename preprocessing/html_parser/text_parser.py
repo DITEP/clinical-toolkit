@@ -13,7 +13,7 @@ from unidecode import unidecode
 import re
 
 
-def main_parser(text, verbose, remove=['h4', 'table', 'link', 'style'],
+def main_parser(text, is_html, verbose, remove=['h4', 'table', 'link', 'style'],
                 headers='h3'):
     """ takes as input the string from the report and
     transforms splits it into sections
@@ -22,6 +22,9 @@ def main_parser(text, verbose, remove=['h4', 'table', 'link', 'style'],
     ----------
     text : string
         report in html format
+
+    is_html : bool
+        set True if text is actually structured as html
 
     verbose : bool
         True for logging
@@ -49,17 +52,20 @@ def main_parser(text, verbose, remove=['h4', 'table', 'link', 'style'],
 
     clean_soup(soup, remove, verbose)
 
-    return parse_soup(soup, verbose, headers)
+    return parse_soup(soup, is_html, verbose, headers)
 
 
-def text_between_tags(tag1, tag2):
+def text_between_tags(tag1, tag2, is_html):
     """ This function fetches the text between tag 1 and tag 2
     The soup should already be cleansed from useless tags such as  span
 
     Parameters
     ----------
     tag1
+
     tag2
+
+    is_html
 
     Returns
     -------
@@ -67,17 +73,27 @@ def text_between_tags(tag1, tag2):
     all the text between tag1 and tag2
 
     """
-    res = tag1.text
-    next_tag = tag1.find_next()
-    # iterates over tags to append text to res
-    while next_tag != tag2:
-        # print(res, cur_tag.text)
-        res += next_tag.text + ' '
-        next_tag = next_tag.find_next()
-    return clean_string(res)
+    if is_html:
+        res = tag1.text
+        next_tag = tag1.find_next()
+        # iterates over tags to append text to res
+        while next_tag != tag2:
+            res += next_tag.text + ' '
+            next_tag = next_tag.find_next()
+
+        return clean_string(res)
+
+    else:
+        res = tag1.next_sibling.strip()
+        next_tag = tag1.find_next()
+        while next_tag != tag2:
+            res += next_tag.next_sibling.strip() + ' '
+            next_tag = next_tag.find_next()
+
+        return clean_string(res)
 
 
-def last_tag_text(final_tag):
+def last_tag_text(final_tag, is_html):
     """ Fetches text from last tag
 
     Parameters
@@ -90,15 +106,18 @@ def last_tag_text(final_tag):
         content of the last section
 
     """
-    res = ''
-    cur_tag = final_tag.find_next()
-    while cur_tag is not None:
-        res += cur_tag.text + ' '
-        cur_tag = cur_tag.find_next()
-    return clean_string(res)
+    if is_html:
+        res = ''
+        cur_tag = final_tag.find_next()
+        while cur_tag is not None:
+            res += cur_tag.text + ' '
+            cur_tag = cur_tag.find_next()
+        return clean_string(res)
+    else:
+        return clean_string(final_tag.next_sibling)
 
 
-def parse_soup(soup, verbose, headers='h3'):
+def parse_soup(soup, is_html, verbose, headers='h3'):
     """Splits the soup between headers and returns a dictionnary
 
     Parameters
@@ -122,15 +141,21 @@ def parse_soup(soup, verbose, headers='h3'):
 
     for index, header in enumerate(header_list[:-1]):
         try:
-            new_text = text_between_tags(header.find_next(), header_list[index + 1])
+            if is_html:
+                new_text = text_between_tags(header.find_next(),
+                                             header_list[index + 1],
+                                             is_html)
+            else:
+                new_text = text_between_tags(header,
+                                             header_list[index + 1],
+                                             is_html)
             key = header.text
             res_dic[clean_string(key)] = new_text
-            # print(index, new_text)
         except AttributeError as e:
             # @TODO fix verbosity
             print('{} occurred at {}'.format(e, soup.name))
     try:
-        final_text = last_tag_text(header_list[-1])
+        final_text = last_tag_text(header_list[-1], is_html)
         final_key = header_list[-1].text
         res_dic[clean_string(final_key)] = final_text
     except IndexError as e:
@@ -190,6 +215,9 @@ def clean_string(s):
     :param s:
     :return:
     """
-    s_decoded = unidecode(s).replace('\n', '').replace('  ', ' ')
-    pattern = re.compile('[\W_]+')
-    return pattern.sub(' ', s_decoded).lower().strip()
+    try:
+        s_decoded = unidecode(s).replace('\n', '').replace('  ', ' ')
+        pattern = re.compile('[\W_]+')
+        return pattern.sub(' ', s_decoded).lower().strip()
+    except:
+        return s or ''

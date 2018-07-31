@@ -33,6 +33,10 @@ class Text2Vector(BaseEstimator):
 
         y : not used, default=None
 
+        **kwargs
+            additionnal arguments to pass to gensim.Word2Vec (see appropriate
+            documentation for details)
+
         Returns
         -------
 
@@ -75,9 +79,7 @@ class AverageWords2Vector(BaseEstimator):
     n_components : int, default=128
         dimension of the embedding vector
 
-    kwargs
-    additionnal arguments to pass to gensim.Word2Vec (see appropriate
-    documentation for details)
+
     """
     def __init__(self,
                  n_components=128):
@@ -94,6 +96,10 @@ class AverageWords2Vector(BaseEstimator):
             contains parsed tokenized reports
 
         y : None
+
+        **kwargs
+            additionnal arguments to pass to gensim.Word2Vec (see appropriate
+            documentation for details)
 
         Returns
         -------

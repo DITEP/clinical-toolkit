@@ -1,9 +1,21 @@
 """
-Embedding of high cardinality categorical variables using Wod2Vec
+Embedding high cardinality categorical variables with distributed
+representations
 
-Embeding is done in two parts: first we group the categories by patient so
-that each one contains a corpus of them, allowing to process the
-concatenation of categories as text
+The first embedder relies on `Word2Vec` algorithm to learn vector
+representations of words in a corpus
+
+.. [1] "Distributed Representations of Words and Phrases and their
+  Compositionality", Mikolov et al, Advances in Neural Information Processing
+  Systems 26, pp 3111--3119, 2013.
+
+
+The second one is based on `transfer learning
+<https://en.wikipedia.org/wiki/Transfer_learning>`_ : we train a fully
+connected neural network on a predictive task (only supports binary
+classification for now) so that the upper layers learn higher level
+representations of the categories.
+After training, we can extract the categories vectors in the embedding space
 """
 import pandas as pd
 
@@ -20,6 +32,7 @@ class W2VVectorizer(object):
     """ vectorizes categories with word2vec model
 
     @deprecated
+
     Parameters
     ----------
     group_key : str
@@ -130,7 +143,7 @@ class NeuralEmbedder(BaseEstimator):
     """ Trains a MLP classifier to learn a distributed representation of
     categories
 
-    Only available for binary tarets
+    Only available for binary targets
 
     @TODO optimizer argument should be able to receive keras.Optimizer class
     @TODO + batch_size + validation set ?
@@ -167,7 +180,6 @@ class NeuralEmbedder(BaseEstimator):
     epochs : int, default=20
         number of epochs
 
-    @TODO copy model to pop() for .transform() method
 
     """
     def __init__(self, input_dim, layers,
@@ -238,13 +250,14 @@ class NeuralEmbedder(BaseEstimator):
 
         Returns
         -------
-        X_embed
+        numpy array
             X projected into an embedding space
 
         """
         model_cut = clone_model(self.model)
 
         # removing output layer + last dropout
+        # @TODO change method (sub optimal and inelegant)
         model_cut.pop()
         model_cut.pop()
 

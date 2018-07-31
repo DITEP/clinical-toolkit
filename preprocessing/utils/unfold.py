@@ -89,6 +89,9 @@ class Unfolder(BaseEstimator):
         unique_features = self.df_[self.feature].unique()
         new_cols = pool.map(self.add_columns, unique_features)
 
+        pool.close()
+        pool.join()
+
         df_res.reset_index(drop=True, inplace=True)
         df_res = pd.concat([df_res] + [new_col for new_col in new_cols],
                            axis=1)

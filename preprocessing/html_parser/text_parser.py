@@ -1,10 +1,10 @@
 """
-This script contains the functions used to parse one report, ie
-the functions to split the html text into a dictionnary of
-sections.
+This script contains the functions used to parse one report, ie the functions
+to split the html text into a dictionnary of sections.
 
 Only main_parser is used in practice since all the other functions
-are auxiliary (~private)
+are auxiliary. Moreover, they should not be used "as-is" since they are
+wrapped up in the `ReportsParser` object for convenience.
 
 """
 from bs4 import BeautifulSoup
@@ -13,10 +13,8 @@ from unidecode import unidecode
 import re
 
 
-def main_parser(text, is_html, verbose, remove=['h4', 'table', 'link', 'style'],
-                headers='h3'):
-    """ takes as input the string from the report and
-    transforms splits it into sections
+def main_parser(text, is_html, verbose, remove, headers):
+    """ takes as input the string from the report and splits it into sections
 
     Parameters
     ----------
@@ -38,8 +36,7 @@ def main_parser(text, is_html, verbose, remove=['h4', 'table', 'link', 'style'],
     Returns
     -------
     dict
-        keys are section names
-        values are the content of the section
+        keys are section names, values are the content of the section
 
     """
     try:
@@ -57,6 +54,7 @@ def main_parser(text, is_html, verbose, remove=['h4', 'table', 'link', 'style'],
 
 def text_between_tags(tag1, tag2, is_html):
     """ This function fetches the text between tag 1 and tag 2
+
     The soup should already be cleansed from useless tags such as  span
 
     Parameters
@@ -69,8 +67,8 @@ def text_between_tags(tag1, tag2, is_html):
 
     Returns
     -------
-    string
-    all the text between tag1 and tag2
+    str
+        all the text between tag1 and tag2
 
     """
     if is_html:
@@ -122,17 +120,21 @@ def parse_soup(soup, is_html, verbose, headers='h3'):
 
     Parameters
     ----------
-    soup : BeautifulSoup instance
+    soup : BeautifulSoup
+
+    is_html : bool
+        true if text is exact html format
+
     verbose: bool, (default=False)
-        weather to print informaion about parsing
+        weather to print information about parsing
+
     headers : string
         delimiters of the sections
 
     Returns
     -------
     dict
-        keys are section names
-        values are section contents
+        keys are section names values are section contents
 
     """
 
@@ -168,7 +170,7 @@ def parse_soup(soup, is_html, verbose, headers='h3'):
 
 def clean_soup(soup, remove, verbose):
     """ Remove the tags indicated in remove parameter from the soup
-    soup
+
     Transfo done inplace
 
     Parameters
@@ -183,8 +185,8 @@ def clean_soup(soup, remove, verbose):
 
     Returns
     -------
-    BeautifulSoup instance
-    the same as input since inline transformation
+    BeautifulSoup
+        the same as input, transformation is done inplace
 
     """
     # remove first span <span style= "color: red"> that indicates
@@ -209,11 +211,17 @@ def clean_soup(soup, remove, verbose):
 
 
 def clean_string(s):
-    """ remove non alphanumeric caracters from string s
+    """ remove non alphanumeric characters from string s
     returns the lowerCase string
 
-    :param s:
-    :return:
+    Parameters
+    ----------
+    s : str
+
+    Returns
+    -------
+    str
+        string with only alphanumeric and lowercased
     """
     try:
         s_decoded = unidecode(s).replace('\n', '').replace('  ', ' ')

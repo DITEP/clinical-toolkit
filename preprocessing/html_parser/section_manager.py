@@ -1,19 +1,26 @@
 """
+Module to manage sections found by parser
 """
 import pandas as pd
 from .text_parser import main_parser
 
 
-def main_splitter(df, columns= ['patient_id', 'date', 'cycle', 'section', 'text']):
+def main_splitter(df, columns):
     """ splits all the entries of df
+
+    Using `main_splitter` causes to split texts into several rows, one text
+    is split into the number of sections it contains
 
     Parameters
     ----------
-    df
-    columns
+    df : pd.DataFrame
+
+    columns : list of str
 
     Returns
     -------
+    pd.DataFrame
+
 
     """
     df_res = pd.DataFrame(columns=columns)
@@ -54,11 +61,15 @@ def reduce_dic(dico, remove):
 
     Parameters
     ----------
-    dico
-    remove
+    dico : dict
+
+    remove : list of str
+        name of the sections to remove as in `ReportsParser.remove_sections`
 
     Returns
     -------
+    str
+        concatenated contents of sections
 
     """
     res = ''

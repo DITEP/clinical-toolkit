@@ -1,5 +1,13 @@
 """
-connection scripts2 to a remote MySQL db server
+connection script for linking to a remote SQL server
+
+The two functions are intended to be used with each other
+
+
+>>> engine = get_engine('username', '192.0.0.1', 'database')
+Password for username:
+>?
+>>> df = sql2df(engine, 'table')
 
 """
 import pandas as pd
@@ -23,10 +31,8 @@ def sql2df(engine, table):
     Returns
     -------
     pandas.DataFrame
+        dataframe representation of the `table` in database
 
-    Examples
-    --------
-    # >>>uri = 'mysql+mysqldb://user:password@192.0.0.1/test'
 
     """
     return pd.read_sql_table(table, engine)
@@ -49,14 +55,15 @@ def get_engine(user, ip, db, use_password='yes', driver='pymysql'):
         password will have to be entered in the terminal
 
     driver : str, default='pymysql'
-        name of the driver used for MySQL-Python connexion,
-        depends on your installation
-        @see http://docs.sqlalchemy.org/en/latest/dialects/mysql.html
+        name of the driver used for MySQL-Python connexion, depends on your
+        installation
+        Check http://docs.sqlalchemy.org/en/latest/dialects/mysql.html
         for details
 
     Returns
     -------
-    sqlalchemy.Engine instance
+    sqlalchemy.Engine
+        engine can then be used for SQL related tasks
 
     """
     if use_password == 'yes':

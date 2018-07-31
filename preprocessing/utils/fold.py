@@ -34,7 +34,7 @@ class Folder:
         secondary key
 
     features : list
-        column names that contain the feature
+        column names that contain the features
 
     date : str
         name of the date column,
@@ -54,17 +54,45 @@ class Folder:
         self.n_jobs = n_jobs
 
     def fold(self, df_base):
-        """ 
+        """
 
         Parameters
         ----------
         df_base : pandas DataFrame
-        
+
         Returns
         -------
         pandas.DataFrame
             columns are [key1, key2, feature, value, date] where feature
             contains the features names and values are the values.
+
+        Examples
+        --------
+        >>> df = pd.DataFrame({'id1': [1, 2, 3], 'id2': ['id1', 'id2', 'id3'],
+        ...                    'feature_a': [0, 0.3, 1.4],
+        ...                    'date': ["12122012", "12122012","12122012"]})
+        >>> folder = fold.Folder('id1', 'id2', ['feature_a'], 'date')
+        >>> folded = folder.fold(df)
+        >>> print(folded)
+           id1  id2    feature  value      date
+        0    1  id1  feature_a    0.0  12122012
+        1    2  id2  feature_a    0.3  12122012
+        2    3  id3  feature_a    1.4  12122012
+        For several features:
+        >>> df['feature_b'] = [-1, 1, 0]
+        >>> folder = fold.Folder('id1', 'id2', ['feature_a', 'feature_b'],
+        ... 'date')
+        >>> folded = folder.fold(df)
+        >>> print(folded)
+           id1  id2    feature  value      date
+        0    1  id1  feature_a    0.0  12122012
+        1    1  id1  feature_b   -1.0  12122012
+        2    2  id2  feature_a    0.3  12122012
+        3    2  id2  feature_b    1.0  12122012
+        4    3  id3  feature_a    1.4  12122012
+        5    3  id3  feature_b    0.0  12122012
+
+
 
         """
         columns = [self.key1, self.key2, 'feature', 'value', 'date']
@@ -74,7 +102,7 @@ class Folder:
             pool = Pool(self.n_jobs)
 
         if len(self.features) > 1:
-            dicts = pool.map(self.fold_several_features, df_base.iterrows())
+            dicts = pool.map(self._fold_several_features, df_base.iterrows())
             pool.close()
             pool.join()
 
@@ -85,7 +113,7 @@ class Folder:
 
         # only one feature
         else:
-            dicts = pool.map(self.fold_one_feature, df_base.iterrows())
+            dicts = pool.map(self._fold_one_feature, df_base.iterrows())
 
             pool.close()
             pool.join()
@@ -95,7 +123,21 @@ class Folder:
         return pd.DataFrame(merged_dict)
 
 
-    def fold_several_features(self, row):
+    def _fold_several_features(self, row):
+        """ folding function for tables with several features
+
+        Parameters
+        ----------
+        row : pandas.series
+            current row during iteration over the base dataframe
+
+        Returns
+        -------
+        dico: dict
+            duplication of the row
+
+
+        """
         # fetching value of the row, dropping index
         _, row = row
         dico = {self.key1: [], self.key2: [], 'feature': [],
@@ -110,7 +152,18 @@ class Folder:
 
         return dico
 
-    def fold_one_feature(self, row):
+    def _fold_one_feature(self, row):
+        """ folding function for one feature
+
+        Parameters
+        ----------
+        row : pd.Series
+
+        Returns
+        -------
+        dico : dict
+
+        """
         _, row = row
 
         dico = {self.key1: row[self.key1],

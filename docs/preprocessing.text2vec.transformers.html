@@ -75,10 +75,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <p class="caption"><span class="caption-text">Intro:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
@@ -166,13 +169,7 @@ This function is only for convenience in using word2vec in a pipeline</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n_components</strong> (<em>int, default=128</em>) – dimension of the embedding vector</li>
-<li><strong>kwargs</strong></li>
-<li><strong>additionnal arguments to pass to gensim.Word2Vec (see appropriate</strong></li>
-<li><strong>documentation for details)</strong></li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_components</strong> (<em>int, default=128</em>) – dimension of the embedding vector</td>
 </tr>
 </tbody>
 </table>
@@ -188,6 +185,8 @@ as input</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parsed_reports</strong> (<em>iterable of iterables</em>) – contains parsed tokenized reports</li>
 <li><strong>y</strong> (<em>None</em>)</li>
+<li><strong>**kwargs</strong> – additionnal arguments to pass to gensim.Word2Vec (see appropriate
+documentation for details)</li>
 </ul>
 </td>
 </tr>
@@ -245,6 +244,8 @@ model on the corpus</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>reports</strong> (<em>iterable of iterables</em>) – list of tokenized reports</li>
 <li><strong>y</strong> (<em>not used, default=None</em>)</li>
+<li><strong>**kwargs</strong> – additionnal arguments to pass to gensim.Word2Vec (see appropriate
+documentation for details)</li>
 </ul>
 </td>
 </tr>

@@ -73,10 +73,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Intro:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
@@ -177,7 +180,7 @@
 <span class="sd">        secondary key</span>
 
 <span class="sd">    features : list</span>
-<span class="sd">        column names that contain the feature</span>
+<span class="sd">        column names that contain the features</span>
 
 <span class="sd">    date : str</span>
 <span class="sd">        name of the date column,</span>
@@ -197,17 +200,45 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
 
 <div class="viewcode-block" id="Folder.fold"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold">[docs]</a>    <span class="k">def</span> <span class="nf">fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df_base</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; </span>
+        <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        df_base : pandas DataFrame</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
 <span class="sd">            columns are [key1, key2, feature, value, date] where feature</span>
 <span class="sd">            contains the features names and values are the values.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; df = pd.DataFrame({&#39;id1&#39;: [1, 2, 3], &#39;id2&#39;: [&#39;id1&#39;, &#39;id2&#39;, &#39;id3&#39;],</span>
+<span class="sd">        ...                    &#39;feature_a&#39;: [0, 0.3, 1.4],</span>
+<span class="sd">        ...                    &#39;date&#39;: [&quot;12122012&quot;, &quot;12122012&quot;,&quot;12122012&quot;]})</span>
+<span class="sd">        &gt;&gt;&gt; folder = fold.Folder(&#39;id1&#39;, &#39;id2&#39;, [&#39;feature_a&#39;], &#39;date&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; folded = folder.fold(df)</span>
+<span class="sd">        &gt;&gt;&gt; print(folded)</span>
+<span class="sd">           id1  id2    feature  value      date</span>
+<span class="sd">        0    1  id1  feature_a    0.0  12122012</span>
+<span class="sd">        1    2  id2  feature_a    0.3  12122012</span>
+<span class="sd">        2    3  id3  feature_a    1.4  12122012</span>
+<span class="sd">        For several features:</span>
+<span class="sd">        &gt;&gt;&gt; df[&#39;feature_b&#39;] = [-1, 1, 0]</span>
+<span class="sd">        &gt;&gt;&gt; folder = fold.Folder(&#39;id1&#39;, &#39;id2&#39;, [&#39;feature_a&#39;, &#39;feature_b&#39;],</span>
+<span class="sd">        ... &#39;date&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; folded = folder.fold(df)</span>
+<span class="sd">        &gt;&gt;&gt; print(folded)</span>
+<span class="sd">           id1  id2    feature  value      date</span>
+<span class="sd">        0    1  id1  feature_a    0.0  12122012</span>
+<span class="sd">        1    1  id1  feature_b   -1.0  12122012</span>
+<span class="sd">        2    2  id2  feature_a    0.3  12122012</span>
+<span class="sd">        3    2  id2  feature_b    1.0  12122012</span>
+<span class="sd">        4    3  id3  feature_a    1.4  12122012</span>
+<span class="sd">        5    3  id3  feature_b    0.0  12122012</span>
+
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key2</span><span class="p">,</span> <span class="s1">&#39;feature&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]</span>
@@ -217,7 +248,7 @@
             <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">dicts</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fold_several_features</span><span class="p">,</span> <span class="n">df_base</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())</span>
+            <span class="n">dicts</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fold_several_features</span><span class="p">,</span> <span class="n">df_base</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())</span>
             <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
@@ -228,7 +259,7 @@
 
         <span class="c1"># only one feature</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">dicts</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fold_one_feature</span><span class="p">,</span> <span class="n">df_base</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())</span>
+            <span class="n">dicts</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fold_one_feature</span><span class="p">,</span> <span class="n">df_base</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())</span>
 
             <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
@@ -238,7 +269,21 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">merged_dict</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Folder.fold_several_features"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold_several_features">[docs]</a>    <span class="k">def</span> <span class="nf">fold_several_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_fold_several_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; folding function for tables with several features</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : pandas.series</span>
+<span class="sd">            current row during iteration over the base dataframe</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dico: dict</span>
+<span class="sd">            duplication of the row</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># fetching value of the row, dropping index</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="n">row</span>
         <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">:</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">key2</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="p">[],</span>
@@ -251,9 +296,20 @@
             <span class="n">dico</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">cur_feat</span><span class="p">]]</span>
             <span class="n">dico</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">]]</span>
 
-        <span class="k">return</span> <span class="n">dico</span></div>
+        <span class="k">return</span> <span class="n">dico</span>
 
-<div class="viewcode-block" id="Folder.fold_one_feature"><a class="viewcode-back" href="../../../preprocessing.utils.fold.html#preprocessing.utils.fold.Folder.fold_one_feature">[docs]</a>    <span class="k">def</span> <span class="nf">fold_one_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_fold_one_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; folding function for one feature</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : pd.Series</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dico : dict</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="n">row</span>
 
         <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key1</span><span class="p">],</span>
@@ -262,7 +318,7 @@
                 <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
                 <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">]}</span>
 
-        <span class="k">return</span> <span class="n">dico</span></div></div>
+        <span class="k">return</span> <span class="n">dico</span></div>
 </pre></div>
 
            </div>

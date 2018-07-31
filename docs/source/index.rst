@@ -8,10 +8,15 @@ Welcome to processing-toolbox's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Intro:
 
    README.rst
    quickstart
+
+.. toctree::
+   :maxdepth: 3
+   :caption: API:
+
    preprocessing
 
 

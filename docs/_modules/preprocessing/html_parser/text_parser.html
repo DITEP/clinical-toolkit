@@ -73,10 +73,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Intro:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
@@ -142,12 +145,12 @@
             
   <h1>Source code for preprocessing.html_parser.text_parser</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This script contains the functions used to parse one report, ie</span>
-<span class="sd">the functions to split the html text into a dictionnary of</span>
-<span class="sd">sections.</span>
+<span class="sd">This script contains the functions used to parse one report, ie the functions</span>
+<span class="sd">to split the html text into a dictionnary of sections.</span>
 
 <span class="sd">Only main_parser is used in practice since all the other functions</span>
-<span class="sd">are auxiliary (~private)</span>
+<span class="sd">are auxiliary. Moreover, they should not be used &quot;as-is&quot; since they are</span>
+<span class="sd">wrapped up in the `ReportsParser` object for convenience.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
@@ -156,15 +159,16 @@
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<div class="viewcode-block" id="main_parser"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.main_parser">[docs]</a><span class="k">def</span> <span class="nf">main_parser</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">],</span>
-                <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; takes as input the string from the report and</span>
-<span class="sd">    transforms splits it into sections</span>
+<div class="viewcode-block" id="main_parser"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.main_parser">[docs]</a><span class="k">def</span> <span class="nf">main_parser</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">is_html</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; takes as input the string from the report and splits it into sections</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    text : string</span>
 <span class="sd">        report in html format</span>
+
+<span class="sd">    is_html : bool</span>
+<span class="sd">        set True if text is actually structured as html</span>
 
 <span class="sd">    verbose : bool</span>
 <span class="sd">        True for logging</span>
@@ -178,8 +182,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        keys are section names</span>
-<span class="sd">        values are the content of the section</span>
+<span class="sd">        keys are section names, values are the content of the section</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -192,35 +195,49 @@
 
     <span class="n">clean_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">is_html</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="text_between_tags"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.text_between_tags">[docs]</a><span class="k">def</span> <span class="nf">text_between_tags</span><span class="p">(</span><span class="n">tag1</span><span class="p">,</span> <span class="n">tag2</span><span class="p">):</span>
+<div class="viewcode-block" id="text_between_tags"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.text_between_tags">[docs]</a><span class="k">def</span> <span class="nf">text_between_tags</span><span class="p">(</span><span class="n">tag1</span><span class="p">,</span> <span class="n">tag2</span><span class="p">,</span> <span class="n">is_html</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function fetches the text between tag 1 and tag 2</span>
+
 <span class="sd">    The soup should already be cleansed from useless tags such as  span</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    tag1</span>
+
 <span class="sd">    tag2</span>
+
+<span class="sd">    is_html</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    string</span>
-<span class="sd">    all the text between tag1 and tag2</span>
+<span class="sd">    str</span>
+<span class="sd">        all the text between tag1 and tag2</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">text</span>
-    <span class="n">next_tag</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
-    <span class="c1"># iterates over tags to append text to res</span>
-    <span class="k">while</span> <span class="n">next_tag</span> <span class="o">!=</span> <span class="n">tag2</span><span class="p">:</span>
-        <span class="c1"># print(res, cur_tag.text)</span>
-        <span class="n">res</span> <span class="o">+=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
-        <span class="n">next_tag</span> <span class="o">=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">is_html</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">next_tag</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+        <span class="c1"># iterates over tags to append text to res</span>
+        <span class="k">while</span> <span class="n">next_tag</span> <span class="o">!=</span> <span class="n">tag2</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+            <span class="n">next_tag</span> <span class="o">=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">next_tag</span> <span class="o">=</span> <span class="n">tag1</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">next_tag</span> <span class="o">!=</span> <span class="n">tag2</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+            <span class="n">next_tag</span> <span class="o">=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="last_tag_text"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.last_tag_text">[docs]</a><span class="k">def</span> <span class="nf">last_tag_text</span><span class="p">(</span><span class="n">final_tag</span><span class="p">):</span>
+<div class="viewcode-block" id="last_tag_text"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.last_tag_text">[docs]</a><span class="k">def</span> <span class="nf">last_tag_text</span><span class="p">(</span><span class="n">final_tag</span><span class="p">,</span> <span class="n">is_html</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Fetches text from last tag</span>
 
 <span class="sd">    Parameters</span>
@@ -233,30 +250,37 @@
 <span class="sd">        content of the last section</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">cur_tag</span> <span class="o">=</span> <span class="n">final_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
-    <span class="k">while</span> <span class="n">cur_tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">res</span> <span class="o">+=</span> <span class="n">cur_tag</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
-        <span class="n">cur_tag</span> <span class="o">=</span> <span class="n">cur_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">is_html</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">cur_tag</span> <span class="o">=</span> <span class="n">final_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">cur_tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">cur_tag</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+            <span class="n">cur_tag</span> <span class="o">=</span> <span class="n">cur_tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">final_tag</span><span class="o">.</span><span class="n">next_sibling</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="parse_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.parse_soup">[docs]</a><span class="k">def</span> <span class="nf">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="parse_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.parse_soup">[docs]</a><span class="k">def</span> <span class="nf">parse_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">is_html</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Splits the soup between headers and returns a dictionnary</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    soup : BeautifulSoup instance</span>
+<span class="sd">    soup : BeautifulSoup</span>
+
+<span class="sd">    is_html : bool</span>
+<span class="sd">        true if text is exact html format</span>
+
 <span class="sd">    verbose: bool, (default=False)</span>
-<span class="sd">        weather to print informaion about parsing</span>
+<span class="sd">        weather to print information about parsing</span>
+
 <span class="sd">    headers : string</span>
 <span class="sd">        delimiters of the sections</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        keys are section names</span>
-<span class="sd">        values are section contents</span>
+<span class="sd">        keys are section names values are section contents</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -265,15 +289,21 @@
 
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">header</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">header_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">new_text</span> <span class="o">=</span> <span class="n">text_between_tags</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">find_next</span><span class="p">(),</span> <span class="n">header_list</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">is_html</span><span class="p">:</span>
+                <span class="n">new_text</span> <span class="o">=</span> <span class="n">text_between_tags</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">find_next</span><span class="p">(),</span>
+                                             <span class="n">header_list</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                                             <span class="n">is_html</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_text</span> <span class="o">=</span> <span class="n">text_between_tags</span><span class="p">(</span><span class="n">header</span><span class="p">,</span>
+                                             <span class="n">header_list</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                                             <span class="n">is_html</span><span class="p">)</span>
             <span class="n">key</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">text</span>
             <span class="n">res_dic</span><span class="p">[</span><span class="n">clean_string</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_text</span>
-            <span class="c1"># print(index, new_text)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># @TODO fix verbosity</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> occurred at </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">final_text</span> <span class="o">=</span> <span class="n">last_tag_text</span><span class="p">(</span><span class="n">header_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">final_text</span> <span class="o">=</span> <span class="n">last_tag_text</span><span class="p">(</span><span class="n">header_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">is_html</span><span class="p">)</span>
         <span class="n">final_key</span> <span class="o">=</span> <span class="n">header_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
         <span class="n">res_dic</span><span class="p">[</span><span class="n">clean_string</span><span class="p">(</span><span class="n">final_key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">final_text</span>
     <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -286,7 +316,7 @@
 
 <div class="viewcode-block" id="clean_soup"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.clean_soup">[docs]</a><span class="k">def</span> <span class="nf">clean_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Remove the tags indicated in remove parameter from the soup</span>
-<span class="sd">    soup</span>
+
 <span class="sd">    Transfo done inplace</span>
 
 <span class="sd">    Parameters</span>
@@ -301,8 +331,8 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    BeautifulSoup instance</span>
-<span class="sd">    the same as input since inline transformation</span>
+<span class="sd">    BeautifulSoup</span>
+<span class="sd">        the same as input, transformation is done inplace</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># remove first span &lt;span style= &quot;color: red&quot;&gt; that indicates</span>
@@ -327,15 +357,24 @@
 
 
 <div class="viewcode-block" id="clean_string"><a class="viewcode-back" href="../../../preprocessing.html_parser.text_parser.html#preprocessing.html_parser.text_parser.clean_string">[docs]</a><span class="k">def</span> <span class="nf">clean_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; remove non alphanumeric caracters from string s</span>
+    <span class="sd">&quot;&quot;&quot; remove non alphanumeric characters from string s</span>
 <span class="sd">    returns the lowerCase string</span>
 
-<span class="sd">    :param s:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    s : str</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        string with only alphanumeric and lowercased</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">s_decoded</span> <span class="o">=</span> <span class="n">unidecode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[\W_]+&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">s_decoded</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s_decoded</span> <span class="o">=</span> <span class="n">unidecode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[\W_]+&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">s_decoded</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span></div>
 </pre></div>
 
            </div>

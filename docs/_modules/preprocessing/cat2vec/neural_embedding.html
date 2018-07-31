@@ -73,10 +73,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Intro:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
@@ -142,11 +145,23 @@
             
   <h1>Source code for preprocessing.cat2vec.neural_embedding</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Embedding of high cardinality categorical variables using Wod2Vec</span>
+<span class="sd">Embedding high cardinality categorical variables with distributed</span>
+<span class="sd">representations</span>
 
-<span class="sd">Embeding is done in two parts: first we group the categories by patient so</span>
-<span class="sd">that each one contains a corpus of them, allowing to process the</span>
-<span class="sd">concatenation of categories as text</span>
+<span class="sd">The first embedder relies on `Word2Vec` algorithm to learn vector</span>
+<span class="sd">representations of words in a corpus</span>
+
+<span class="sd">.. [1] &quot;Distributed Representations of Words and Phrases and their</span>
+<span class="sd">  Compositionality&quot;, Mikolov et al, Advances in Neural Information Processing</span>
+<span class="sd">  Systems 26, pp 3111--3119, 2013.</span>
+
+
+<span class="sd">The second one is based on `transfer learning</span>
+<span class="sd">&lt;https://en.wikipedia.org/wiki/Transfer_learning&gt;`_ : we train a fully</span>
+<span class="sd">connected neural network on a predictive task (only supports binary</span>
+<span class="sd">classification for now) so that the upper layers learn higher level</span>
+<span class="sd">representations of the categories.</span>
+<span class="sd">After training, we can extract the categories vectors in the embedding space</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -163,6 +178,7 @@
     <span class="sd">&quot;&quot;&quot; vectorizes categories with word2vec model</span>
 
 <span class="sd">    @deprecated</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    group_key : str</span>
@@ -273,7 +289,7 @@
     <span class="sd">&quot;&quot;&quot; Trains a MLP classifier to learn a distributed representation of</span>
 <span class="sd">    categories</span>
 
-<span class="sd">    Only available for binary tarets</span>
+<span class="sd">    Only available for binary targets</span>
 
 <span class="sd">    @TODO optimizer argument should be able to receive keras.Optimizer class</span>
 <span class="sd">    @TODO + batch_size + validation set ?</span>
@@ -310,7 +326,6 @@
 <span class="sd">    epochs : int, default=20</span>
 <span class="sd">        number of epochs</span>
 
-<span class="sd">    @TODO copy model to pop() for .transform() method</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span>
@@ -381,13 +396,14 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        X_embed</span>
+<span class="sd">        numpy array</span>
 <span class="sd">            X projected into an embedding space</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model_cut</span> <span class="o">=</span> <span class="n">clone_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
 
         <span class="c1"># removing output layer + last dropout</span>
+        <span class="c1"># @TODO change method (sub optimal and inelegant)</span>
         <span class="n">model_cut</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="n">model_cut</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 

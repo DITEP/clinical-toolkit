@@ -73,10 +73,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Intro:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">preprocessing package</a></li>
 </ul>
 
@@ -142,9 +145,15 @@
             
   <h1>Source code for preprocessing.html_parser.parser</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">object to parse reports written in html</span>
+<span class="sd">object to parse text reports, compatible with scikit-learn transformer API</span>
 
-<span class="sd">compatible with scikit-learn transformer API</span>
+<span class="sd">The format of typical reports to be parsed can be found in data/ directory of</span>
+<span class="sd">this repo. `ReportsParser` enables choosing custom :</span>
+
+<span class="sd">* section delimiters with `headers` attribute</span>
+<span class="sd">* tags that dont contain informative texte (style tag for instance) with</span>
+<span class="sd">  `remove_tags`</span>
+<span class="sd">* additional stop words, that may be specific to a corpus or a task</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -158,11 +167,11 @@
 
 
 <div class="viewcode-block" id="ReportsParser"><a class="viewcode-back" href="../../../preprocessing.html_parser.parser.html#preprocessing.html_parser.parser.ReportsParser">[docs]</a><span class="k">class</span> <span class="nc">ReportsParser</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; a parser for html pages</span>
+    <span class="sd">&quot;&quot;&quot; a parser for html-like text reports</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    strategy : string, (default=&#39;strings&#39;)</span>
+<span class="sd">    strategy : string, default=&#39;strings&#39;</span>
 <span class="sd">        defines the type of object returned by the transformation,</span>
 <span class="sd">        if &#39;strings&#39;, each line of the returned df is string. &#39;strings&#39; is to</span>
 <span class="sd">        be used for CountVectorizer and TFiDFVectorizer</span>
@@ -170,19 +179,31 @@
 <span class="sd">        be used for gensim&#39;s Word2Vec and Doc2Vec models</span>
 
 <span class="sd">    remove_sections : list, default=[]</span>
-<span class="sd">        list containing the names of the sections to be removes from</span>
+<span class="sd">        list containing names of the sections to remove</span>
 
 <span class="sd">    remove_tags : list, default=[&#39;h4&#39;, &#39;table&#39;, &#39;link&#39;, &#39;style&#39;]</span>
 <span class="sd">        list of tags to remove from html  page</span>
 
 <span class="sd">    headers : str or None, default=&#39;h3</span>
-<span class="sd">        name of the html tag that delimits the sections in the page</span>
+<span class="sd">        name of the html tag that delimits the sections in the</span>
+
+<span class="sd">    is_html : bool, default=True</span>
+<span class="sd">        boolean indicating weather the structure of the reports is strictly html</span>
+<span class="sd">        format or not.</span>
+<span class="sd">        Check documentation usage for details</span>
 
 <span class="sd">    stop_words : list, default=[]</span>
 <span class="sd">        additional words to remove from the text, specific to the kind</span>
 <span class="sd">        of parsed document</span>
 
-<span class="sd">    verbose : bool, default=Fale</span>
+<span class="sd">    verbose : bool, default=False</span>
+
+<span class="sd">    n_jobs : int, default=1</span>
+<span class="sd">        number of CPU cores to use, if -1 then all the available one are used</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    .text_parser module : which contains the core functions to parse each text</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -191,6 +212,7 @@
                  <span class="n">remove_tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">],</span>
                  <span class="n">col_name</span><span class="o">=</span><span class="s1">&#39;report&#39;</span><span class="p">,</span>
                  <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">,</span>
+                 <span class="n">is_html</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">stop_words</span><span class="o">=</span><span class="p">[],</span>
                  <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -199,7 +221,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_sections</span> <span class="o">=</span> <span class="n">remove_sections</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">remove_tags</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">colName</span> <span class="o">=</span> <span class="n">col_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_html</span> <span class="o">=</span> <span class="n">is_html</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_name</span> <span class="o">=</span> <span class="n">col_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span> <span class="o">=</span> <span class="n">stop_words</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
@@ -208,11 +231,12 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="ReportsParser.transform"><a class="viewcode-back" href="../../../preprocessing.html_parser.parser.html#preprocessing.html_parser.parser.ReportsParser.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; parses the reports in input</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : pd.Series or DataFrame</span>
+<span class="sd">            each entry is a string defining a report</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -222,26 +246,39 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
             <span class="c1"># then turn it into a Series</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">colName</span><span class="p">]</span>
-        <span class="c1"># res = []</span>
-        <span class="c1"># for html in X:</span>
-        <span class="c1">#     res.append(self.fetch_doc(html))</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">col_name</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="p">)</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
 
-        <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fetch_doc</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_doc</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
 
         <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-
-        <span class="n">ser_res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c1">#, index=X.index)</span>
+        <span class="n">ser_res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ser_res</span></div>
 
-<div class="viewcode-block" id="ReportsParser.fetch_doc"><a class="viewcode-back" href="../../../preprocessing.html_parser.parser.html#preprocessing.html_parser.parser.ReportsParser.fetch_doc">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_fetch_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; parses one html document using `self` parameters</span>
+
+<span class="sd">        Method is protected as it is only made to be used to facilitate the</span>
+<span class="sd">        serialization of the main loop in `transform`</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        html : str</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or list of str</span>
+<span class="sd">            depending of `self.strategy`</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># html is not structured</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">html</span><span class="p">),</span>
@@ -250,7 +287,8 @@
 
         <span class="c1"># parse html split into self.headers</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">dico</span> <span class="o">=</span> <span class="n">main_parser</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+            <span class="n">dico</span> <span class="o">=</span> <span class="n">main_parser</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_html</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                               <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">reduce_dic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_sections</span><span class="p">)</span>
 
             <span class="n">text</span> <span class="o">=</span> <span class="n">text_normalize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">,</span>
@@ -258,8 +296,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;strings&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">text</span></div></div>
-
+            <span class="k">return</span> <span class="n">text</span></div>
 </pre></div>
 
            </div>

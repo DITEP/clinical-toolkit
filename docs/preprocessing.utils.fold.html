@@ -75,10 +75,13 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <p class="caption"><span class="caption-text">Intro:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package:</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
@@ -178,7 +181,7 @@ name and the other is the feature value.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>key1</strong> (<em>str</em>) – indicator of the primary key indicator</li>
 <li><strong>key2</strong> (<em>str, (optionnal?)</em>) – secondary key</li>
-<li><strong>features</strong> (<em>list</em>) – column names that contain the feature</li>
+<li><strong>features</strong> (<em>list</em>) – column names that contain the features</li>
 <li><strong>date</strong> (<em>str</em>) – name of the date column,</li>
 <li><strong>n_jobs</strong> (<em>int</em>) – number of CPUs to use for computation. If -1, all the available cores
 are used</li>
@@ -203,17 +206,33 @@ contains the features names and values are the values.</td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;id2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;id1&#39;</span><span class="p">,</span> <span class="s1">&#39;id2&#39;</span><span class="p">,</span> <span class="s1">&#39;id3&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;feature_a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;12122012&quot;</span><span class="p">,</span> <span class="s2">&quot;12122012&quot;</span><span class="p">,</span><span class="s2">&quot;12122012&quot;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">folder</span> <span class="o">=</span> <span class="n">fold</span><span class="o">.</span><span class="n">Folder</span><span class="p">(</span><span class="s1">&#39;id1&#39;</span><span class="p">,</span> <span class="s1">&#39;id2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;feature_a&#39;</span><span class="p">],</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">folded</span> <span class="o">=</span> <span class="n">folder</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">folded</span><span class="p">)</span>
+<span class="go">   id1  id2    feature  value      date</span>
+<span class="go">0    1  id1  feature_a    0.0  12122012</span>
+<span class="go">1    2  id2  feature_a    0.3  12122012</span>
+<span class="go">2    3  id3  feature_a    1.4  12122012</span>
+<span class="go">For several features:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;feature_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">folder</span> <span class="o">=</span> <span class="n">fold</span><span class="o">.</span><span class="n">Folder</span><span class="p">(</span><span class="s1">&#39;id1&#39;</span><span class="p">,</span> <span class="s1">&#39;id2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;feature_a&#39;</span><span class="p">,</span> <span class="s1">&#39;feature_b&#39;</span><span class="p">],</span>
+<span class="gp">... </span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">folded</span> <span class="o">=</span> <span class="n">folder</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">folded</span><span class="p">)</span>
+<span class="go">   id1  id2    feature  value      date</span>
+<span class="go">0    1  id1  feature_a    0.0  12122012</span>
+<span class="go">1    1  id1  feature_b   -1.0  12122012</span>
+<span class="go">2    2  id2  feature_a    0.3  12122012</span>
+<span class="go">3    2  id2  feature_b    1.0  12122012</span>
+<span class="go">4    3  id3  feature_a    1.4  12122012</span>
+<span class="go">5    3  id3  feature_b    0.0  12122012</span>
+</pre></div>
+</div>
 </dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.fold.Folder.fold_one_feature">
-<code class="descname">fold_one_feature</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_one_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_one_feature" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.fold.Folder.fold_several_features">
-<code class="descname">fold_several_features</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/fold.html#Folder.fold_several_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.fold.Folder.fold_several_features" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

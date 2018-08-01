@@ -39,17 +39,23 @@ class Unfolder(BaseEstimator):
     date : datetime
         date at which `feature` was measured
 
+    group_date : bool, default=True
+        set True to use date column as key to group data
+
+
     n_jobs : int
         number of CPUs to use for computation. If -1, all the available cores
         are used
 
     """
-    def __init__(self, key1, key2, feature, value, date, n_jobs=1):
+    def __init__(self, key1, key2, feature, value, date,
+                 group_date=True, n_jobs=1):
         self.key1 = key1
         self.key2 = key2
         self.feature = feature
         self.value = value
         self.date = date
+        self.group_date=group_date
         self.n_jobs = n_jobs
         self.df_ = None
 
@@ -87,7 +93,7 @@ class Unfolder(BaseEstimator):
             pool = Pool(self.n_jobs)
 
         unique_features = self.df_[self.feature].unique()
-        new_cols = pool.map(self.add_columns, unique_features)
+        new_cols = pool.map(self._add_columns, unique_features)
 
         pool.close()
         pool.join()
@@ -98,12 +104,18 @@ class Unfolder(BaseEstimator):
 
         # aggregation function for group by
         agg_dic = {key: 'mean' for key in unique_features}
-        df_grouped = df_res.groupby(by=[self.key1, self.key2, self.date],
-                                    sort=False,
-                                    as_index=False).agg(agg_dic)
+        if self.group_date:
+            df_grouped = df_res.groupby(by=[self.key1, self.key2, self.date],
+                                        sort=False,
+                                        as_index=False).agg(agg_dic)
+        else:
+            df_res.drop(self.date, axis=1, inplace=True)
+            df_grouped = df_res.groupby(by=[self.key1, self.key2],
+                                        sort=False,
+                                        as_index=False).agg(agg_dic)
         return df_grouped
 
-    def add_columns(self, feature_name):
+    def _add_columns(self, feature_name):
         """ adds a column of a given feature
 
         This auxiliary function is to ease the use of multiprocess.pool.Pool

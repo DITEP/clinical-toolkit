@@ -142,6 +142,7 @@ class ReportsParser(BaseEstimator):
         # parse html split into self.headers
         else:
             dico = main_parser(html, self.is_html, self.verbose,
+                               self.remove_sections,
                                headers=self.headers)
             text = reduce_dic(dico, self.remove_sections)
 

@@ -1,11 +1,11 @@
 """
-This script is to test html_parser.text_parser script
+This script is to test text_parser.text_parser script
 
 @TODO tests for unstructured html
 """
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal
-from preprocessing.html_parser import text_parser
+from preprocessing.text_parser import parser_utils
 
 html_doc = """
 <h3> Some title 0</h3>  
@@ -36,7 +36,7 @@ class TestParser(object):
 
     def test_empty_cleaner(self):
         soup, _ = self.setUp()
-        text_parser.clean_soup(soup, remove=['div'], verbose=False)
+        parser_utils.clean_soup(soup, remove=['div'], verbose=False)
 
         expected = """
         <h3> Some title 0</h3>
@@ -58,9 +58,9 @@ class TestParser(object):
         s2 = 'Hello World! 123      '
         s3 = 'Bonjour à tous'
 
-        s1_clean = text_parser.clean_string(s1)
-        s2_clean = text_parser.clean_string(s2)
-        s3_clean = text_parser.clean_string(s3)
+        s1_clean = parser_utils.clean_string(s1)
+        s2_clean = parser_utils.clean_string(s2)
+        s3_clean = parser_utils.clean_string(s3)
 
         assert_equal('hello world', s1_clean)
         assert_equal('hello world 123', s2_clean)
@@ -69,7 +69,7 @@ class TestParser(object):
     def test_parse(self):
         soup, _ = self.setUp()
 
-        res = text_parser.parse_soup(soup, True, False, 'h3')
+        res = parser_utils.parse_soup(soup, True, False, 'h3')
         expected = {'some title 0': 'texts in red are important this ' +
                                     'is div 0 text 0 0 text 0 1',
                     'title 1': 'this is div 1 text 1 0 text 1 1 ' +
@@ -80,7 +80,7 @@ class TestParser(object):
         soup, tags = self.setUp()
         last_tag = tags[-1]
 
-        res_text = text_parser.last_tag_text(last_tag, True)
+        res_text = parser_utils.last_tag_text(last_tag, True)
         expected = 'this is div 1 text 1 0 text 1 1 this is a span'
 
         assert_equal(res_text, expected)
@@ -88,8 +88,8 @@ class TestParser(object):
     def test_between_tags(self):
         soup, tags = self.setUp()
 
-        res = text_parser.text_between_tags(tags[0].find_next(), tags[1],
-                                            True)
+        res = parser_utils.text_between_tags(tags[0].find_next(), tags[1],
+                                             True)
         expected = 'texts in red are important this is div 0 ' \
                    'text 0 0 text 0 1'
 
@@ -97,7 +97,7 @@ class TestParser(object):
 
     def test_main_parser(self):
         # soup, _ = self.setUp()
-        res = text_parser.main_parser(html_doc, True, False, [], 'h3')
+        res = parser_utils.main_parser(html_doc, True, False, [], 'h3')
 
         expected = {'some title 0': 'this is div 0 text ' +
                                     '0 0 text 0 1',

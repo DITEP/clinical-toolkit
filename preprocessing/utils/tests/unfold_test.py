@@ -8,7 +8,7 @@ from numpy.testing import assert_array_equal
 from nose.tools import assert_list_equal
 from sklearn.feature_extraction.text import TfidfVectorizer
 from preprocessing.utils.unfold import transform_and_label, Unfolder
-from preprocessing.html_parser.parser import ReportsParser
+from preprocessing.text_parser.parser import ReportsParser
 from sklearn.pipeline import Pipeline
 
 

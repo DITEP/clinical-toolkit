@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from gensim.models import word2vec
 from sklearn.manifold import TSNE
-from preprocessing.html_parser.parser import ReportsParser
+from preprocessing.text_parser.parser import ReportsParser
 
 
 path = '../data/reports.csv'

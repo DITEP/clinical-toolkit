@@ -6,7 +6,7 @@ import pandas as pd
 
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal, assert_list_equal
-from preprocessing.html_parser.parser import ReportsParser
+from preprocessing.text_parser.parser import ReportsParser
 from sklearn.utils.estimator_checks import check_estimator
 
 

@@ -15,7 +15,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from sklearn.base import BaseEstimator
 from .section_manager import reduce_dic
-from .text_parser import main_parser, clean_string
+from .parser_utils import main_parser, clean_string
 from preprocessing.text2vec.tools import text_normalize
 from multiprocessing.pool import Pool
 
@@ -52,6 +52,9 @@ class ReportsParser(BaseEstimator):
 
     verbose : bool, default=False
 
+    norm : bool, default=True
+        weather normalising text (removing stopwords, lemmatization etc..)
+
     n_jobs : int, default=1
         number of CPU cores to use, if -1 then all the available one are used
 
@@ -68,6 +71,7 @@ class ReportsParser(BaseEstimator):
                  headers='h3',
                  is_html=True,
                  stop_words=[],
+                 norm=True,
                  verbose=False,
                  n_jobs=1):
 
@@ -78,6 +82,7 @@ class ReportsParser(BaseEstimator):
         self.is_html = is_html
         self.col_name = col_name
         self.verbose = verbose
+        self.norm = norm
         self.stop_words = stop_words
         self.n_jobs = n_jobs
 
@@ -137,7 +142,6 @@ class ReportsParser(BaseEstimator):
             # html is not structured
             text = clean_string(BeautifulSoup(str(html),
                                               'html.parser').text)
-            text = text_normalize(text, self.stop_words, stem=False)
 
         # parse html split into self.headers
         else:
@@ -146,9 +150,13 @@ class ReportsParser(BaseEstimator):
                                headers=self.headers)
             text = reduce_dic(dico, self.remove_sections)
 
-            text = text_normalize(text, self.stop_words,
-                                  stem=False)
+        if self.norm:
+            text = text_normalize(text, self.stop_words, stem=False)
+
         if self.strategy == 'strings':
-            return ' '.join(text)
+            if self.norm:
+                return ' '.join(text) #@TODO ou ' '.join(text) selon self.norm
+            else:
+                return ''.join(text)
         else:
             return text

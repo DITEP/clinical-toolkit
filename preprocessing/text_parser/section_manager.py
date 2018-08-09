@@ -2,7 +2,7 @@
 Module to manage sections found by parser
 """
 import pandas as pd
-from .text_parser import main_parser
+from .parser_utils import main_parser
 
 
 def main_splitter(df, columns):

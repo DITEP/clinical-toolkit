@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>clintk.text2vec.w2v_clusters &mdash; clinical-toolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> clinical-toolkit
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Intro:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">clinical-toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../clintk.html">clintk package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">clinical-toolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>clintk.text2vec.w2v_clusters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for clintk.text2vec.w2v_clusters</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">clustering of word embeddings</span>
+
+<span class="sd">@TODO documentation of the module</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="k">import</span> <span class="n">Word2Vec</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
+
+
+<div class="viewcode-block" id="WordClustering"><a class="viewcode-back" href="../../../clintk.text2vec.w2v_clusters.html#clintk.text2vec.w2v_clusters.WordClustering">[docs]</a><span class="k">class</span> <span class="nc">WordClustering</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; theme-affinity vectorization of documents</span>
+
+<span class="sd">    w2v_size : int, default=128</span>
+<span class="sd">       size of the hidden layer in the embedding Word2Vec model</span>
+
+<span class="sd">    n_clusters : int, default=30</span>
+<span class="sd">        number of clusters,  to the number of output parameters for the</span>
+<span class="sd">        vectorization.</span>
+<span class="sd">        It is advised to set `n_clusters` to the approximate number of</span>
+<span class="sd">        lexical fields</span>
+
+<span class="sd">    pca : sklearn.decomposition instance, default=PCA(n_components=0.9)</span>
+<span class="sd">        reduction of dimension of the embeddings before clustering</span>
+
+<span class="sd">    clustering : sklearn.cluster instace, default=KMeans(n_clusters=30)</span>
+<span class="sd">        clustering algorithm</span>
+<span class="sd">        The number of clusters must be equal to `n_clusters`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">w2v_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                 <span class="n">n_clusters</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                 <span class="n">pca</span><span class="o">=</span><span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+                 <span class="n">clustering</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">30</span><span class="p">)):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w2v_size</span> <span class="o">=</span> <span class="n">w2v_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pca</span> <span class="o">=</span> <span class="n">pca</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clustering</span> <span class="o">=</span> <span class="n">clustering</span>
+
+        <span class="c1"># vocabulary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># distribued representation of the words</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_vectors_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># cluster id for each word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster_ids_</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+
+<div class="viewcode-block" id="WordClustering.fit"><a class="viewcode-back" href="../../../clintk.text2vec.w2v_clusters.html#clintk.text2vec.w2v_clusters.WordClustering.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; train w2v model and clustering algorithm</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : iterable of iterable</span>
+<span class="sd">            corpus of tokenized documents</span>
+
+<span class="sd">        y : None</span>
+
+<span class="sd">        fit_params : additionnal parameters for word2vec algorithm</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">w2v</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">w2v_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span> <span class="o">=</span> <span class="n">w2v</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_vectors_</span> <span class="o">=</span> <span class="n">w2v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">]</span>
+
+        <span class="n">pca_word_vectors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_vectors_</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster_ids_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">pca_word_vectors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="WordClustering.transform"><a class="viewcode-back" href="../../../clintk.text2vec.w2v_clusters.html#clintk.text2vec.w2v_clusters.WordClustering.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; transforms each row of `X` into a vector of clusters affinities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : iterable of iterable</span>
+
+<span class="sd">        y: None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray, shape=(n, p)</span>
+<span class="sd">            transformed docments, where `p=n_cluster`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">word_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+                    <span class="n">word_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_ids_</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span>
+                    <span class="n">vector</span><span class="p">[</span><span class="n">word_cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">word_cluster</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># except word is not in vocabular</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector</span> <span class="o">/</span> <span class="n">count</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WordClustering.get_clusters_words"><a class="viewcode-back" href="../../../clintk.text2vec.w2v_clusters.html#clintk.text2vec.w2v_clusters.WordClustering.get_clusters_words">[docs]</a>    <span class="k">def</span> <span class="nf">get_clusters_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; return the words in each cluster</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            keys are cluster ids, values are lists of words</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">words_cluster</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">cluser_id</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_ids_</span><span class="p">):</span>
+            <span class="n">words_cluster</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">cluser_id</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_ids_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">words_cluster</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">words_cluster</span></div></div>
+
+
+
+
+<div class="viewcode-block" id="embed_corpus"><a class="viewcode-back" href="../../../clintk.text2vec.w2v_clusters.html#clintk.text2vec.w2v_clusters.embed_corpus">[docs]</a><span class="k">def</span> <span class="nf">embed_corpus</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">,</span> <span class="n">clustering</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; transforms X into vector of cluster affinities</span>
+
+<span class="sd">    ..deprecated use `WordClustering` object instead</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : iterable of iterable, (length=n)</span>
+<span class="sd">        corpus of document</span>
+
+<span class="sd">    clustering : sklearn.cluster object</span>
+<span class="sd">        instanciated clustering algorithm</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray, shape=(n, n_clusters)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># fit</span>
+    <span class="n">w2v</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+    <span class="n">words</span> <span class="o">=</span> <span class="n">w2v</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>
+    <span class="n">word_vectors</span> <span class="o">=</span> <span class="n">w2v</span><span class="p">[</span><span class="n">words</span><span class="p">]</span>
+
+    <span class="n">pca_word_vectors</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">)</span>
+
+    <span class="c1"># clustering = AgglomerativeClustering(n_clusters, affinity=&#39;euclidean&#39;)</span>
+
+    <span class="n">cluster_ids</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">pca_word_vectors</span><span class="p">)</span>
+    
+    <span class="c1"># transform</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+        <span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">word_id</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+                <span class="n">word_cluster</span> <span class="o">=</span> <span class="n">cluster_ids</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span>
+                <span class="n">vector</span><span class="p">[</span><span class="n">word_cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">word_cluster</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector</span> <span class="o">/</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">),</span> <span class="n">cluster_ids</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Valentin Charvet.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

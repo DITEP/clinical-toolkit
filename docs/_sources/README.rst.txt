@@ -1,5 +1,5 @@
-processing-toolbox
-==================
+clinical-toolkit
+================
 
 processing-toolbox is a machine learning python API designed for clinical data
 processing.
@@ -16,7 +16,7 @@ The package is not available on PyPI so you need to install it from source.
 .. code-block:: sh
     :linenos:
 
-    $ git clone https://github.com/DITEP/processing-toolbox.git
+    $ git clone https://github.com/DITEP/clinical-toolkit.git
     $ cd preprocessing-toolbox
     $ pip install -r requirements.txt
     $ pip install .
@@ -61,7 +61,7 @@ one should need to follow to keep it clean and functioning
 * make sure your code follows `PEP 8 <https://www.python.org/dev/peps/pep-0008>`_ guidelines
   for optimal readability. The best way to check it is by using `flake 8 <http://flake8.pycqa.org/en/latest/>`_
   tool.
-* to report an issue or a bug, refer https://github.com/DITEP/processing-toolbox/issues
+* to report an issue or a bug, refer https://github.com/DITEP/clinical-toolkit/issues
   and make sur the error you report is **reproducible**.
 * to make add a feature or fix a bug, clone the repo and create a new branch
   named *new_feature* and then make the pull request so that other contributors

@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to processing-toolbox's documentation!
+Welcome to clinical-toolkit's documentation!
 ==============================================
 
 .. toctree::
@@ -17,7 +17,7 @@ Welcome to processing-toolbox's documentation!
    :maxdepth: 3
    :caption: API:
 
-   preprocessing
+   clintk
 
 
 Indices and tables

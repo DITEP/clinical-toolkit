@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>clintk.text_parser.parser_utils module &mdash; clinical-toolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="clintk.text_parser.section_manager module" href="clintk.text_parser.section_manager.html" />
+    <link rel="prev" title="clintk.text_parser.parser module" href="clintk.text_parser.parser.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> clinical-toolkit
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Intro:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">clinical-toolkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="clintk.html">clintk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="clintk.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clintk.html#module-clintk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">clinical-toolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="clintk.html">clintk package</a> &raquo;</li>
+        
+          <li><a href="clintk.text_parser.html">clintk.text_parser package</a> &raquo;</li>
+        
+      <li>clintk.text_parser.parser_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/clintk.text_parser.parser_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-clintk.text_parser.parser_utils">
+<span id="clintk-text-parser-parser-utils-module"></span><h1>clintk.text_parser.parser_utils module<a class="headerlink" href="#module-clintk.text_parser.parser_utils" title="Permalink to this headline">¶</a></h1>
+<p>This script contains the functions used to parse one report, ie the functions
+to split the html text into a dictionnary of sections.</p>
+<p>Only main_parser is used in practice since all the other functions
+are auxiliary. Moreover, they should not be used “as-is” since they are
+wrapped up in the <cite>ReportsParser</cite> object for convenience.</p>
+<p>&#64;TODO change module name to <cite>utils</cite></p>
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.clean_soup">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">clean_soup</code><span class="sig-paren">(</span><em>soup</em>, <em>remove</em>, <em>verbose</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#clean_soup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.clean_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the tags indicated in remove parameter from the soup
+&#64;TODO change function name to <cite>to_alpha_num</cite>
+Transfo done inplace</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>soup</strong> (<em>BeautifulSoup instance</em>)</li>
+<li><strong>remove</strong> (<em>list</em>) – name of the tags to remove from the soup</li>
+<li><strong>verbose</strong> (<em>bool</em>) – controls logging</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the same as input, transformation is done inplace</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BeautifulSoup</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.clean_string">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">clean_string</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#clean_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.clean_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove non alphanumeric characters from string s
+returns the lowerCase string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string with only alphanumeric and lowercased</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.last_tag_text">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">last_tag_text</code><span class="sig-paren">(</span><em>final_tag</em>, <em>is_html</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#last_tag_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.last_tag_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches text from last tag</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>final_tag</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">content of the last section</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.main_parser">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">main_parser</code><span class="sig-paren">(</span><em>text</em>, <em>is_html</em>, <em>verbose</em>, <em>remove</em>, <em>headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#main_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.main_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>takes as input the string from the report and splits it into sections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>string</em>) – report in html format</li>
+<li><strong>is_html</strong> (<em>bool</em>) – set True if text is actually structured as html</li>
+<li><strong>verbose</strong> (<em>bool</em>) – True for logging</li>
+<li><strong>remove</strong> (<em>list</em>) – name of the tags to remove because contain useless information</li>
+<li><strong>headers</strong> (<em>string</em>) – name of the tags that delimit the sections</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">keys are section names, values are the content of the section</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.parse_soup">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">parse_soup</code><span class="sig-paren">(</span><em>soup</em>, <em>is_html</em>, <em>verbose</em>, <em>headers='h3'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#parse_soup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.parse_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the soup between headers and returns a dictionnary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>soup</strong> (<em>BeautifulSoup</em>)</li>
+<li><strong>is_html</strong> (<em>bool</em>) – true if text is exact html format</li>
+<li><strong>verbose</strong> (<em>bool, (default=False)</em>) – weather to print information about parsing</li>
+<li><strong>headers</strong> (<em>string</em>) – delimiters of the sections</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">keys are section names values are section contents</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="clintk.text_parser.parser_utils.text_between_tags">
+<code class="descclassname">clintk.text_parser.parser_utils.</code><code class="descname">text_between_tags</code><span class="sig-paren">(</span><em>tag1</em>, <em>tag2</em>, <em>is_html</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser_utils.html#text_between_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser_utils.text_between_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function fetches the text between tag 1 and tag 2</p>
+<p>The soup should already be cleansed from useless tags such as  span</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tag1</strong></li>
+<li><strong>tag2</strong></li>
+<li><strong>is_html</strong></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">all the text between tag1 and tag2</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="clintk.text_parser.section_manager.html" class="btn btn-neutral float-right" title="clintk.text_parser.section_manager module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clintk.text_parser.parser.html" class="btn btn-neutral" title="clintk.text_parser.parser module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Valentin Charvet.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

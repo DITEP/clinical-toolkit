@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from sklearn.base import BaseEstimator
 from .section_manager import reduce_dic
 from .parser_utils import main_parser, clean_string
-from preprocessing.text2vec.tools import text_normalize
+from clintk.text2vec.tools import text_normalize
 from multiprocessing.pool import Pool
 
 

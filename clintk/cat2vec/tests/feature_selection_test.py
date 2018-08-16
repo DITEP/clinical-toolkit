@@ -5,7 +5,7 @@
 import pandas as pd
 import numpy as np
 
-from preprocessing.cat2vec.feature_selection import LassoSelector
+from clintk.cat2vec.feature_selection import LassoSelector
 from numpy.testing import assert_array_equal
 
 

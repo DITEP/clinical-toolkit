@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from preprocessing.text_parser.parser import ReportsParser
-from preprocessing.text2vec.transformers import AverageWords2Vector, Text2Vector
+from clintk.text_parser.parser import ReportsParser
+from clintk.text2vec.transformers import AverageWords2Vector, Text2Vector
 from sklearn.manifold import TSNE
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline

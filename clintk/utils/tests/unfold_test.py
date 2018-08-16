@@ -7,8 +7,8 @@ import numpy as np
 from numpy.testing import assert_array_equal
 from nose.tools import assert_list_equal
 from sklearn.feature_extraction.text import TfidfVectorizer
-from preprocessing.utils.unfold import transform_and_label, Unfolder
-from preprocessing.text_parser.parser import ReportsParser
+from clintk.utils.unfold import transform_and_label, Unfolder
+from clintk.text_parser.parser import ReportsParser
 from sklearn.pipeline import Pipeline
 
 
@@ -106,15 +106,13 @@ class TestUnfold(object):
 
         unfolded_df = unfolder.unfold()
 
-        # unfolded_df = unfold(df, 'key1', 'key2', 'feature', 'value', 'date')
-
         expected = {'key1': ['1', '2', '2'],
                     'key2': ['a1', 'a2', 'a2'],
                     'date': ['2018-06-14', '2018-05-22', '2017-03-01'],
                     'feat1': [3, 1, 3],
                     'feat3': [5, 3, 5]}
 
-        df_expected = pd.DataFrame(expected)
+        df_expected = pd.DataFrame(expected, columns=expected.keys())
 
         assert_array_equal(df_expected, unfolded_df.values)
         assert_list_equal(list(df_expected.columns), list(unfolded_df.columns))

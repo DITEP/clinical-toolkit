@@ -4,7 +4,7 @@ testing Folder class
 import pandas as pd
 import numpy as np
 
-from preprocessing.utils.fold import Folder
+from clintk.utils.fold import Folder
 from numpy.testing import assert_array_equal
 
 

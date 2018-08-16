@@ -4,8 +4,8 @@ script to test reptk.features.embedding
 import numpy as np
 
 from numpy.testing import assert_array_almost_equal
-from preprocessing.text2vec import tools
-from preprocessing.text2vec.transformers import AverageWords2Vector
+from clintk.text2vec import tools
+from clintk.text2vec.transformers import AverageWords2Vector
 from gensim.models import word2vec
 
 

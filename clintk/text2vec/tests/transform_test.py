@@ -1,7 +1,7 @@
 """
-script to test functions in preprocessing.text2vec.fold
+script to test functions in clintk.text2vec.fold
 """
-import preprocessing.text2vec.tools
+import clintk.text2vec.tools
 from nose.tools import assert_list_equal
 
 
@@ -12,7 +12,7 @@ class TestTransform(object):
     def test_normalizer(self):
         s = 'alfred le chat de mon voisin était rose avec des tâches'
 
-        res = preprocessing.text2vec.tools.text_normalize(s, ['chat'])
+        res = clintk.text2vec.tools.text_normalize(s, ['chat'])
 
         expected = ['alfred', 'voisin', 'rose', 'tâches']
 

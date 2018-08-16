@@ -8,7 +8,7 @@ import numpy as np
 import os
 
 from numpy.testing import assert_array_equal
-from preprocessing.utils import outliers
+from clintk.utils import outliers
 
 curpath = os.path.dirname(__file__)
 # print('CURPATH IS: \n', curpath)

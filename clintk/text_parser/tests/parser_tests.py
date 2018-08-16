@@ -5,7 +5,7 @@ This script is to test text_parser.text_parser script
 """
 from bs4 import BeautifulSoup
 from nose.tools import assert_equal
-from preprocessing.text_parser import parser_utils
+from clintk.text_parser import parser_utils
 
 html_doc = """
 <h3> Some title 0</h3>  

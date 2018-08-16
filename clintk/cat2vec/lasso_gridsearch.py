@@ -10,7 +10,7 @@ For the moment only binary/continuous logistic regression is implemented
 import pandas as pd
 import numpy as np
 
-from preprocessing.cat2vec import tools
+from clintk.cat2vec import tools
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 

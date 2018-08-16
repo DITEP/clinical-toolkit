@@ -7,7 +7,7 @@ import numpy as np
 
 from gensim.models import Word2Vec
 from numpy.testing import assert_array_equal, assert_array_almost_equal
-from preprocessing.cat2vec import neural_embedding, tools
+from clintk.cat2vec import neural_embedding, tools
 
 # global variables definition
 

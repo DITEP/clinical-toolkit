@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,79 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.html_parser.section_manager">
-<span id="preprocessing-html-parser-section-manager-module"></span><h1>preprocessing.html_parser.section_manager module<a class="headerlink" href="#module-preprocessing.html_parser.section_manager" title="Permalink to this headline">¶</a></h1>
-<p>Module to manage sections found by parser</p>
-<dl class="function">
-<dt id="preprocessing.html_parser.section_manager.main_splitter">
-<code class="descclassname">preprocessing.html_parser.section_manager.</code><code class="descname">main_splitter</code><span class="sig-paren">(</span><em>df</em>, <em>columns</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/section_manager.html#main_splitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.section_manager.main_splitter" title="Permalink to this definition">¶</a></dt>
-<dd><p>splits all the entries of df</p>
-<p>Using <cite>main_splitter</cite> causes to split texts into several rows, one text
-is split into the number of sections it contains</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> (<em>pd.DataFrame</em>)</li>
-<li><strong>columns</strong> (<em>list of str</em>)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.html_parser.section_manager.reduce_dic">
-<code class="descclassname">preprocessing.html_parser.section_manager.</code><code class="descname">reduce_dic</code><span class="sig-paren">(</span><em>dico</em>, <em>remove</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/section_manager.html#reduce_dic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.section_manager.reduce_dic" title="Permalink to this definition">¶</a></dt>
-<dd><p>merges key, values of a dictionary</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dico</strong> (<em>dict</em>)</li>
-<li><strong>remove</strong> (<em>list of str</em>) – name of the sections to remove as in <cite>ReportsParser.remove_sections</cite></li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">concatenated contents of sections</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.html_parser.section_manager.splitter">
-<code class="descclassname">preprocessing.html_parser.section_manager.</code><code class="descname">splitter</code><span class="sig-paren">(</span><em>patient_id</em>, <em>date</em>, <em>cycle</em>, <em>report_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/section_manager.html#splitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.section_manager.splitter" title="Permalink to this definition">¶</a></dt>
-<dd><p>splits the report into the number of keys in report_dict</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>patient_id</strong></li>
-<li><strong>date</strong></li>
-<li><strong>cycle</strong></li>
-<li><strong>report_dict</strong></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+  <div class="section" id="preprocessing-html-parser-section-manager-module">
+<h1>preprocessing.html_parser.section_manager module<a class="headerlink" href="#preprocessing-html-parser-section-manager-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

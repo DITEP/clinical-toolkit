@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,73 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.utils.connection">
-<span id="preprocessing-utils-connection-module"></span><h1>preprocessing.utils.connection module<a class="headerlink" href="#module-preprocessing.utils.connection" title="Permalink to this headline">¶</a></h1>
-<p>connection script for linking to a remote SQL server</p>
-<p>The two functions are intended to be used with each other</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;192.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">)</span>
-<span class="go">Password for username:</span>
-<span class="go">&gt;?</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">sql2df</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="function">
-<dt id="preprocessing.utils.connection.get_engine">
-<code class="descclassname">preprocessing.utils.connection.</code><code class="descname">get_engine</code><span class="sig-paren">(</span><em>user</em>, <em>ip</em>, <em>db</em>, <em>use_password='yes'</em>, <em>driver='pymysql'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/connection.html#get_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.connection.get_engine" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns engine instance connected to a given database</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user</strong> (<em>str</em>) – username</li>
-<li><strong>ip</strong> (<em>str</em>) – ip adress of the sql server</li>
-<li><strong>db</strong> (<em>str</em>) – name of the database</li>
-<li><strong>use_password</strong> (<em>str, {‘yes’, ‘no’}, default=’yes</em>) – ‘yes’ to use a password to connect, if ‘yes’, the
-password will have to be entered in the terminal</li>
-<li><strong>driver</strong> (<em>str, default=’pymysql’</em>) – name of the driver used for MySQL-Python connexion, depends on your
-installation
-Check <a class="reference external" href="http://docs.sqlalchemy.org/en/latest/dialects/mysql.html">http://docs.sqlalchemy.org/en/latest/dialects/mysql.html</a>
-for details</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">engine can then be used for SQL related tasks</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">sqlalchemy.Engine</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.connection.sql2df">
-<code class="descclassname">preprocessing.utils.connection.</code><code class="descname">sql2df</code><span class="sig-paren">(</span><em>engine</em>, <em>table</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/connection.html#sql2df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.connection.sql2df" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds a DataFrame using a table from the
-database to which engine is connected</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>engine</strong> (<em>sqlalchemy.Engine</em>) – Engine instance connected to a remote or local
-sql database</li>
-<li><strong>table</strong> (<em>str</em>) – name of the table you wish to retrieve</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dataframe representation of the <cite>table</cite> in database</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+  <div class="section" id="preprocessing-utils-connection-module">
+<h1>preprocessing.utils.connection module<a class="headerlink" href="#preprocessing-utils-connection-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

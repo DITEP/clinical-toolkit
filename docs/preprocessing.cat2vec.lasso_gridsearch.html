@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,48 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.cat2vec.lasso_gridsearch">
-<span id="preprocessing-cat2vec-lasso-gridsearch-module"></span><h1>preprocessing.cat2vec.lasso_gridsearch module<a class="headerlink" href="#module-preprocessing.cat2vec.lasso_gridsearch" title="Permalink to this headline">¶</a></h1>
-<p>The objective of this script is to select the best categories of a high
-cardinality categorical feature using LASSO penalization.</p>
-<p>For the moment only binary/continuous logistic regression is implemented</p>
-<p>&gt;&gt; reload_ext autoreload
-&gt;&gt; autoreload 2</p>
-<dl class="function">
-<dt id="preprocessing.cat2vec.lasso_gridsearch.lr_coefficients">
-<code class="descclassname">preprocessing.cat2vec.lasso_gridsearch.</code><code class="descname">lr_coefficients</code><span class="sig-paren">(</span><em>path</em>, <em>features</em>, <em>targets</em>, <em>key</em>, <em>output_path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/lasso_gridsearch.html#lr_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.lasso_gridsearch.lr_coefficients" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs categorical variable selection using L1-penalized logistic
-regression model</p>
-<p>It only supports binary or continuous target for the moment</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>path</strong> (<em>str</em>) – input path or url for the dataframe</li>
-<li><strong>features</strong> (<em>str</em>) – column name of the categorical column</li>
-<li><strong>targets</strong> (<em>str</em>) – name of the target column in the df</li>
-<li><strong>key</strong> (<em>str</em>) – key to group categorical variables</li>
-<li><strong>output_path</strong> (<em>str</em>) – path to save the coefficients in a csv file</li>
-<li><strong>kwargs</strong> – keyword arguments for the hyperparameter grid</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><em>array</em></li>
-<li><em>the coefficients of the L1-logistic regression</em></li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lr_coefficients</span><span class="p">(</span><span class="s1">&#39;input.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;medication_name&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span>     <span class="n">solver</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="s1">&#39;saga&#39;</span><span class="p">],</span> <span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-</pre></div>
-</div>
-</dd></dl>
-
+  <div class="section" id="preprocessing-cat2vec-lasso-gridsearch-module">
+<h1>preprocessing.cat2vec.lasso_gridsearch module<a class="headerlink" href="#preprocessing-cat2vec-lasso-gridsearch-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

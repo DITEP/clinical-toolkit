@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,183 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.cat2vec.neural_embedding">
-<span id="preprocessing-cat2vec-neural-embedding-module"></span><h1>preprocessing.cat2vec.neural_embedding module<a class="headerlink" href="#module-preprocessing.cat2vec.neural_embedding" title="Permalink to this headline">¶</a></h1>
-<p>Embedding high cardinality categorical variables with distributed
-representations</p>
-<p>The first embedder relies on <cite>Word2Vec</cite> algorithm to learn vector
-representations of words in a corpus</p>
-<table class="docutils footnote" frame="void" id="id1" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>“Distributed Representations of Words and Phrases and their
-Compositionality”, Mikolov et al, Advances in Neural Information Processing
-Systems 26, pp 3111–3119, 2013.</td></tr>
-</tbody>
-</table>
-<p>The second one is based on <a class="reference external" href="https://en.wikipedia.org/wiki/Transfer_learning">transfer learning</a> : we train a fully
-connected neural network on a predictive task (only supports binary
-classification for now) so that the upper layers learn higher level
-representations of the categories.
-After training, we can extract the categories vectors in the embedding space</p>
-<dl class="class">
-<dt id="preprocessing.cat2vec.neural_embedding.NeuralEmbedder">
-<em class="property">class </em><code class="descclassname">preprocessing.cat2vec.neural_embedding.</code><code class="descname">NeuralEmbedder</code><span class="sig-paren">(</span><em>input_dim, layers, activation='relu', output='sigmoid', optimizer='adam', loss='binary-crossentropy', dropout=0.5, metrics=['acc', 'mae'], epochs=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralEmbedder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralEmbedder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>Trains a MLP classifier to learn a distributed representation of
-categories</p>
-<p>Only available for binary targets</p>
-<p>&#64;TODO optimizer argument should be able to receive keras.Optimizer class
-&#64;TODO + batch_size + validation set ?</p>
-<dl class="docutils">
-<dt>input_dim <span class="classifier-delimiter">:</span> <span class="classifier">tuple, (int, int)</span></dt>
-<dd>input_dim[0] number of units in inpuot layer
-input_dim[1] : dimension of the input layer (= number of features)</dd>
-<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
-<dd>The ith element represents the number of neurons in the ith hidden
-layer. Similar to sklearn’s MLP</dd>
-<dt>activation <span class="classifier-delimiter">:</span> <span class="classifier">str, default=’relu’</span></dt>
-<dd>activation function in the intermediate layers</dd>
-<dt>output <span class="classifier-delimiter">:</span> <span class="classifier">str, default=’sigmoid’</span></dt>
-<dd>output activation function, only supports sigmoid for binary
-classification</dd>
-<dt>optimizer <span class="classifier-delimiter">:</span> <span class="classifier">str, default=’adam’</span></dt>
-<dd>optimizing function for backpropagation
-check <a class="reference external" href="https://keras.io/optimizers">https://keras.io/optimizers</a> for available algorithms</dd>
-<dt>loss <span class="classifier-delimiter">:</span> <span class="classifier">str, default=’binary-crossentropy’</span></dt>
-<dd>loss computed for optimization
-check <a class="reference external" href="https://keras.io/losses">https://keras.io/losses</a></dd>
-<dt>dropout <span class="classifier-delimiter">:</span> <span class="classifier">str, default=0.5</span></dt>
-<dd>dropout rate</dd>
-<dt>metrics <span class="classifier-delimiter">:</span> <span class="classifier">list, default=[‘acc’, ‘mae’]</span></dt>
-<dd>metrics used uring training and testing</dd>
-<dt>epochs <span class="classifier-delimiter">:</span> <span class="classifier">int, default=20</span></dt>
-<dd>number of epochs</dd>
-</dl>
-<dl class="method">
-<dt id="preprocessing.cat2vec.neural_embedding.NeuralEmbedder.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralEmbedder.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralEmbedder.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>trains the model using input data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>iterable</em>) – feature matrix</li>
-<li><strong>y</strong> (<em>iterable</em>) – target vector (possibly one-hot-encoded?)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">record of training loss values and metrics values at successive
-epochs, as well as validation loss values and validation metrics
-values (if applicable)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">keras.History.history</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.cat2vec.neural_embedding.NeuralEmbedder.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#NeuralEmbedder.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.NeuralEmbedder.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform X into a distributed representation learned by fit</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>iterable</em>) – feature matrix to embed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">X projected into an embedding space</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy array</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="preprocessing.cat2vec.neural_embedding.W2VVectorizer">
-<em class="property">class </em><code class="descclassname">preprocessing.cat2vec.neural_embedding.</code><code class="descname">W2VVectorizer</code><span class="sig-paren">(</span><em>group_key</em>, <em>category_col</em>, <em>size=128</em>, <em>min_count=1</em>, <em>sg=1</em>, <em>window=3</em>, <em>strategy='tokens'</em>, <em>seed=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#W2VVectorizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.W2VVectorizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>vectorizes categories with word2vec model</p>
-<p>&#64;deprecated</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>group_key</strong> (<em>str</em>) – name of the column to group</li>
-<li><strong>category_col</strong> (<em>str</em>) – name of the column containing the categorical variables</li>
-<li><strong>size</strong> (<em>int, default=128</em>) – dimension of the embedding vector</li>
-<li><strong>min_count</strong> (<em>int, default=1</em>) – minimum amount of instances to integrate it to the model</li>
-<li><strong>sg</strong> (<em>int {0, 1}, default=1</em>) – 0 for skip-gram word2vec model
-1 for CBOW (best suited for small datasets)</li>
-<li><strong>window</strong> (<em>int, default=3</em>) – size of the context</li>
-<li><strong>strategy</strong> (<em>str {‘tokens’, ‘strings’}, default=’tokens’</em>) – if ‘tokens’, categories containing several words are split
-else, each category is considered as a word</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#W2VVectorizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>fits the model by grouping categories by group_key in order to
-embed categories as text</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> (<em>pd.DataFrame</em>)</li>
-<li><strong>y</strong></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit_pretrained">
-<code class="descname">fit_pretrained</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#W2VVectorizer.fit_pretrained"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.W2VVectorizer.fit_pretrained" title="Permalink to this definition">¶</a></dt>
-<dd><p>fits model using pretrained word embedding from
-<a class="reference external" href="https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md">https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – path do wiki.lg.vec file</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.cat2vec.neural_embedding.W2VVectorizer.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/cat2vec/neural_embedding.html#W2VVectorizer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.cat2vec.neural_embedding.W2VVectorizer.transform" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> (<em>pd.DataFrame</em>)</li>
-<li><strong>y</strong> (<em>None</em>)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="preprocessing-cat2vec-neural-embedding-module">
+<h1>preprocessing.cat2vec.neural_embedding module<a class="headerlink" href="#preprocessing-cat2vec-neural-embedding-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

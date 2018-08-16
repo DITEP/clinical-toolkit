@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,125 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.text2vec.transformers">
-<span id="preprocessing-text2vec-transformers-module"></span><h1>preprocessing.text2vec.transformers module<a class="headerlink" href="#module-preprocessing.text2vec.transformers" title="Permalink to this headline">¶</a></h1>
-<p>object classes for sklearn pipeline compatibility</p>
-<dl class="class">
-<dt id="preprocessing.text2vec.transformers.AverageWords2Vector">
-<em class="property">class </em><code class="descclassname">preprocessing.text2vec.transformers.</code><code class="descname">AverageWords2Vector</code><span class="sig-paren">(</span><em>n_components=128</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>trains a unsupervised word2vec model, and then fold
-text data according to it
-This function is only for convenience in using word2vec in a pipeline</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_components</strong> (<em>int, default=128</em>) – dimension of the embedding vector</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>parsed_reports</em>, <em>y=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Trains the word2vec model with given corpus
-as input</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parsed_reports</strong> (<em>iterable of iterables</em>) – contains parsed tokenized reports</li>
-<li><strong>y</strong> (<em>None</em>)</li>
-<li><strong>**kwargs</strong> – additionnal arguments to pass to gensim.Word2Vec (see appropriate
-documentation for details)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained">
-<code class="descname">fit_pretrained</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.fit_pretrained"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.fit_pretrained" title="Permalink to this definition">¶</a></dt>
-<dd><p>fits a pretrained model from
-<a class="reference external" href="https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md">https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – path to the model</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.text2vec.transformers.AverageWords2Vector.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>parsed_reports</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#AverageWords2Vector.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.AverageWords2Vector.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns the documents into vector by averaging
-over all the words</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parsed_reports</strong> (<em>iterable of iterables</em>)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="preprocessing.text2vec.transformers.Text2Vector">
-<em class="property">class </em><code class="descclassname">preprocessing.text2vec.transformers.</code><code class="descname">Text2Vector</code><span class="sig-paren">(</span><em>n_components=128</em>, <em>dm=1</em>, <em>window=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>implementation of Doc2Vec model adapted to sklearn for
-hyperparameters tuning</p>
-<dl class="method">
-<dt id="preprocessing.text2vec.transformers.Text2Vector.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>reports</em>, <em>y=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>tags reports (for gensim’s model consistence) and trains Doc2Vec
-model on the corpus</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>reports</strong> (<em>iterable of iterables</em>) – list of tokenized reports</li>
-<li><strong>y</strong> (<em>not used, default=None</em>)</li>
-<li><strong>**kwargs</strong> – additionnal arguments to pass to gensim.Word2Vec (see appropriate
-documentation for details)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.text2vec.transformers.Text2Vector.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>reports</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/text2vec/transformers.html#Text2Vector.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.text2vec.transformers.Text2Vector.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>transforms reports in embedding space based on previously trained
-Doc2Vec model</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reports</strong> (<em>iterable of iterables</em>) – list of tokenized reports</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vectorized reports</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="preprocessing-text2vec-transformers-module">
+<h1>preprocessing.text2vec.transformers module<a class="headerlink" href="#preprocessing-text2vec-transformers-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

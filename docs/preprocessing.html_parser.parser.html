@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,77 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.html_parser.parser">
-<span id="preprocessing-html-parser-parser-module"></span><h1>preprocessing.html_parser.parser module<a class="headerlink" href="#module-preprocessing.html_parser.parser" title="Permalink to this headline">¶</a></h1>
-<p>object to parse text reports, compatible with scikit-learn transformer API</p>
-<p>The format of typical reports to be parsed can be found in data/ directory of
-this repo. <cite>ReportsParser</cite> enables choosing custom :</p>
-<ul class="simple">
-<li>section delimiters with <cite>headers</cite> attribute</li>
-<li>tags that dont contain informative texte (style tag for instance) with
-<cite>remove_tags</cite></li>
-<li>additional stop words, that may be specific to a corpus or a task</li>
-</ul>
-<dl class="class">
-<dt id="preprocessing.html_parser.parser.ReportsParser">
-<em class="property">class </em><code class="descclassname">preprocessing.html_parser.parser.</code><code class="descname">ReportsParser</code><span class="sig-paren">(</span><em>strategy='strings', remove_sections=[], remove_tags=['h4', 'table', 'link', 'style'], col_name='report', headers='h3', is_html=True, stop_words=[], verbose=False, n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/parser.html#ReportsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.parser.ReportsParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>a parser for html-like text reports</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>strategy</strong> (<em>string, default=’strings’</em>) – defines the type of object returned by the transformation,
-if ‘strings’, each line of the returned df is string. ‘strings’ is to
-be used for CountVectorizer and TFiDFVectorizer
-if ‘tokens’, the string is split into a list of words. ‘tokens’ is to
-be used for gensim’s Word2Vec and Doc2Vec models</li>
-<li><strong>remove_sections</strong> (<em>list, default=[]</em>) – list containing names of the sections to remove</li>
-<li><strong>remove_tags</strong> (<em>list, default=[‘h4’, ‘table’, ‘link’, ‘style’]</em>) – list of tags to remove from html  page</li>
-<li><strong>headers</strong> (<em>str or None, default=’h3</em>) – name of the html tag that delimits the sections in the</li>
-<li><strong>is_html</strong> (<em>bool, default=True</em>) – boolean indicating weather the structure of the reports is strictly html
-format or not.
-Check documentation usage for details</li>
-<li><strong>stop_words</strong> (<em>list, default=[]</em>) – additional words to remove from the text, specific to the kind
-of parsed document</li>
-<li><strong>verbose</strong> (<em>bool, default=False</em>)</li>
-<li><strong>n_jobs</strong> (<em>int, default=1</em>) – number of CPU cores to use, if -1 then all the available one are used</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-class docutils literal notranslate"><span class="pre">text_parser</span></code></p>
-</div>
-<dl class="method">
-<dt id="preprocessing.html_parser.parser.ReportsParser.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/parser.html#ReportsParser.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.parser.ReportsParser.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.html_parser.parser.ReportsParser.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/html_parser/parser.html#ReportsParser.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.html_parser.parser.ReportsParser.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>parses the reports in input</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>pd.Series or DataFrame</em>) – each entry is a string defining a report</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">each entry is either a string or list of words depending on
-the strategy</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pd.Series</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="preprocessing-html-parser-parser-module">
+<h1>preprocessing.html_parser.parser module<a class="headerlink" href="#preprocessing-html-parser-parser-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

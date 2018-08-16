@@ -80,11 +80,11 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">processing-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Package:</span></p>
+<p class="caption"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="preprocessing.html">preprocessing package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="preprocessing.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-preprocessing">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -155,104 +155,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-preprocessing.utils.outliers">
-<span id="preprocessing-utils-outliers-module"></span><h1>preprocessing.utils.outliers module<a class="headerlink" href="#module-preprocessing.utils.outliers" title="Permalink to this headline">¶</a></h1>
-<p>Scripts to remove the outliers and na values from the different tables</p>
-<p>To be used for the values that are mistyped</p>
-<dl class="class">
-<dt id="preprocessing.utils.outliers.OutlierRemover">
-<em class="property">class </em><code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">OutlierRemover</code><span class="sig-paren">(</span><em>dic_path</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>removes outliers and replaces them by value given in dic_path or by
-imputing the column mean value</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dic_path</strong> (<em>str</em>) – path to the dictionary containing outliers information</li>
-<li><strong>inplace</strong> (<em>bool, default=True</em>) – True to perform the transformation inplace
-False to do it on a copy of the dataframe</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="preprocessing.utils.outliers.OutlierRemover.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="preprocessing.utils.outliers.OutlierRemover.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#OutlierRemover.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.OutlierRemover.transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.outliers.impute_col">
-<code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">impute_col</code><span class="sig-paren">(</span><em>X</em>, <em>lbound</em>, <em>ubound</em>, <em>impute</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#impute_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.impute_col" title="Permalink to this definition">¶</a></dt>
-<dd><p>imputes missing and mistyped values of one col of the dataframe</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> (<em>iterable, array-like</em>) – column to which we want to impute missing values</p>
-<p class="last">name of the column</p>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>lbound <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>lower bound for normal values</dd>
-<dt>ubound <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>upper bound for normal values</dd>
-<dt>impute <span class="classifier-delimiter">:</span> <span class="classifier">float or None</span></dt>
-<dd>if float is given, replaces outlier by the given value
-if None, the mean value is returned</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">df.col_name except its wrong values are imputed according
-to strategy</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">df.Series</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="preprocessing.utils.outliers.impute_df">
-<code class="descclassname">preprocessing.utils.outliers.</code><code class="descname">impute_df</code><span class="sig-paren">(</span><em>df</em>, <em>dic_path</em>, <em>inplace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing/utils/outliers.html#impute_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing.utils.outliers.impute_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>cleans the df from missing/mistyped values</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> (<em>pd.DataFrame</em>)</li>
-<li><strong>dic_path</strong> (<em>str</em>) – path containing name of the columns to clean and the upper/lower
-limits to consider point as outlier and optionnal third value is the
-imputing value</li>
-<li><strong>inplace</strong> (<em>bool</em>) – if True, performs the transformation inline</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+  <div class="section" id="preprocessing-utils-outliers-module">
+<h1>preprocessing.utils.outliers module<a class="headerlink" href="#preprocessing-utils-outliers-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

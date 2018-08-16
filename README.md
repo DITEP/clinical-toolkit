@@ -1,6 +1,6 @@
 # Processing Toolbox 
 
-Full documentation available at https://ditep.github.io/processing-toolbox/
+Full documentation available at https://ditep.github.io/clinical-toolkit/
 
 This repository contains scripts to preprocess a clinical database. It notably
 includes functions to process medical text reports, and feature selection on 
@@ -20,7 +20,7 @@ this <i>toolbox</i>.
 The package is not available on PyPI so you need to install it from source.
 
 ```bash
-$ git clone https://github.com/DITEP/processing-toolbox.git
+$ git clone https://github.com/DITEP/clinical-toolkit.git
 $ cd preprocessing-toolbox
 $ pip install -r requirements.txt
 $ pip install . 

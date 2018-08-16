@@ -10,11 +10,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='processing-toolbox',
+    name='clinical-toolkit',
 
     version='0.1',
 
-    description='Basic preprocessing for clinical databases ',
+    description='Preprocessing for clinical databases ',
 
     long_description=long_description,
 

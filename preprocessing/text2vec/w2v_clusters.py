@@ -1,15 +1,17 @@
 """
-clustering of word embeddings 
+clustering of word embeddings
+
+@TODO documentation of the module
 """
 import numpy as np
 
-from sklearn.base import  BaseEstimator
+from sklearn.base import BaseEstimator
 from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 
 
-class WordClustering:
+class WordClustering(BaseEstimator):
     """ theme-affinity vectorization of documents
 
     w2v_size : int, default=128
@@ -34,7 +36,7 @@ class WordClustering:
                  n_clusters=30,
                  pca=PCA(n_components=0.9),
                  clustering=KMeans(n_clusters=30)):
-        self.w2v_size= w2v_size
+        self.w2v_size = w2v_size
         self.n_clusters = n_clusters
         self.pca = pca
         self.clustering = clustering
@@ -44,7 +46,7 @@ class WordClustering:
         # distribued representation of the words
         self.word_vectors_ = None
         # cluster id for each word
-        self.cluter_ids_ = None
+        self.cluster_ids_ = None
 
 
 
@@ -72,7 +74,7 @@ class WordClustering:
 
         pca_word_vectors = self.pca.fit_transform(self.word_vectors_)
 
-        self.cluster_ids_ = self.clustering.fit_transform(pca_word_vectors)
+        self.cluster_ids_ = self.clustering.fit_predict(pca_word_vectors)
 
         return self
 
@@ -112,7 +114,6 @@ class WordClustering:
     def get_clusters_words(self):
         """ return the words in each cluster
 
-        @TODO implement the function
 
         Returns
         -------
@@ -120,7 +121,15 @@ class WordClustering:
             keys are cluster ids, values are lists of words
 
         """
-        return 0
+        words_cluster = {}
+        for cluser_id in np.unique(self.cluster_ids_):
+            words_cluster[str(cluser_id)] = []
+
+        for i, word in enumerate(self.vocabulary_):
+            label = str(self.cluster_ids_[i])
+            words_cluster[label].append(word)
+
+        return words_cluster
 
 
 
@@ -168,6 +177,5 @@ def embed_corpus(X, n_clusters, clustering, **kwargs):
             except KeyError:
                 pass
         vectors.append(vector / count)
-     #   @TODO return words
-    #
+
     return np.array(vectors), cluster_ids

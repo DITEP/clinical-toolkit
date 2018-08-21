@@ -56,15 +56,15 @@ def splitter(patient_id, date, cycle, report_dict):
              'text': report_dict[key]} for key in report_dict]
 
 
-def reduce_dic(dico, remove):
+def reduce_dic(dico, sections):
     """ merges key, values of a dictionary
 
     Parameters
     ----------
     dico : dict
 
-    remove : list of str
-        name of the sections to remove as in `ReportsParser.remove_sections`
+    sections : list of str
+        name of the sections to keep as in `ReportsParser.sections`
 
     Returns
     -------
@@ -73,8 +73,14 @@ def reduce_dic(dico, remove):
 
     """
     res = ''
-    for key, value in dico.items():
-        if key not in remove:
+    # if sections id not None
+    if sections:
+        for key, value in dico.items():
+            if key in sections:
+                res += ' ' + value
+    #keep all the sections
+    else:
+        for key, value in dico.items():
             res += ' ' + value
 
     return res

@@ -10,6 +10,7 @@ this repo. `ReportsParser` enables choosing custom :
 * additional stop words, that may be specific to a corpus or a task
 
 @TODO add examples
+@TODO change remove_sections into sections_to_keep
 """
 import pandas as pd
 
@@ -33,8 +34,9 @@ class ReportsParser(BaseEstimator):
         if 'tokens', the string is split into a list of words. 'tokens' is to
         be used for gensim's Word2Vec and Doc2Vec models
 
-    remove_sections : list, default=[]
-        list containing names of the sections to remove
+    sections : tuple or None, default=None
+        tuple containing section names  to keep
+        if None, keep all the sections
 
     remove_tags : list, default=['h4', 'table', 'link', 'style']
         list of tags to remove from html  page
@@ -66,7 +68,7 @@ class ReportsParser(BaseEstimator):
     """
     def __init__(self,
                  strategy='strings',
-                 remove_sections=[],
+                 sections=None,
                  remove_tags=['h4', 'table', 'link', 'style'],
                  col_name='report',
                  headers='h3',
@@ -77,8 +79,8 @@ class ReportsParser(BaseEstimator):
                  n_jobs=1):
 
         self.strategy = strategy
-        self.remove_sections = remove_sections
-        self.tags = remove_tags
+        self.sections = sections
+        self.remove_tags = remove_tags
         self.headers = headers
         self.is_html = is_html
         self.col_name = col_name
@@ -140,16 +142,16 @@ class ReportsParser(BaseEstimator):
 
         """
         if self.headers is None:
-            # html is not structured
+            # keep plain text
             text = clean_string(BeautifulSoup(str(html),
                                               'html.parser').text)
 
         # parse html split into self.headers
         else:
             dico = main_parser(html, self.is_html, self.verbose,
-                               self.remove_sections,
+                               self.remove_tags,
                                headers=self.headers)
-            text = reduce_dic(dico, self.remove_sections).strip()
+            text = reduce_dic(dico, self.sections).strip()
 
         if self.norm:
             text = text_normalize(text, self.stop_words, stem=False)

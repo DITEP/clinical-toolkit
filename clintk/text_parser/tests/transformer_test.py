@@ -93,7 +93,7 @@ class TestHTMLParser(object):
     def test_remove_section(self):
         x = self.setUp()
 
-        parsed_x = ReportsParser(remove_sections=['some title 0']).transform(x)
+        parsed_x = ReportsParser(sections=('title 1')).transform(x)
         res_text = parsed_x.values[0]
 
         expected_text = 'this is div 1 text 1 0 text 1 1 this is a span'
@@ -118,7 +118,8 @@ class TestHTMLParser(object):
     def test_remove_section2(self):
         x = self.setUp(False)
 
-        parsed_x = ReportsParser(remove_sections=['bold title'],
+        parsed_x = ReportsParser(sections=('other bold title',
+                                           'last bold title'),
                                  headers='b',
                                  is_html=False).transform(x)
         res_text = parsed_x.values[0]

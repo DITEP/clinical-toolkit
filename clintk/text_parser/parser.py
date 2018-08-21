@@ -9,6 +9,7 @@ this repo. `ReportsParser` enables choosing custom :
   `remove_tags`
 * additional stop words, that may be specific to a corpus or a task
 
+@TODO add examples
 """
 import pandas as pd
 
@@ -148,15 +149,18 @@ class ReportsParser(BaseEstimator):
             dico = main_parser(html, self.is_html, self.verbose,
                                self.remove_sections,
                                headers=self.headers)
-            text = reduce_dic(dico, self.remove_sections)
+            text = reduce_dic(dico, self.remove_sections).strip()
 
         if self.norm:
             text = text_normalize(text, self.stop_words, stem=False)
 
         if self.strategy == 'strings':
             if self.norm:
-                return ' '.join(text) #@TODO ou ' '.join(text) selon self.norm
+                return ' '.join(text)
             else:
                 return ''.join(text)
         else:
-            return text
+            if self.norm:
+                return text
+            else:
+                return text.split(' ')

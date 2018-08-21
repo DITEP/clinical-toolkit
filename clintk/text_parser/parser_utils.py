@@ -6,7 +6,6 @@ Only main_parser is used in practice since all the other functions
 are auxiliary. Moreover, they should not be used "as-is" since they are
 wrapped up in the `ReportsParser` object for convenience.
 
-@TODO change module name to `utils`
 """
 from bs4 import BeautifulSoup
 

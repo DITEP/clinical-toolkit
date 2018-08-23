@@ -48,10 +48,11 @@ class WordClustering(BaseEstimator):
         # cluster id for each word
         self.cluster_ids_ = None
 
+        self.clustering.set_params(n_clusters=n_clusters)
 
 
     def fit(self, X, y=None, **fit_params):
-        """ train w2v model and clustering algorithm
+        """ train w2v and clustering models
 
         Parameters
         ----------

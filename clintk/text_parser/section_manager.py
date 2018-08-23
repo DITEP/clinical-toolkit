@@ -59,6 +59,8 @@ def splitter(patient_id, date, cycle, report_dict):
 def reduce_dic(dico, sections):
     """ merges key, values of a dictionary
 
+    @TODO find sections names using regex
+
     Parameters
     ----------
     dico : dict

@@ -108,7 +108,10 @@ class WordClustering(BaseEstimator):
                 # except word is not in vocabular
                 except KeyError:
                     pass
-            vectors.append(vector / count)
+            if count > 0:
+                vectors.append(vector / count)
+            else:
+                vectors.append(vector)
 
         return np.array(vectors)
 

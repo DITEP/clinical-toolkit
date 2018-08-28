@@ -6,7 +6,7 @@ clustering of word embeddings
 import numpy as np
 
 from sklearn.base import BaseEstimator
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, KeyedVectors
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 
@@ -23,19 +23,30 @@ class WordClustering(BaseEstimator):
         It is advised to set `n_clusters` to the approximate number of
         lexical fields
 
-
     clustering : sklearn.cluster instace, default=KMeans(n_clusters=30)
         clustering algorithm
         The number of clusters must be equal to `n_clusters`
+
+    pretrained : bool, default=False
+        False to train a new w2v model
+        True to use a model already trained
+
+    model_path : str, default=None
+        path to the trained w2v model
+        Only used when `pretrained` is set to True
 
     """
     def __init__(self,
                  w2v_size=128,
                  n_clusters=30,
-                 clustering=KMeans(n_clusters=30)):
+                 clustering=KMeans(n_clusters=30),
+                 pretrained=False,
+                 model_path=None):
         self.w2v_size = w2v_size
         self.n_clusters = n_clusters
         self.clustering = clustering
+        self.pretrained = pretrained
+        self.model_path = model_path
 
         # vocabulary
         self.vocabulary_ = None
@@ -47,13 +58,15 @@ class WordClustering(BaseEstimator):
         self.clustering.set_params(n_clusters=n_clusters)
 
 
-    def fit(self, X, y=None, **fit_params):
+    def fit(self, X=None, y=None, **fit_params):
         """ train w2v and clustering models
 
         Parameters
         ----------
-        X : iterable of iterable
-            corpus of tokenized documents
+        X : iterable of iterable, defaul=None
+            corpus of tokenized documents if `pretrained`=False
+            else, X=None and the pretrained model is used
+
 
         y : None
 
@@ -64,7 +77,10 @@ class WordClustering(BaseEstimator):
         self
 
         """
-        w2v = Word2Vec(X, size=self.w2v_size)
+        if self.pretrained:
+            w2v = KeyedVectors.load_word2vec_format(self.model_path)
+        else:
+            w2v = Word2Vec(X, size=self.w2v_size)
 
         self.vocabulary_ = w2v.wv.vocab
         self.word_vectors_ = w2v[self.vocabulary_]

@@ -23,8 +23,6 @@ class WordClustering(BaseEstimator):
         It is advised to set `n_clusters` to the approximate number of
         lexical fields
 
-    pca : sklearn.decomposition instance, default=PCA(n_components=0.9)
-        reduction of dimension of the embeddings before clustering
 
     clustering : sklearn.cluster instace, default=KMeans(n_clusters=30)
         clustering algorithm
@@ -34,11 +32,9 @@ class WordClustering(BaseEstimator):
     def __init__(self,
                  w2v_size=128,
                  n_clusters=30,
-                 pca=PCA(n_components=0.9),
                  clustering=KMeans(n_clusters=30)):
         self.w2v_size = w2v_size
         self.n_clusters = n_clusters
-        self.pca = pca
         self.clustering = clustering
 
         # vocabulary
@@ -73,9 +69,7 @@ class WordClustering(BaseEstimator):
         self.vocabulary_ = w2v.wv.vocab
         self.word_vectors_ = w2v[self.vocabulary_]
 
-        pca_word_vectors = self.pca.fit_transform(self.word_vectors_)
-
-        self.cluster_ids_ = self.clustering.fit_predict(pca_word_vectors)
+        self.cluster_ids_ = self.clustering.fit_predict(self.word_vectors_)
 
         return self
 

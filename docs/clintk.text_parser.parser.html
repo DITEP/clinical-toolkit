@@ -166,9 +166,11 @@ this repo. <cite>ReportsParser</cite> enables choosing custom :</p>
 <cite>remove_tags</cite></li>
 <li>additional stop words, that may be specific to a corpus or a task</li>
 </ul>
+<p>&#64;TODO add examples
+&#64;TODO change remove_sections into sections_to_keep</p>
 <dl class="class">
 <dt id="clintk.text_parser.parser.ReportsParser">
-<em class="property">class </em><code class="descclassname">clintk.text_parser.parser.</code><code class="descname">ReportsParser</code><span class="sig-paren">(</span><em>strategy='strings', remove_sections=[], remove_tags=['h4', 'table', 'link', 'style'], col_name='report', headers='h3', is_html=True, stop_words=[], norm=True, verbose=False, n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser.html#ReportsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser.ReportsParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">clintk.text_parser.parser.</code><code class="descname">ReportsParser</code><span class="sig-paren">(</span><em>strategy='strings', sections=None, remove_tags=['h4', 'table', 'link', 'style'], col_name='report', headers='h3', is_html=True, stop_words=[], norm=True, verbose=False, n_jobs=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/parser.html#ReportsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.parser.ReportsParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>a parser for html-like text reports</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -181,7 +183,8 @@ if ‘strings’, each line of the returned df is string. ‘strings’ is to
 be used for CountVectorizer and TFiDFVectorizer
 if ‘tokens’, the string is split into a list of words. ‘tokens’ is to
 be used for gensim’s Word2Vec and Doc2Vec models</li>
-<li><strong>remove_sections</strong> (<em>list, default=[]</em>) – list containing names of the sections to remove</li>
+<li><strong>sections</strong> (<em>tuple or None, default=None</em>) – tuple containing section names  to keep
+if None, keep all the sections</li>
 <li><strong>remove_tags</strong> (<em>list, default=[‘h4’, ‘table’, ‘link’, ‘style’]</em>) – list of tags to remove from html  page</li>
 <li><strong>headers</strong> (<em>str or None, default=’h3</em>) – name of the html tag that delimits the sections in the</li>
 <li><strong>is_html</strong> (<em>bool, default=True</em>) – boolean indicating weather the structure of the reports is strictly html

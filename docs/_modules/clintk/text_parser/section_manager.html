@@ -202,15 +202,17 @@
              <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">report_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]}</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">report_dict</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="reduce_dic"><a class="viewcode-back" href="../../../clintk.text_parser.section_manager.html#clintk.text_parser.section_manager.reduce_dic">[docs]</a><span class="k">def</span> <span class="nf">reduce_dic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="n">remove</span><span class="p">):</span>
+<div class="viewcode-block" id="reduce_dic"><a class="viewcode-back" href="../../../clintk.text_parser.section_manager.html#clintk.text_parser.section_manager.reduce_dic">[docs]</a><span class="k">def</span> <span class="nf">reduce_dic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="n">sections</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; merges key, values of a dictionary</span>
+
+<span class="sd">    @TODO find sections names using regex</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    dico : dict</span>
 
-<span class="sd">    remove : list of str</span>
-<span class="sd">        name of the sections to remove as in `ReportsParser.remove_sections`</span>
+<span class="sd">    sections : list of str</span>
+<span class="sd">        name of the sections to keep as in `ReportsParser.sections`</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -219,8 +221,14 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">remove</span><span class="p">:</span>
+    <span class="c1"># if sections id not None</span>
+    <span class="k">if</span> <span class="n">sections</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">value</span>
+    <span class="c1">#keep all the sections</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">res</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">value</span>
 
     <span class="k">return</span> <span class="n">res</span></div>

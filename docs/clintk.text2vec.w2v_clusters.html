@@ -161,7 +161,7 @@
 <p>&#64;TODO documentation of the module</p>
 <dl class="class">
 <dt id="clintk.text2vec.w2v_clusters.WordClustering">
-<em class="property">class </em><code class="descclassname">clintk.text2vec.w2v_clusters.</code><code class="descname">WordClustering</code><span class="sig-paren">(</span><em>w2v_size=128</em>, <em>n_clusters=30</em>, <em>pca=PCA(copy=True</em>, <em>iterated_power='auto'</em>, <em>n_components=0.9</em>, <em>random_state=None</em>, <em>svd_solver='auto'</em>, <em>tol=0.0</em>, <em>whiten=False)</em>, <em>clustering=KMeans(algorithm='auto'</em>, <em>copy_x=True</em>, <em>init='k-means++'</em>, <em>max_iter=300</em>, <em>n_clusters=30</em>, <em>n_init=10</em>, <em>n_jobs=1</em>, <em>precompute_distances='auto'</em>, <em>random_state=None</em>, <em>tol=0.0001</em>, <em>verbose=0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text2vec/w2v_clusters.html#WordClustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text2vec.w2v_clusters.WordClustering" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">clintk.text2vec.w2v_clusters.</code><code class="descname">WordClustering</code><span class="sig-paren">(</span><em>w2v_size=128</em>, <em>n_clusters=30</em>, <em>clustering=KMeans(algorithm='auto'</em>, <em>copy_x=True</em>, <em>init='k-means++'</em>, <em>max_iter=300</em>, <em>n_clusters=30</em>, <em>n_init=10</em>, <em>n_jobs=1</em>, <em>precompute_distances='auto'</em>, <em>random_state=None</em>, <em>tol=0.0001</em>, <em>verbose=0)</em>, <em>pretrained=False</em>, <em>model_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text2vec/w2v_clusters.html#WordClustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text2vec.w2v_clusters.WordClustering" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>theme-affinity vectorization of documents</p>
 <dl class="docutils">
@@ -172,32 +172,38 @@
 vectorization.
 It is advised to set <cite>n_clusters</cite> to the approximate number of
 lexical fields</dd>
-<dt>pca <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.decomposition instance, default=PCA(n_components=0.9)</span></dt>
-<dd>reduction of dimension of the embeddings before clustering</dd>
 <dt>clustering <span class="classifier-delimiter">:</span> <span class="classifier">sklearn.cluster instace, default=KMeans(n_clusters=30)</span></dt>
 <dd>clustering algorithm
 The number of clusters must be equal to <cite>n_clusters</cite></dd>
+<dt>pretrained <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dd>False to train a new w2v model
+True to use a model already trained</dd>
+<dt>model_path <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd>path to the trained w2v model
+Only used when <cite>pretrained</cite> is set to True</dd>
 </dl>
 <dl class="method">
 <dt id="clintk.text2vec.w2v_clusters.WordClustering.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em>, <em>**fit_params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text2vec/w2v_clusters.html#WordClustering.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text2vec.w2v_clusters.WordClustering.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>train w2v model and clustering algorithm</p>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X=None</em>, <em>y=None</em>, <em>**fit_params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text2vec/w2v_clusters.html#WordClustering.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text2vec.w2v_clusters.WordClustering.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>train w2v and clustering models</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> (<em>iterable of iterable</em>) – corpus of tokenized documents</li>
-<li><strong>y</strong> (<em>None</em>)</li>
-<li><strong>fit_params</strong> (<em>additionnal parameters for word2vec algorithm</em>)</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>iterable of iterable, defaul=None</em>) – corpus of tokenized documents if <a href="#id1"><span class="problematic" id="id2">`</span></a>pretrained`=False
+else, X=None and the pretrained model is used</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
+</tbody>
+</table>
+<p>y : None</p>
+<p>fit_params : additionnal parameters for word2vec algorithm</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">self</p>
-</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">self</td>
 </tr>
 </tbody>
 </table>

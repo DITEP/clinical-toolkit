@@ -155,6 +155,8 @@
 <span class="sd">  `remove_tags`</span>
 <span class="sd">* additional stop words, that may be specific to a corpus or a task</span>
 
+<span class="sd">@TODO add examples</span>
+<span class="sd">@TODO change remove_sections into sections_to_keep</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -178,8 +180,9 @@
 <span class="sd">        if &#39;tokens&#39;, the string is split into a list of words. &#39;tokens&#39; is to</span>
 <span class="sd">        be used for gensim&#39;s Word2Vec and Doc2Vec models</span>
 
-<span class="sd">    remove_sections : list, default=[]</span>
-<span class="sd">        list containing names of the sections to remove</span>
+<span class="sd">    sections : tuple or None, default=None</span>
+<span class="sd">        tuple containing section names  to keep</span>
+<span class="sd">        if None, keep all the sections</span>
 
 <span class="sd">    remove_tags : list, default=[&#39;h4&#39;, &#39;table&#39;, &#39;link&#39;, &#39;style&#39;]</span>
 <span class="sd">        list of tags to remove from html  page</span>
@@ -211,7 +214,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;strings&#39;</span><span class="p">,</span>
-                 <span class="n">remove_sections</span><span class="o">=</span><span class="p">[],</span>
+                 <span class="n">sections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">remove_tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">],</span>
                  <span class="n">col_name</span><span class="o">=</span><span class="s1">&#39;report&#39;</span><span class="p">,</span>
                  <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;h3&#39;</span><span class="p">,</span>
@@ -222,8 +225,8 @@
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remove_sections</span> <span class="o">=</span> <span class="n">remove_sections</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">remove_tags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sections</span> <span class="o">=</span> <span class="n">sections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_tags</span> <span class="o">=</span> <span class="n">remove_tags</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_html</span> <span class="o">=</span> <span class="n">is_html</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">col_name</span> <span class="o">=</span> <span class="n">col_name</span>
@@ -285,27 +288,30 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># html is not structured</span>
+            <span class="c1"># keep plain text</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">html</span><span class="p">),</span>
                                               <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
         <span class="c1"># parse html split into self.headers</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dico</span> <span class="o">=</span> <span class="n">main_parser</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_html</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
-                               <span class="bp">self</span><span class="o">.</span><span class="n">remove_sections</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">remove_tags</span><span class="p">,</span>
                                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">reduce_dic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_sections</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">reduce_dic</span><span class="p">(</span><span class="n">dico</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">:</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">text_normalize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;strings&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="c1">#@TODO ou &#39; &#39;.join(text) selon self.norm</span>
+                <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">text</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">text</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

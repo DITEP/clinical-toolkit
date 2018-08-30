@@ -186,15 +186,16 @@ is split into the number of sections it contains</p>
 
 <dl class="function">
 <dt id="clintk.text_parser.section_manager.reduce_dic">
-<code class="descclassname">clintk.text_parser.section_manager.</code><code class="descname">reduce_dic</code><span class="sig-paren">(</span><em>dico</em>, <em>remove</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/section_manager.html#reduce_dic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.section_manager.reduce_dic" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">clintk.text_parser.section_manager.</code><code class="descname">reduce_dic</code><span class="sig-paren">(</span><em>dico</em>, <em>sections</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/clintk/text_parser/section_manager.html#reduce_dic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clintk.text_parser.section_manager.reduce_dic" title="Permalink to this definition">¶</a></dt>
 <dd><p>merges key, values of a dictionary</p>
+<p>&#64;TODO find sections names using regex</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>dico</strong> (<em>dict</em>)</li>
-<li><strong>remove</strong> (<em>list of str</em>) – name of the sections to remove as in <cite>ReportsParser.remove_sections</cite></li>
+<li><strong>sections</strong> (<em>list of str</em>) – name of the sections to keep as in <cite>ReportsParser.sections</cite></li>
 </ul>
 </td>
 </tr>

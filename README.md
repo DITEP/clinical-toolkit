@@ -86,5 +86,10 @@ OK
 ## TODO
 * example notebooks
 * contributing guidelines
-* issue template
+* prepare __init__ files and requirements 
+
+
+* function to export decision tree to png?
+
+
 

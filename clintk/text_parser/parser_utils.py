@@ -224,8 +224,19 @@ def clean_string(s):
         string with only alphanumeric and lowercased
     """
     try:
+        """
         s_decoded = unidecode(s).replace('\n', '').replace('  ', ' ')
         pattern = re.compile('[\W_]+')
         return pattern.sub(' ', s_decoded).lower().strip()
+        """
+        
+        ########################
+        #changed 19/02/19 by Enrico
+        s_decoded = unidecode(s).replace('\n', '')
+        s = re.compile('[^a-zA-Z0-9\.?!]+').sub(' ', s_decoded)
+        s = re.sub('(?<=\d)\.(?=\d)', ' ',s)
+        s = re.compile(r'\.{3,}').sub('', s).replace('   ', ' ')
+        return s.lower().strip()
+    
     except:
         return s or ''
